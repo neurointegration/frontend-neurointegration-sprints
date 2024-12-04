@@ -1,0 +1,17 @@
+:root {
+    --colors-life: #FFFBC8;
+    --colors-kaif: #F0D4FA;
+    --colors-drive: #D9EEFF;
+
+    --colors-font-hint: #656059;
+ 
+    --colors-light-gray: #DADADA;
+    --colors-light-skin: #F8DFBB;
+    --colors-dark-skin: #DFC7A4;
+    --colors-border-gray: #6C6C6C;
+
+    --colors-status-yellow: #FFE683;
+    --colors-status-green: #B5FF98;
+    --colors-status-purple: #ED9FFF;
+    --colors-status-gray: #DADADA;
+}

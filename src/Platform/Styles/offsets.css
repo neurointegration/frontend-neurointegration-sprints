@@ -1,0 +1,298 @@
+/* Здесь прописаны платформенные классы отступов Margin и Padding соответствующие переменным отступа*/
+/* Навешивание класса не гарантирует присутствие отступов, т.к. их легко перебить своим css */
+:root {
+    --controls-offset-4xs: 2px;
+    --controls-offset-3xs: 4px;
+    --controls-offset-2xs: 6px;
+    --controls-offset-xs: 8px;
+    --controls-offset-s: 10px;
+    --controls-offset-m: 12px;
+    --controls-offset-l: 14px;
+    --controls-offset-xl: 16px;
+    --controls-offset-2xl: 18px;
+    --controls-offset-3xl: 20px;
+    --controls-offset-4xl: 22px;
+}
+
+/* ---------------------------- MARGINS --------------------------------------------------------- */
+/* Верхний margin */
+.controls-margin_top-4xs {
+    margin-top: var(--controls-offset-4xs);
+}
+.controls-margin_top-3xs {
+    margin-top: var(--controls-offset-3xs);
+}
+.controls-margin_top-2xs {
+    margin-top: var(--controls-offset-2xs);
+}
+.controls-margin_top-xs {
+    margin-top: var(--controls-offset-xs);
+}
+.controls-margin_top-s {
+    margin-top: var(--controls-offset-s);
+}
+.controls-margin_top-m {
+    margin-top: var(--controls-offset-m);
+}
+.controls-margin_top-l {
+    margin-top: var(--controls-offset-l);
+}
+.controls-margin_top-xl {
+    margin-top: var(--controls-offset-xl);
+}
+.controls-margin_top-2xl {
+    margin-top: var(--controls-offset-2xl);
+}
+.controls-margin_top-3xl {
+    margin-top: var(--controls-offset-3xl);
+}
+.controls-margin_top-4xl {
+    margin-top: var(--controls-offset-4xl);
+}
+
+/* Нижний margin */
+.controls-margin_bottom-4xs {
+    margin-bottom: var(--controls-offset-4xs);
+}
+.controls-margin_bottom-3xs {
+    margin-bottom: var(--controls-offset-3xs);
+}
+.controls-margin_bottom-2xs {
+    margin-bottom: var(--controls-offset-2xs);
+}
+.controls-margin_bottom-xs {
+    margin-bottom: var(--controls-offset-xs);
+}
+.controls-margin_bottom-s {
+    margin-bottom: var(--controls-offset-s);
+}
+.controls-margin_bottom-m {
+    margin-bottom: var(--controls-offset-m);
+}
+.controls-margin_bottom-l {
+    margin-bottom: var(--controls-offset-l);
+}
+.controls-margin_bottom-xl {
+    margin-bottom: var(--controls-offset-xl);
+}
+.controls-margin_bottom-2xl {
+    margin-bottom: var(--controls-offset-2xl);
+}
+.controls-margin_bottom-3xl {
+    margin-bottom: var(--controls-offset-3xl);
+}
+.controls-margin_bottom-4xl {
+    margin-bottom: var(--controls-offset-4xl);
+}
+
+/* Левый margin */
+.controls-margin_left-4xs {
+    margin-left: var(--controls-offset-4xs);
+}
+.controls-margin_left-3xs {
+    margin-left: var(--controls-offset-3xs);
+}
+.controls-margin_left-2xs {
+    margin-left: var(--controls-offset-2xs);
+}
+.controls-margin_left-xs {
+    margin-left: var(--controls-offset-xs);
+}
+.controls-margin_left-s {
+    margin-left: var(--controls-offset-s);
+}
+.controls-margin_left-m {
+    margin-left: var(--controls-offset-m);
+}
+.controls-margin_left-l {
+    margin-left: var(--controls-offset-l);
+}
+.controls-margin_left-xl {
+    margin-left: var(--controls-offset-xl);
+}
+.controls-margin_left-2xl {
+    margin-left: var(--controls-offset-2xl);
+}
+.controls-margin_left-3xl {
+    margin-left: var(--controls-offset-3xl);
+}
+.controls-margin_left-4xl {
+    margin-left: var(--controls-offset-4xl);
+}
+
+/* Правый margin */
+.controls-margin_right-4xs {
+    margin-right: var(--controls-offset-4xs);
+}
+.controls-margin_right-3xs {
+    margin-right: var(--controls-offset-3xs);
+}
+.controls-margin_right-2xs {
+    margin-right: var(--controls-offset-2xs);
+}
+.controls-margin_right-xs {
+    margin-right: var(--controls-offset-xs);
+}
+.controls-margin_right-s {
+    margin-right: var(--controls-offset-s);
+}
+.controls-margin_right-m {
+    margin-right: var(--controls-offset-m);
+}
+.controls-margin_right-l {
+    margin-right: var(--controls-offset-l);
+}
+.controls-margin_right-xl {
+    margin-right: var(--controls-offset-xl);
+}
+.controls-margin_right-2xl {
+    margin-right: var(--controls-offset-2xl);
+}
+.controls-margin_right-3xl {
+    margin-right: var(--controls-offset-3xl);
+}
+.controls-margin_right-4xl {
+    margin-right: var(--controls-offset-4xl);
+}
+
+
+/* ----------------------------------------- PADDINGS ------------------------------------------- */
+/* Верхний padding */
+.controls-padding_top-4xs {
+    padding-top: var(--controls-offset-4xs);
+}
+.controls-padding_top-3xs {
+    padding-top: var(--controls-offset-3xs);
+}
+.controls-padding_top-2xs {
+    padding-top: var(--controls-offset-2xs);
+}
+.controls-padding_top-xs {
+    padding-top: var(--controls-offset-xs);
+}
+.controls-padding_top-s {
+    padding-top: var(--controls-offset-s);
+}
+.controls-padding_top-m {
+    padding-top: var(--controls-offset-m);
+}
+.controls-padding_top-l {
+    padding-top: var(--controls-offset-l);
+}
+.controls-padding_top-xl {
+    padding-top: var(--controls-offset-xl);
+}
+.controls-padding_top-2xl {
+    padding-top: var(--controls-offset-2xl);
+}
+.controls-padding_top-3xl {
+    padding-top: var(--controls-offset-3xl);
+}
+.controls-padding_top-4xl {
+    padding-top: var(--controls-offset-4xl);
+}
+
+/* Нижний padding */
+.controls-padding_bottom-4xs {
+    padding-bottom: var(--controls-offset-4xs);
+}
+.controls-padding_bottom-3xs {
+    padding-bottom: var(--controls-offset-3xs);
+}
+.controls-padding_bottom-2xs {
+    padding-bottom: var(--controls-offset-2xs);
+}
+.controls-padding_bottom-xs {
+    padding-bottom: var(--controls-offset-xs);
+}
+.controls-padding_bottom-s {
+    padding-bottom: var(--controls-offset-s);
+}
+.controls-padding_bottom-m {
+    padding-bottom: var(--controls-offset-m);
+}
+.controls-padding_bottom-l {
+    padding-bottom: var(--controls-offset-l);
+}
+.controls-padding_bottom-xl {
+    padding-bottom: var(--controls-offset-xl);
+}
+.controls-padding_bottom-2xl {
+    padding-bottom: var(--controls-offset-2xl);
+}
+.controls-padding_bottom-3xl {
+    padding-bottom: var(--controls-offset-3xl);
+}
+.controls-padding_bottom-4xl {
+    padding-bottom: var(--controls-offset-4xl);
+}
+
+/* Левый padding */
+.controls-padding_left-4xs {
+    padding-left: var(--controls-offset-4xs);
+}
+.controls-padding_left-3xs {
+    padding-left: var(--controls-offset-3xs);
+}
+.controls-padding_left-2xs {
+    padding-left: var(--controls-offset-2xs);
+}
+.controls-padding_left-xs {
+    padding-left: var(--controls-offset-xs);
+}
+.controls-padding_left-s {
+    padding-left: var(--controls-offset-s);
+}
+.controls-padding_left-m {
+    padding-left: var(--controls-offset-m);
+}
+.controls-padding_left-l {
+    padding-left: var(--controls-offset-l);
+}
+.controls-padding_left-xl {
+    padding-left: var(--controls-offset-xl);
+}
+.controls-padding_left-2xl {
+    padding-left: var(--controls-offset-2xl);
+}
+.controls-padding_left-3xl {
+    padding-left: var(--controls-offset-3xl);
+}
+.controls-padding_left-4xl {
+    padding-left: var(--controls-offset-4xl);
+}
+
+/* Правый padding */
+.controls-padding_right-4xs {
+    padding-right: var(--controls-offset-4xs);
+}
+.controls-padding_right-3xs {
+    padding-right: var(--controls-offset-3xs);
+}
+.controls-padding_right-2xs {
+    padding-right: var(--controls-offset-2xs);
+}
+.controls-padding_right-xs {
+    padding-right: var(--controls-offset-xs);
+}
+.controls-padding_right-s {
+    padding-right: var(--controls-offset-s);
+}
+.controls-padding_right-m {
+    padding-right: var(--controls-offset-m);
+}
+.controls-padding_right-l {
+    padding-right: var(--controls-offset-l);
+}
+.controls-padding_right-xl {
+    padding-right: var(--controls-offset-xl);
+}
+.controls-padding_right-2xl {
+    padding-right: var(--controls-offset-2xl);
+}
+.controls-padding_right-3xl {
+    padding-right: var(--controls-offset-3xl);
+}
+.controls-padding_right-4xl {
+    padding-right: var(--controls-offset-4xl);
+}

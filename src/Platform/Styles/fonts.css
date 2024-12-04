@@ -1,0 +1,53 @@
+/* Обычные шрифты */
+.controls-font_size-xs {
+    font-size: var(--fontsize-xs);
+    /* line-height: auto; */
+}
+
+.controls-font_size-s {
+    font-size: var(--fontsize-s);
+    /* line-height: auto; */
+}
+
+.controls-font_size-m {
+    font-size: var(--fontsize-m);
+    /* line-height: auto; */
+}
+
+.controls-font_size-l {
+    font-size: var(--fontsize-l);
+    /* line-height: auto; */
+}
+
+.controls-font_size-xl {
+    font-size: var(--fontsize-xl);
+    /* line-height: auto; */
+}
+
+.controls-font_size-2xl {
+    font-size: var(--fontsize-2xl);
+    /* line-height: auto; */
+}
+
+/* Шрифт размера заголовок */
+.controls-font_size-header-s {
+    font-size: var(--fontsize-header-s);
+    /* line-height: auto; */
+}
+
+.controls-font_size-header-m {
+    font-size: var(--fontsize-header-m);
+    /* line-height: auto; */
+}
+
+.controls-font_size-header-l {
+    font-size: var(--fontsize-header-l);
+    /* line-height: auto; */
+}
+
+/* При навешивании этого класса все его наследники вида span будут обрезаться при переполнении*/
+.controls-span-overflow-ellipsis span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

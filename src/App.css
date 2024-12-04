@@ -1,0 +1,39 @@
+* {
+    /* max-width: 1280px; */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto;
+}
+
+:root {
+    height: 150%;
+    max-width: 1280px;
+    margin: 0 auto;
+    box-shadow:  0 0 20px 1px rgb(0, 0, 0, .15);
+
+    font-family: 'Roboto', monospace, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+body.body-color-life {
+    background-color: var(--colors-life);
+}
+
+body.body-color-kaif {
+    background-color: var(--colors-kaif);
+}
+
+body.body-color-drive {
+    background-color: var(--colors-drive);
+}
+
+button {
+    cursor: pointer;
+}
+
+.weekselector {
+    height: 120px;
+    border: solid 15px gray;
+}

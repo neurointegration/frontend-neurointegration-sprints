@@ -1,0 +1,17 @@
+:root {
+    /* Размеры шрифтов */
+    --fontsize-xs: 8px;
+    --fontsize-s: 10px;
+    --fontsize-m: 12px;
+    --fontsize-l: 14px;
+    --fontsize-xl: 16px;
+    --fontsize-2xl: 18px;
+    
+    --fontsize-header-s: 20px;
+    --fontsize-header-m: 24px;
+    --fontsize-header-l: 28px;
+
+    /* Веса шрифтов */
+    --fontweight-normal: 400;
+    --fontweight-medium: 500;
+}

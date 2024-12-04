@@ -1,0 +1,48 @@
+.controls-timeComparer {
+    display: flex;
+    width: min-content;
+
+    font-size: var(--fontsize-m);
+}
+
+.controls-timeComparer:not(.controls-timeComparer_horizontal) {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.controls-timeComparer_horizontal {
+    gap: 4px;
+}
+
+.controls-timeComparer__time {
+    border-radius: 4px;
+    text-align: center;
+    min-height: 26px;
+}
+
+.controls-timeComparer__time_vertical {
+    padding: 4px 8px;
+    min-width: 46px;
+}
+
+.controls-timeComparer__time_horizontal {
+    padding: 4px 17px;
+    min-width: 64px;
+}
+
+.controls-timeComparer__time_yellow {
+    background-color: var(--colors-status-yellow);
+}
+
+.controls-timeComparer__time_green {
+    background-color: var(--colors-status-green);
+}
+
+.controls-timeComparer__time_purple {
+    background-color: var(--colors-status-purple);
+}
+
+.controls-timeComparer__time_gray {
+    background-color: var(--colors-status-gray);
+}

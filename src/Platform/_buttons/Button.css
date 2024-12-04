@@ -1,0 +1,44 @@
+.controls-button {
+    border-radius: 16px;
+    border: none;
+    background: none;
+    white-space: nowrap;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.controls-button_normal-size {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.controls-button_small-size {
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.controls-button_filled-showMode {
+    background-color: var(--colors-light-skin);
+}
+
+.controls-button_outlined-showMode {
+    border: solid var(--colors-border-gray) 1px;
+
+}
+
+.controls-button_outlined-showMode:active {
+    border-color: var(--colors-light-gray);
+    background-color: var(--colors-light-gray);
+}
+
+.controls-button_filled-showMode:active {
+    background-color: var(--colors-dark-skin);
+}
+
+.controls-button_icon {
+    padding-left: 16px;
+} 
