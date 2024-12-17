@@ -2,9 +2,9 @@ import clsx from 'clsx';
 import './TimeComparerStyle.css';
 
 /**
- * Символ прочерка для отображения при переданном value: null
+ * Символ для отображения при переданном value: null или undefined
  */
-const EMPTY_TIME = '—';
+const EMPTY_TIME = '';
 
 type TimeComparerProps = {
     /**
@@ -31,12 +31,12 @@ type TimeComparerProps = {
 /**
  * Формат описания объекта времени, включающий в себя значение и цвет подсветки
  */
-type TimeDescriptor = {
+export type TimeDescriptor = {
     /**
-     * Строк формата "12:34" или null, что соответствует символу прочерка
-     * @remark Можно передать пустую строку и подсветить её при этом прчоерк выводиться не будет
+     * Строк формата "12:34" или null
+     * @remark Можно передать пустую строку или null или undefined, но задать цвет чтобы отображить пустое время
      */
-    value: string | null;
+    value: string | null | undefined;
 
     /**
      * Цвет подсветки времени в зависимости от статуса

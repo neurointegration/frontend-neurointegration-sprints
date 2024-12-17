@@ -1,7 +1,5 @@
 .controls-timeComparer {
     display: flex;
-    width: min-content;
-
     font-size: var(--fontsize-m);
 }
 
@@ -9,10 +7,12 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: min-content;
 }
 
 .controls-timeComparer_horizontal {
     gap: 4px;
+    width: 100%;
 }
 
 .controls-timeComparer__time {
@@ -23,12 +23,22 @@
 
 .controls-timeComparer__time_vertical {
     padding: 4px 8px;
-    min-width: 46px;
+    min-width: 42px;
 }
+
+/* Для совсем узких экранов смартфонов, чтобы картчока проекта помещалась */
+@media screen and (max-width: 350px) {
+    .controls-timeComparer__time_vertical {
+        padding: 4px 3px;
+        min-width: 36px;
+    }
+}
+
 
 .controls-timeComparer__time_horizontal {
     padding: 4px 17px;
     min-width: 64px;
+    width: 100%;
 }
 
 .controls-timeComparer__time_yellow {

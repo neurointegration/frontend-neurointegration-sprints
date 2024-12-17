@@ -1,0 +1,92 @@
+.eventCard {
+    --event-card-border-radius: 8px;
+
+    /* margin: 5px 20px; */
+    margin: 10px 20px 0 40px;
+    position: relative;
+    display: flex;
+    max-width: 600px;
+    /* min-width: 280px; */
+}
+
+.eventCard__cardContent:active,
+.eventCard__cardContent:hover {
+    background-color: var(--colors-card-active-gray);
+}
+
+.eventCard:not(.eventCard_project) > .eventCard__cardContent {
+    border-bottom-left-radius: var(--event-card-border-radius);
+    border-top-left-radius: var(--event-card-border-radius);
+}
+
+.eventCard__noneTime {
+    color: var(--colors-font-hint);
+    font-size: var(--fontsize-m);
+    font-weight: var(--fontweight-normal);
+    margin-top: -8px;
+}
+
+.eventCard__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.eventCard__cardContent {
+    padding: 9px 17px 12px 17px;
+    background-color: white;
+    width: 100%;
+
+    border-top-right-radius: var(--event-card-border-radius);
+    border-bottom-right-radius: var(--event-card-border-radius);
+}
+
+.eventCard__title {
+    font-weight: var(--fontweight-medium);
+    font-size: var(--fontsize-m);
+}
+
+.eventCard__sidebar {
+    border-bottom-left-radius: var(--event-card-border-radius);
+    border-top-left-radius: var(--event-card-border-radius);
+    width: 20px;
+    position: absolute;
+    left: 0;
+    transform: translateX(-100%);
+    height: 100%;
+}
+
+.eventCard__sidebar_life {
+    background-color: var(--colors-life-bright);
+}
+
+.eventCard__sidebar_kaif {
+    background-color: var(--colors-kaif-bright);
+}
+
+.eventCard__sidebar_drive {
+    background-color: var(--colors-drive-bright);
+}
+
+.eventCard__expanderIcon {
+    margin: 12px 10px;
+    align-self: flex-start;
+}
+
+.eventCard__timeSeparator {
+    width: 1px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: var(--colors-light-gray);
+}
+
+.eventCard__timeInfo {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.eventCard__expanderButton {
+    background: none;
+    border: none;
+}

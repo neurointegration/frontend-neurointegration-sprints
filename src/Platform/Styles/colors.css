@@ -3,6 +3,10 @@
     --colors-kaif: #F0D4FA;
     --colors-drive: #D9EEFF;
 
+    --colors-life-bright: #EDE253;
+    --colors-kaif-bright: #DB74FF;
+    --colors-drive-bright: #8CCBFF;
+
     --colors-font-hint: #656059;
  
     --colors-light-gray: #DADADA;
@@ -14,4 +18,6 @@
     --colors-status-green: #B5FF98;
     --colors-status-purple: #ED9FFF;
     --colors-status-gray: #DADADA;
+
+    --colors-card-active-gray: #EBEBEB;
 }
