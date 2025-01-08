@@ -1,0 +1,69 @@
+.controls-timeEditor {
+    display: flex;
+    gap: 12px;
+    width: min-content;
+}
+
+.controls-timeEditor__timeBlock {
+    display: flex;
+    gap: 4px;
+    font-size: var(--fontsize-2xl);
+    font-weight: var(--fontweight-medium);
+    align-items: center;
+}
+
+.controls-timeEditor__inputSeparator {
+    font-weight: var(--fontweight-semiBold);
+    font-size: var(--fontsize-header-m);
+}
+
+.controls-timeEditor__input {
+    background-color: var(--colors-extra-light-gray);
+    border: none;
+    outline: none;
+    padding: 8px 0 8px 12px;
+    font-size: inherit;
+    font-weight: inherit;
+    width: 54px;
+}
+
+.controls-timeEditor__input:focus {
+    font-weight: var(--fontweight-semiBold);
+    font-size: var(--fontsize-header-m);
+    width: 64px;
+}
+
+.controls-timeEditor__input_hours {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.controls-timeEditor__input_minutes {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.controls-timeEditor__addButtonsBlock {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.controls-timeEditor__addButton {
+    white-space: nowrap;
+    color: var(--colors-font-blue-button);
+    font-size: var(--fontsize-l);
+}
+
+
+
+.controls-timeEditor__input::-webkit-outer-spin-button,
+.controls-timeEditor__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.controls-timeEditor__input[type="number"] {
+    -moz-appearance: textfield;
+}
+  

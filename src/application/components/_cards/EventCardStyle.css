@@ -2,15 +2,14 @@
     --event-card-border-radius: 8px;
 
     /* margin: 5px 20px; */
-    margin: 10px 20px 0 40px;
+    margin-top: 10px;
     position: relative;
     display: flex;
-    max-width: 600px;
+    
     /* min-width: 280px; */
 }
 
-.eventCard__cardContent:active,
-.eventCard__cardContent:hover {
+.eventCard__cardContent:active {
     background-color: var(--colors-card-active-gray);
 }
 
@@ -23,7 +22,7 @@
     color: var(--colors-font-hint);
     font-size: var(--fontsize-m);
     font-weight: var(--fontweight-normal);
-    margin-top: -8px;
+    /* margin-top: -8px; */
 }
 
 .eventCard__header {
@@ -71,6 +70,10 @@
 .eventCard__expanderIcon {
     margin: 12px 10px;
     align-self: flex-start;
+}
+
+.eventCard__expanderIcon_rotated {
+    transform: rotate(180deg);
 }
 
 .eventCard__timeSeparator {

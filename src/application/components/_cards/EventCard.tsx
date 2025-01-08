@@ -5,9 +5,22 @@ import TimeComparer, {
 import { Icons } from '../../../Platform/_types/Icons';
 import './EventCardStyle.css';
 import { EventCardType, EventType, TimeInfoType } from './_types/EventCardType';
+import { ExpanderClickHandlerType } from '../../screens/Home';
+import { SyntheticEvent } from 'react';
 
 type EventCardProps = {
     item: EventCardType;
+    expanderClickHandler: ExpanderClickHandlerType;
+
+    /**
+     * Идентификатор события (задачи или проекта)
+     */
+    id: string;
+
+    /**
+     * Развернут ли проект на задачи
+     */
+    expanded: boolean;
 
     /**
      * Тип информации о времени.
@@ -21,13 +34,17 @@ type EventCardProps = {
     timeType: TimeInfoType;
 };
 
-// TODO: заменить на реальное условие наличия задач в проекте
-const PROJECT_INCLUDES_TASKS = true;
-
-// TODO: будем задавать для карточек задач указатель parent: uuid, т.е. указание на карточку проекта
+// TODO: будем задавать для карточек задач указатель project: uuid, т.е. указание на карточку проекта
 // возможно, задача без проекта - тогда укажем в parent null
 
-function EventCard({ item, timeType }: EventCardProps) {
+function EventCard({
+    item,
+    id,
+    expanded,
+    timeType,
+    expanderClickHandler,
+}: EventCardProps) {
+    const PROJECT_INCLUDES_TASKS = item.type === EventType.Project;
     const mainCN = 'eventCard';
     const wrapperCN = clsx(
         mainCN,
@@ -40,7 +57,10 @@ function EventCard({ item, timeType }: EventCardProps) {
     const cardContentCN = clsx(`${mainCN}__cardContent`);
     const headerCN = clsx(`${mainCN}__header`);
     const titleCN = clsx(`${mainCN}__title`);
-    const expanderIconCN = clsx(`${mainCN}__expanderIcon`);
+    const expanderIconCN = clsx(
+        `${mainCN}__expanderIcon`,
+        expanded && `${mainCN}__expanderIcon_rotated`
+    );
     const timeInfoCN = clsx(`${mainCN}__timeInfo`);
     const separatorCN = clsx(`${mainCN}__timeSeparator`);
     const noneTimeCN = clsx(`${mainCN}__noneTime`);
@@ -53,7 +73,10 @@ function EventCard({ item, timeType }: EventCardProps) {
         noneTimeCN
     );
 
-    const expanderClickHandler = () => {};
+    const expanderButtonClickHandler = (event: SyntheticEvent) => {
+        event.stopPropagation();
+        expanderClickHandler(id, expanded);
+    };
 
     return (
         <div className={wrapperCN}>
@@ -64,7 +87,7 @@ function EventCard({ item, timeType }: EventCardProps) {
                     {PROJECT_INCLUDES_TASKS && (
                         <button
                             className={expanderBtnCN}
-                            onClick={expanderClickHandler}
+                            onClick={expanderButtonClickHandler}
                         >
                             <img
                                 className={expanderIconCN}
@@ -87,6 +110,11 @@ function _getTimeInfoComponent(
 ): JSX.Element[] {
     const maxIterator: number = timeInfoType * 2;
     const result = [];
+    const withoutTimeEl = <div className={noneTimeCN}>Без времени</div>;
+
+    if (values.length < maxIterator) {
+        return [withoutTimeEl];
+    }
 
     // TODO: задать key на списочные элементы. нужен uuid?
     for (let i = 0; i < maxIterator; i += 2) {
@@ -108,7 +136,7 @@ function _getTimeInfoComponent(
     }
 
     if (timeInfoType === TimeInfoType.None) {
-        result.push(<div className={noneTimeCN}>Без времени</div>);
+        result.push(withoutTimeEl);
     }
 
     return result;

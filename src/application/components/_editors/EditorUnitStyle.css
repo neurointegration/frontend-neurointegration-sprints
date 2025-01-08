@@ -1,0 +1,17 @@
+.editorUnit {
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+.editorUnit__timeBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.editorUnit__timeBlockTitle {
+    font-size: var(--fontsize-xl);
+    font-weight: var(--fontweight-medium);
+}

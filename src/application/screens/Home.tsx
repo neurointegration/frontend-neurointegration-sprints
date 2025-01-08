@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import { Tab } from '../../Platform/_tabs/TabType';
-import TabSelector from '../../Platform/_tabs/TabSelector';
 import DropdownSelector, {
     DropdownItem,
 } from '../../Platform/_dropdownSelector/DropdownSelector';
@@ -8,8 +5,14 @@ import {
     EventCardType,
     EventType,
 } from '../components/_cards/_types/EventCardType';
-import EventCard from '../components/_cards/EventCard';
+import EventRegistry, { RegistryItemType } from '../components/_registry/EventRegistry';
 import { MainColorStatus } from '../../Platform/_types/Statuses';
+import TabSelector from '../../Platform/_tabs/TabSelector';
+import { Tab } from '../../Platform/_tabs/TabType';
+import { useEffect, useState } from 'react';
+import Sidebar from '../components/_sidebar/Sidebar';
+import TimeEditor, { TimeEditorValueType } from '../../Platform/_times/TimeEditor';
+import EditorUnit from '../components/_editors/EditorUnit';
 
 const Tabs: Tab[] = [
     {
@@ -61,7 +64,7 @@ const Items: DropdownItem[] = [
         value: 1,
     },
     {
-        caption: 'Отоюражение без времени',
+        caption: 'Отображение без времени',
         value: 0,
     },
     {
@@ -69,6 +72,8 @@ const Items: DropdownItem[] = [
         value: 5,
     },
 ];
+
+export type ExpanderClickHandlerType = (id: string, expanded: boolean) => void;
 
 function HomeScreen() {
     const [activeTab, setActiveTab] = useState<Tab>(Tabs[0]);
@@ -97,7 +102,7 @@ function HomeScreen() {
     };
 
     const item2: EventCardType = {
-        title: 'Проект веб',
+        title: 'Задача в проекте',
         timeValues: [
             { value: '12:34' },
             { value: '12:34', color: 'yellow' },
@@ -113,8 +118,55 @@ function HomeScreen() {
         type: EventType.Task,
     };
 
+    const [items, setItems] = useState<RegistryItemType[]>([
+        { item: item, id: '1', project: null, projectExpanded: false },
+        { item: { ...item, title: 'Ещё какой-то проект' }, id: 'abracadabra', project: null, projectExpanded: false },
+    ]);
+
+    /*
+        Обработчик клика по экспандеру на карточке проекта
+        делает запрос на сервер за задачами из проекта по uuid проекта
+
+        Затем изменяет основной массив items, добавляя новые значение и устанавливая
+        projectExpanded на true
+    */
+
+    const expanderClickHandler: ExpanderClickHandlerType = (id, expanded) => {
+        setItems((prevItems) => {
+            const index = prevItems.findIndex((item) => item.id === id);
+            if (index === -1) {
+                return;
+            }
+
+            let result;
+            if (expanded) {
+                result = prevItems.filter((item) => item.project !== id);
+                result[index] = { ...prevItems[index], projectExpanded: false };
+            } else {
+                // TODO: здесь просим новые элементы с сервера и причесываем их
+                // пока сэмулируем, что нам пришли новые карточки заданий
+                const newItems = id === '1' ? [
+                    { item: item2, id: '2', project: '1', projectExpanded: false },
+                    { item: item2, id: '3', project: '1', projectExpanded: false },
+                ] : [];
+                result = [
+                    ...prevItems.slice(0, index),
+                    { ...prevItems[index], projectExpanded: true },
+                    ...newItems,
+                    ...prevItems.slice(index + 1)
+                ]
+            }
+
+            return result;
+        })
+    };
+
+    const testUseTime = useState<TimeEditorValueType>({ hours: 98, minutes: 17 });
+    const test2UseTime = useState<TimeEditorValueType>({ hours: 99, minutes: 1 });
+
     return (
         <>
+            <Sidebar />
             <DropdownSelector
                 items={Items}
                 useSelectedItem={[selectedItem, setSelectedItem]}
@@ -126,8 +178,12 @@ function HomeScreen() {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
             />
-            <EventCard item={item} timeType={selectedItem.value} />
-            <EventCard item={item2} timeType={selectedItem.value} />
+            <EventRegistry
+                expanderClickHandler={expanderClickHandler}
+                items={items}
+                timeType={selectedItem.value}
+            />
+            <EditorUnit usePlannedTime={testUseTime} useFactTime={test2UseTime}/>
         </>
     );
 }

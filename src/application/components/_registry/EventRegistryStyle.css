@@ -1,0 +1,32 @@
+.eventRegistry__wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.eventRegistry {
+    margin: 10px 20px 0 40px;
+    max-width: 600px;
+    flex-grow: 1;
+}
+
+.eventRegistry__weeksHeader {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: var(--fontsize-m);
+    font-weight: var(--fontweight-medium);
+    color: var(--colors-border-gray);
+
+    padding: 0 17px;
+}
+
+.eventRegistry__weeksHeader_week {
+    text-align: center;
+    min-width: 42px;
+}
+
+@media screen and (max-width: 350px) {
+    .eventRegistry__weeksHeader_week {
+        min-width: 36px;
+    }
+}

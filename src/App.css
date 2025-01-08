@@ -31,6 +31,8 @@ body.body-color-drive {
 
 button {
     cursor: pointer;
+    border: none;
+    background: none;
 }
 
 .weekselector {
