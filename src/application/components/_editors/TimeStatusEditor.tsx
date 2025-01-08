@@ -31,8 +31,8 @@ function TimeStatusEditor({
                     {CHECKED && <img src={Icons.checkmark} />}
                 </button>
                 <span className={statusTitleCN}>
-                    Отказаться от{' '}
-                    {type === EventType.Project ? 'проекта' : 'задачи'}
+                    Отказаться от
+                    {type === EventType.Project ? ' проекта' : ' задачи'}
                 </span>
             </div>
         </div>
