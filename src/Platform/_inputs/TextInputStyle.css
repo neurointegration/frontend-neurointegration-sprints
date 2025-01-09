@@ -1,0 +1,23 @@
+.controls-textInput {
+    width: 100%;
+}
+
+.controls-textInput__input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-bottom: var(--colors-border-gray) 1px solid;
+    padding: 12px 16px;
+
+    font-size: var(--fontsize-m);
+    font-weight: var(--fontweight-normal);
+    line-height: 14px;
+
+    text-overflow: ellipsis;
+
+    resize: none;
+    overflow: auto;
+    height: auto;
+
+    flex-grow: 1;
+}

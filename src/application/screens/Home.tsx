@@ -5,14 +5,23 @@ import {
     EventCardType,
     EventType,
 } from '../components/_cards/_types/EventCardType';
-import EventRegistry, { RegistryItemType } from '../components/_registry/EventRegistry';
+import EventRegistry, {
+    RegistryItemType,
+} from '../components/_registry/EventRegistry';
 import { MainColorStatus } from '../../Platform/_types/Statuses';
 import TabSelector from '../../Platform/_tabs/TabSelector';
 import { Tab } from '../../Platform/_tabs/TabType';
 import { useEffect, useState } from 'react';
 import Sidebar from '../components/_sidebar/Sidebar';
-import TimeEditor, { TimeEditorValueType } from '../../Platform/_times/TimeEditor';
+import TimeEditor, {
+    TimeEditorValueType,
+} from '../../Platform/_times/TimeEditor';
 import EditorUnit from '../components/_editors/EditorUnit';
+import TimeStatusEditor, {
+    ColorStatusType,
+} from '../components/_editors/TimeStatusEditor';
+import EventTitleEditor from '../components/_editors/EventTitleEditor';
+import EventEditorDialog from '../components/_dialogs/EventEditorDialog';
 
 const Tabs: Tab[] = [
     {
@@ -57,6 +66,7 @@ const Items: DropdownItem[] = [
     // },
     {
         caption: 'Отображение 3 недель',
+        hint: 'а тут подсказка...',
         value: 4,
     },
     {
@@ -120,7 +130,12 @@ function HomeScreen() {
 
     const [items, setItems] = useState<RegistryItemType[]>([
         { item: item, id: '1', project: null, projectExpanded: false },
-        { item: { ...item, title: 'Ещё какой-то проект' }, id: 'abracadabra', project: null, projectExpanded: false },
+        {
+            item: { ...item, title: 'Ещё какой-то проект' },
+            id: 'abracadabra',
+            project: null,
+            projectExpanded: false,
+        },
     ]);
 
     /*
@@ -145,24 +160,47 @@ function HomeScreen() {
             } else {
                 // TODO: здесь просим новые элементы с сервера и причесываем их
                 // пока сэмулируем, что нам пришли новые карточки заданий
-                const newItems = id === '1' ? [
-                    { item: item2, id: '2', project: '1', projectExpanded: false },
-                    { item: item2, id: '3', project: '1', projectExpanded: false },
-                ] : [];
+                const newItems =
+                    id === '1'
+                        ? [
+                              {
+                                  item: item2,
+                                  id: '2',
+                                  project: '1',
+                                  projectExpanded: false,
+                              },
+                              {
+                                  item: item2,
+                                  id: '3',
+                                  project: '1',
+                                  projectExpanded: false,
+                              },
+                          ]
+                        : [];
                 result = [
                     ...prevItems.slice(0, index),
                     { ...prevItems[index], projectExpanded: true },
                     ...newItems,
-                    ...prevItems.slice(index + 1)
-                ]
+                    ...prevItems.slice(index + 1),
+                ];
             }
 
             return result;
-        })
+        });
     };
 
-    const testUseTime = useState<TimeEditorValueType>({ hours: 98, minutes: 17 });
-    const test2UseTime = useState<TimeEditorValueType>({ hours: 99, minutes: 1 });
+    const testUseTime = useState<TimeEditorValueType>({
+        hours: 98,
+        minutes: 17,
+    });
+    const test2UseTime = useState<TimeEditorValueType>({
+        hours: 99,
+        minutes: 1,
+    });
+
+    const useChosedColorStatus = useState<ColorStatusType>(null);
+
+    const useTitle = useState<string | null>('Очень при очень длинное название при название при очень при очень');
 
     return (
         <>
@@ -183,7 +221,7 @@ function HomeScreen() {
                 items={items}
                 timeType={selectedItem.value}
             />
-            <EditorUnit usePlannedTime={testUseTime} useFactTime={test2UseTime}/>
+            <EventEditorDialog />
         </>
     );
 }
