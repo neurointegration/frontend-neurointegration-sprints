@@ -1,0 +1,158 @@
+/* Общие стили для контейнера */
+.settings-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  position: relative;
+}
+
+/* Кнопка "Сохранить" в правом верхнем углу */
+.primary-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background-color: #ccc;
+}
+
+/* Секция с фото профиля */
+.profile-picture-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.profile-picture-label {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.profile-picture {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #aaa;
+  border: 2px dashed #ccc;
+  margin-right: 16px;
+}
+
+.hidden-input {
+  display: none;
+}
+
+/* Заголовки секций */
+.section-title {
+  font-size: 18px;
+  margin: 16px 0 8px;
+}
+
+/* Текстовые поля */
+.text-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.disabled-input {
+  background-color: #f9f9f9;
+  color: #999;
+}
+
+.textarea {
+  height: 60px;
+  resize: none;
+}
+
+/* Радиокнопки */
+.radio-group {
+  margin-bottom: 16px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  gap: 8px; /* Отступ между радиокнопкой и текстом */
+}
+
+input[type="radio"]:checked {
+  accent-color: black; /* Устанавливаем черный цвет, сохраняя стандартный внешний вид */
+}
+
+/* Кнопки второго уровня */
+.secondary-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.secondary-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Выпадающий список */
+select.text-input {
+  appearance: none;
+  background-color: #fff;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path d="M0 0l5 6 5-6z" fill="%23aaa"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+  .settings-container {
+    padding: 8px;
+  }
+
+  .profile-picture {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .text-input {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .primary-button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .secondary-button {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
