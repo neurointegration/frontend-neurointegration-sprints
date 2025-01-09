@@ -78,7 +78,6 @@ const ClientsScreen: React.FC = () => {
 
   return (
     <div className="clients-container">
-      <header className="header">Клиенты</header>
       <div className="client-list">
         {clients.map((client, index) => (
           <ClientCard
