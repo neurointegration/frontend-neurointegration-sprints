@@ -31,17 +31,7 @@ const SettingsScreen: React.FC = () => {
       <form onSubmit={handleSubmit}>
         {/* Profile Picture */}
         <div className="profile-picture-container">
-          <label htmlFor="profile-picture-upload" className="profile-picture-label">
-            <div className="profile-picture">
-              <span className="camera-icon">📷</span>
-            </div>
-            <input
-              id="profile-picture-upload"
-              type="file"
-              accept="image/*"
-              className="hidden-input"
-            />
-          </label>
+          <img src="/empty-avatar.jpg" alt="Profile" className="profile-picture" />
         </div>
 
         {/* Personal Information */}
