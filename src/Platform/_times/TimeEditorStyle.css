@@ -55,6 +55,24 @@
     font-size: var(--fontsize-l);
 }
 
+.controls-timeEditor__minutesHint::before {
+    content: 'минут';
+}
+
+.controls-timeEditor__hoursHint::before {
+    content: 'час';
+}
+
+@media screen and (max-width: 350px) {
+    .controls-timeEditor__minutesHint::before {
+        content: 'мин';
+    }
+
+    .controls-timeEditor__hoursHint::before {
+        content: 'ч';
+    }
+}
+
 
 
 .controls-timeEditor__input::-webkit-outer-spin-button,

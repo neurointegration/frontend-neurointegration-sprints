@@ -37,6 +37,8 @@ function TimeEditor({
     const inputSeparatorCN = clsx(`${baseCN}__inputSeparator`);
     const hoursInputCN = clsx(inputCN, `${inputCN}_hours`);
     const minutesInputCN = clsx(inputCN, `${inputCN}_minutes`);
+    const minutesHintCN = clsx(`${baseCN}__minutesHint`);
+    const hoursHintCN = clsx(`${baseCN}__hoursHint`);
 
     const inputClickSelectValueHandler = (event: SyntheticEvent) => {
         const target = event.target as unknown as { select: () => void };
@@ -163,10 +165,10 @@ function TimeEditor({
             </div>
             <div className={addButtonsBlockCN}>
                 <button onClick={minutesClickHandler} className={addButtonCN}>
-                    +{PLUS_MINUTES_BUTTON} минут
+                    +{PLUS_MINUTES_BUTTON} <span className={minutesHintCN} />
                 </button>
                 <button onClick={hoursClickHandler} className={addButtonCN}>
-                    +{PLUS_HOURS_BUTTON} час
+                    +{PLUS_HOURS_BUTTON} <span className={hoursHintCN} />
                 </button>
                 <button onClick={resetClickHandler} className={addButtonCN}>
                     {RESET_TIME_CROSS}
