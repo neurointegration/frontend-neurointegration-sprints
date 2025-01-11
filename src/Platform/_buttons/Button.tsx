@@ -5,13 +5,15 @@ import './Button.css';
 import { SyntheticEvent } from 'react';
 
 type ButtonProps = {
-    showMode: 'common' | 'filled' | 'outlined';
+    showMode?: 'common' | 'filled' | 'outlined';
     size?: 'normal' | 'small';
     icon?: Icons;
     caption?: string;
     fontSize?: FontSize;
     iconPosition?: IconPosition;
-    onClick: (event: SyntheticEvent) => void;
+    className?: string;
+    disabled?: boolean;
+    onClick?: (event: SyntheticEvent) => void;
 };
 
 function Button({
@@ -21,23 +23,26 @@ function Button({
     caption,
     fontSize,
     iconPosition = 'left',
-    onClick
+    className,
+    disabled = false,
+    onClick,
 }: ButtonProps) {
     const buttonCN = clsx(
         'controls-button',
         icon && 'controls-button_icon',
         `controls-button_${size}-size`,
-        `controls-button_${showMode}-showMode`
+        `controls-button_${showMode}-showMode`,
+        className && className
     );
 
     const captionCN = clsx(
         'controls-button__caption',
-        fontSize && `controls-font_size-${fontSize}`
+        fontSize && `controls-fontsize-${fontSize}`
     );
 
     const iconIMG = <img src={icon} />;
     return (
-        <button onClick={onClick} className={buttonCN}>
+        <button onClick={onClick} disabled={disabled} className={buttonCN}>
             {icon && iconPosition === 'left' && iconIMG}
 
             <div className={captionCN}>{caption}</div>

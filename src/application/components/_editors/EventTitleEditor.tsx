@@ -8,11 +8,13 @@ type EventTitleEditorProps = {
         React.Dispatch<React.SetStateAction<string | null>>
     ];
     eventType: EventType;
+    disabled?: boolean;
 };
 
 function EventTitleEditor({
     useTitle: [title, setTitle],
     eventType,
+    disabled,
 }: EventTitleEditorProps) {
     const baseCN = 'eventTitleEditor';
 
@@ -23,7 +25,11 @@ function EventTitleEditor({
                     ? 'Название проекта'
                     : 'Название задачи'}
             </span>
-            <TextInput useValue={[title, setTitle]} />
+            <TextInput
+                useValue={[title, setTitle]}
+                multiline
+                disabled={disabled}
+            />
         </div>
     );
 }

@@ -1,49 +1,65 @@
 /* Обычные шрифты */
-.controls-font_size-xs {
+.controls-fontsize-xs {
     font-size: var(--fontsize-xs);
     /* line-height: auto; */
 }
 
-.controls-font_size-s {
+.controls-fontsize-s {
     font-size: var(--fontsize-s);
     /* line-height: auto; */
 }
 
-.controls-font_size-m {
+.controls-fontsize-m {
     font-size: var(--fontsize-m);
     /* line-height: auto; */
 }
 
-.controls-font_size-l {
+.controls-fontsize-l {
     font-size: var(--fontsize-l);
     /* line-height: auto; */
 }
 
-.controls-font_size-xl {
+.controls-fontsize-xl {
     font-size: var(--fontsize-xl);
     /* line-height: auto; */
 }
 
-.controls-font_size-2xl {
+.controls-fontsize-2xl {
     font-size: var(--fontsize-2xl);
     /* line-height: auto; */
 }
 
 /* Шрифт размера заголовок */
-.controls-font_size-header-s {
+.controls-fontsize-header-s {
     font-size: var(--fontsize-header-s);
     /* line-height: auto; */
 }
 
-.controls-font_size-header-m {
+.controls-fontsize-header-m {
     font-size: var(--fontsize-header-m);
     /* line-height: auto; */
 }
 
-.controls-font_size-header-l {
+.controls-fontsize-header-l {
     font-size: var(--fontsize-header-l);
     /* line-height: auto; */
 }
+
+/* ========================================= */
+
+.controls-fontweight-normal {
+    font-weight: var(--fontweight-normal);
+}
+
+.controls-fontweight-medium {
+    font-weight: var(--fontweight-medium);
+}
+
+.controls-fontweight-semiBold {
+    font-weight: var(--fontweight-semiBold);
+}
+
+/* ========================================= */
 
 /* При навешивании этого класса все его наследники вида span будут обрезаться при переполнении*/
 .controls-span-overflow-ellipsis span {

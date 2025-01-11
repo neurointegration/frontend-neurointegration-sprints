@@ -3,10 +3,6 @@ import { useState } from 'react';
 import './SidebarStyle.css';
 import clsx from 'clsx';
 
-// type SidebarProps = {
-
-// };
-
 const SELECTOR_ITEMS = [
     { icon: Icons.pencil, title: 'Спринт' },
     { icon: Icons.clock, title: 'Рефлексия (WIP)' },
@@ -16,14 +12,18 @@ const SELECTOR_ITEMS = [
     { icon: Icons.settings, title: 'Настройки' },
 ];
 
-function Sidebar() {
+type SidebarProps = {
+    menuButtonClassName?: string;
+};
+
+function Sidebar({ menuButtonClassName }: SidebarProps) {
     const [expanded, setExpanded] = useState<boolean>(false);
     // TODO: добавить обработку аватарки
     const avatarURL = null;
-    const emptyAvatarURL = '/empty-avatar.jpg';
+    const emptyAvatarURL = '/empty-avatar.gif';
 
     const baseCN = 'sidebar';
-    const menuIconCN = clsx(`${baseCN}__menuIcon`);
+    const menuIconCN = clsx(`${baseCN}__menuIcon`, menuButtonClassName && menuButtonClassName);
     const menuCN = clsx('sidebarMenu');
     const menuOverlayCN = clsx(`${menuCN}__overlay`);
     const avatarCN = clsx(`${menuCN}__avatar`);

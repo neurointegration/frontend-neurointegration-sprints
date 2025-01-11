@@ -1,5 +1,5 @@
-import { TimeDescriptor } from "../../../../Platform/_times/TimeComparer";
-import { MainColorStatus } from "../../../../Platform/_types/Statuses";
+import { TimeDescriptor } from '../../../../Platform/_times/TimeComparer';
+import { MainColorStatus } from '../../../../Platform/_types/Statuses';
 
 type EventCardBaseType = {
     title: string;
@@ -25,7 +25,7 @@ type EventCardBaseType = {
 
 type EventCardProjectType = EventCardBaseType & {
     type: EventType.Project;
-    
+
     /**
      * Цвет соответствует основным вкладкам
      */
@@ -36,10 +36,15 @@ type EventCardTaskType = EventCardBaseType & {
     type: EventType.Task;
 };
 
+type EventCardAddTaskType = {
+    type: EventType.AddTasCpecial;
+};
+
 /**
  * Тип, описывающий объект карточки события (проект или задача)
  */
 export type EventCardType = EventCardProjectType | EventCardTaskType;
+export type ExtendedCardType = EventCardType | EventCardAddTaskType;
 
 /**
  * Вид соыбтийных карточек
@@ -54,6 +59,11 @@ export enum EventType {
      * Карточка задачи
      */
     Task = 'task',
+
+    /**
+     * Карточка добавления задачи в проект. По сущности - кнопка в виде карточки
+     */
+    AddTasCpecial = 'addTaskSpecial',
 }
 
 /**

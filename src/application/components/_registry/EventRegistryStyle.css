@@ -20,6 +20,10 @@
     padding: 0 17px;
 }
 
+.eventRegistry__addproject {
+    margin: 6px 0 16px -20px;
+}
+
 .eventRegistry__weeksHeader_week {
     text-align: center;
     min-width: 42px;

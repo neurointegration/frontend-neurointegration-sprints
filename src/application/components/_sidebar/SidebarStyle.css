@@ -1,5 +1,7 @@
 .sidebar {
     position: absolute;
+    left: 0;
+    top: 0;
     z-index: 2;
 
     font-size: var(--fontsize-xl);
@@ -15,6 +17,8 @@
 
 .sidebarMenu__overlay {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     background-color: black;
@@ -23,9 +27,8 @@
 }
 
 .sidebar__menuIcon {
-    padding: 12px 9px;
-    margin-top: 8px;
-    margin-left: 20px;
+    width: 42px;
+    height: 42px;
 }
 
 .sidebarMenu {
@@ -62,7 +65,7 @@
     overflow: hidden;
     position: relative;
     flex-shrink: 0;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2);
 }
 
 .sidebarMenu__avatarImg {

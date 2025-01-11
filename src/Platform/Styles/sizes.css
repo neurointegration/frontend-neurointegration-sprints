@@ -15,4 +15,7 @@
     --fontweight-normal: 400;
     --fontweight-medium: 500;
     --fontweight-semiBold: 600;
+
+    /* Размер скругления карточек */
+    --event-card-border-radius: 8px;
 }

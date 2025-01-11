@@ -1,16 +1,27 @@
-import clsx from 'clsx';
 import TimeComparer, {
     TimeDescriptor,
 } from '../../../Platform/_times/TimeComparer';
-import { Icons } from '../../../Platform/_types/Icons';
-import './EventCardStyle.css';
 import { EventCardType, EventType, TimeInfoType } from './_types/EventCardType';
-import { ExpanderClickHandlerType } from '../../screens/Home';
+import { ExpanderClickHandlerType } from '../../screens/home/Home';
+import { Icons } from '../../../Platform/_types/Icons';
 import { SyntheticEvent } from 'react';
+import './EventCardStyle.css';
+import clsx from 'clsx';
+
+export type EventCardClickHandlerType = (id: string, eventType: EventType) => void;
 
 type EventCardProps = {
     item: EventCardType;
+
+    /**
+     * Обработчик клика по кнопки "Развернуть", которая есть только на карточке проекта
+     */
     expanderClickHandler: ExpanderClickHandlerType;
+
+    /**
+     * Обработчик клика по карточке события (задачи или проекта)
+     */
+    cardClikHandler: EventCardClickHandlerType;
 
     /**
      * Идентификатор события (задачи или проекта)
@@ -43,6 +54,7 @@ function EventCard({
     expanded,
     timeType,
     expanderClickHandler,
+    cardClikHandler
 }: EventCardProps) {
     const PROJECT_INCLUDES_TASKS = item.type === EventType.Project;
     const mainCN = 'eventCard';
@@ -68,9 +80,9 @@ function EventCard({
 
     const timeInfo = _getTimeInfoComponent(
         timeType,
-        item.timeValues,
         separatorCN,
-        noneTimeCN
+        noneTimeCN,
+        item.timeValues,
     );
 
     const expanderButtonClickHandler = (event: SyntheticEvent) => {
@@ -78,10 +90,15 @@ function EventCard({
         expanderClickHandler(id, expanded);
     };
 
+    const cardContentClickHandler = (event: SyntheticEvent) => {
+        event.nativeEvent.stopImmediatePropagation();
+        cardClikHandler(id, item.type);
+    }
+
     return (
         <div className={wrapperCN}>
             {item.type === EventType.Project && <div className={sideBarCN} />}
-            <div className={cardContentCN}>
+            <div className={cardContentCN} onClick={cardContentClickHandler}>
                 <div className={headerCN}>
                     <span className={titleCN}>{item.title}</span>
                     {PROJECT_INCLUDES_TASKS && (
@@ -104,9 +121,9 @@ function EventCard({
 
 function _getTimeInfoComponent(
     timeInfoType: TimeInfoType,
-    values: TimeDescriptor[],
     separatorCN: string,
-    noneTimeCN: string
+    noneTimeCN: string,
+    values?: TimeDescriptor[],
 ): JSX.Element[] {
     const maxIterator: number = timeInfoType * 2;
     const result = [];
