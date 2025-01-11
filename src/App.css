@@ -29,6 +29,10 @@ body.body-color-drive {
     background-color: var(--colors-drive);
 }
 
+body.body-color-card-active-gray {
+    background-color: var(--colors-card-active-gray);
+}
+
 button {
     cursor: pointer;
     border: none;

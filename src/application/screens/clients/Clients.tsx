@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Clients.css';
 
-interface ClientCardProps {
+interface Client {
   username: string;
   name: string;
   comment?: string;
+}
+
+interface ClientCardProps {
+  client: Client;
   onCommentSubmit: (username: string, comment: string) => void;
 }
 
-const ClientCard: React.FC<ClientCardProps> = ({ username, name, comment, onCommentSubmit }) => {
+const ClientCard: React.FC<ClientCardProps> = ({ client, onCommentSubmit }) => {
+  const { username, name, comment } = client;
   const [newComment, setNewComment] = useState(comment || '');
   const [isDirty, setIsDirty] = useState(false);
 
@@ -53,7 +58,7 @@ const ClientCard: React.FC<ClientCardProps> = ({ username, name, comment, onComm
 };
 
 const ClientsScreen: React.FC = () => {
-  const [clients, setClients] = useState([
+  const [clients, setClients] = useState<Client[]>([
     {
       username: 'vilgelminka_rumyanaya_malinka',
       name: 'Вильгельмина Васильевна Румянцева-Задунайская',
@@ -65,6 +70,10 @@ const ClientsScreen: React.FC = () => {
     },
   ]);
 
+  useEffect(() => {
+    document.body.className = 'body-color-card-active-gray';
+  }, []);
+
   const handleCommentSubmit = (username: string, comment: string) => {
     setClients(prevClients =>
       prevClients.map(client =>
@@ -72,19 +81,16 @@ const ClientsScreen: React.FC = () => {
       )
     );
 
-    // Simulate sending comment to backend
-    console.log(`Comment submitted for ${username}: ${comment}`);
+    // TODO отправка запроса на бэк
   };
 
   return (
     <div className="clients-container">
       <div className="client-list">
-        {clients.map((client, index) => (
+        {clients.map(client => (
           <ClientCard
-            key={index}
-            username={client.username}
-            name={client.name}
-            comment={client.comment}
+            key={client.username}
+            client={client}
             onCommentSubmit={handleCommentSubmit}
           />
         ))}
