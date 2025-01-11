@@ -14,6 +14,7 @@ type TextInputProps = {
     className?: string;
     multiline?: boolean;
     placeholder?: string;
+    disabled?: boolean;
 };
 
 /**
@@ -29,6 +30,7 @@ function TextInput({
     className,
     multiline = false,
     placeholder,
+    disabled,
 }: TextInputProps) {
     const baseCN = 'controls-textInput';
     const wrapperCN = clsx(baseCN, className && className);
@@ -60,13 +62,14 @@ function TextInput({
         };
     }) => {
         setTimeout(() => {
-            event.target.setSelectionRange(value.length, value.length);
+            event.target.setSelectionRange(value?.length, value?.length);
             event.target.scrollLeft = event.target.scrollWidth;
         }, 0);
     };
 
     const renderEl = multiline ? (
         <textarea
+            disabled={disabled}
             placeholder={placeholder || ''}
             ref={textAreaRef}
             rows={1}
@@ -77,6 +80,7 @@ function TextInput({
         />
     ) : (
         <input
+            disabled={disabled}
             placeholder={placeholder || ''}
             type='text'
             className={inputCN}

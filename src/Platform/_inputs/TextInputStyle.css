@@ -21,3 +21,8 @@
 
     flex-grow: 1;
 }
+
+.controls-textInput__input:disabled {
+    background: none;
+    color: var(--colors-border-gray);
+}
