@@ -56,16 +56,6 @@
   font-size: 12px;
 }
 
-.disabled-input {
-  background-color: #f9f9f9;
-  color: #999;
-}
-
-.textarea {
-  height: 60px;
-  resize: none;
-}
-
 .radio-group {
   margin-bottom: 16px;
 }

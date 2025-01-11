@@ -26,11 +26,10 @@ const SettingsScreen: React.FC = () => {
             <img src="/empty-avatar.jpg" alt="Profile" className="profile-picture" />
           </div>
           <h2 className="section-title">Личная информация</h2>
-          <input
-            type="text"
-            value={username}
+          <TextInput
+            useValue={[username, setUsername]}
             disabled
-            className="text-input disabled-input"
+            className="controls-margin_bottom-m"
           />
           <TextInput
             useValue={[fullName, setFullName]}
@@ -68,6 +67,7 @@ const SettingsScreen: React.FC = () => {
           <h2 className="section-title">Мой тренер</h2>
           <TextInput
             useValue={[trainer, setTrainer]}
+            disabled
             className="controls-margin_bottom-m"
           />
           <h2 className="section-title">Количество недель в спринте</h2>
