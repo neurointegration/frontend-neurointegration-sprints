@@ -1,0 +1,7 @@
+.eventTitleEditor {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: var(--fontsize-xl);
+    font-weight: var(--fontweight-medium);
+}

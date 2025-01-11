@@ -1,0 +1,43 @@
+.timeStatusEditor {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: var(--fontsize-m);
+}
+
+.timeStatusEditor__statusItem {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.timeStatusEditor__pickerButton {
+    width: 64px;
+    height: 32px;
+    background-color: aqua;
+    border-radius: 4px;
+}
+
+.timeStatusEditor__pickerButton_yellow {
+    background-color: var(--colors-status-light-yellow);
+}
+
+.timeStatusEditor__pickerButton_green {
+    background-color: var(--colors-status-light-green);
+}
+
+.timeStatusEditor__pickerButton_purple {
+    background-color: var(--colors-status-light-purple);
+}
+
+.timeStatusEditor__pickerButton_checked.timeStatusEditor__pickerButton_yellow {
+    background-color: var(--colors-status-yellow);
+}
+
+.timeStatusEditor__pickerButton_checked.timeStatusEditor__pickerButton_green {
+    background-color: var(--colors-status-green);
+}
+
+.timeStatusEditor__pickerButton_checked.timeStatusEditor__pickerButton_purple {
+    background-color: var(--colors-status-purple);
+}
