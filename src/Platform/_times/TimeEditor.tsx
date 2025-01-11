@@ -26,7 +26,7 @@ const RESET_TIME_CROSS = '✖';
 
 function TimeEditor({
     useTimeValue: [timeValue, setTimeValue],
-    className,
+    className
 }: TimeEditorProps) {
     const baseCN = 'controls-timeEditor';
     const rootCN = clsx(baseCN, className && className);

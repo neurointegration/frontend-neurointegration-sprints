@@ -13,6 +13,7 @@ type TextInputProps = {
     ) => void;
     className?: string;
     multiline?: boolean;
+    placeholder?: string;
 };
 
 /**
@@ -27,6 +28,7 @@ function TextInput({
     onChange,
     className,
     multiline = false,
+    placeholder,
 }: TextInputProps) {
     const baseCN = 'controls-textInput';
     const wrapperCN = clsx(baseCN, className && className);
@@ -65,6 +67,7 @@ function TextInput({
 
     const renderEl = multiline ? (
         <textarea
+            placeholder={placeholder || ''}
             ref={textAreaRef}
             rows={1}
             className={inputCN}
@@ -74,6 +77,7 @@ function TextInput({
         />
     ) : (
         <input
+            placeholder={placeholder || ''}
             type='text'
             className={inputCN}
             value={value}
