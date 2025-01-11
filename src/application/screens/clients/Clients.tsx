@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Clients.css';
+import TextInput from '../../../Platform/_inputs/TextInput';
+import Sidebar from '../../components/_sidebar/Sidebar';
 
 interface Client {
   username: string;
@@ -18,7 +20,6 @@ const ClientCard: React.FC<ClientCardProps> = ({ client, onCommentSubmit }) => {
   const [isDirty, setIsDirty] = useState(false);
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewComment(e.target.value);
     setIsDirty(e.target.value !== comment);
   };
 
@@ -39,11 +40,11 @@ const ClientCard: React.FC<ClientCardProps> = ({ client, onCommentSubmit }) => {
         </div>
       </div>
       <div className="card-bottom">
-        <textarea
-          className="comment-input"
-          value={newComment}
+        <TextInput
+          useValue={[newComment, setNewComment]}
           onChange={handleCommentChange}
           placeholder="Добавить комментарий"
+          multiline
         />
         <button
           className="submit-button"
@@ -85,17 +86,20 @@ const ClientsScreen: React.FC = () => {
   };
 
   return (
-    <div className="clients-container">
-      <div className="client-list">
-        {clients.map(client => (
-          <ClientCard
-            key={client.username}
-            client={client}
-            onCommentSubmit={handleCommentSubmit}
-          />
-        ))}
+    <>
+      <Sidebar />
+      <div className="clients-container">
+        <div className="client-list">
+          {clients.map(client => (
+            <ClientCard
+              key={client.username}
+              client={client}
+              onCommentSubmit={handleCommentSubmit}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 .clients-container {
-  padding: 16px;
+  padding: 64px 16px ;
 }
 
 .client-list {
@@ -50,16 +50,6 @@
 
 .card-bottom {
   margin-top: 10px;
-}
-
-.comment-input {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 6px;
-  font-size: 10px;
-  resize: none;
-  height: 60px;
 }
 
 .submit-button {
