@@ -37,6 +37,27 @@
     width: 95%;
 }
 
+.eventEditorDialog__buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.eventEditorDialog__actionButton {
+    padding: 12px 0;
+    flex-grow: 1;
+    border-radius: 10px;
+    font-size: var(--fontsize-m);
+    font-weight: var(--fontweight-medium);
+}
+
+.eventEditorDialog__actionButton_outlined {
+    border: var(--colors-border-gray) 2px solid;
+}
+
+.eventEditorDialog__actionButton_outlined:disabled {
+    border-color: #c9c9c9;
+}
+
 .eventEditorDialog__cross {
     position: absolute;
     right: 14px;

@@ -1,12 +1,12 @@
-import EventTitleEditor from '../_editors/EventTitleEditor';
+import { TimeEditorValueType } from '../../../Platform/_times/TimeEditor';
 import { ColorStatusType } from '../_editors/TimeStatusEditor';
-import { EventType } from '../_cards/_types/EventCardType';
+import { EventCardType } from '../_cards/_types/EventCardType';
+import EventTitleEditor from '../_editors/EventTitleEditor';
+import { Icons } from '../../../Platform/_types/Icons';
 import EditorUnit from '../_editors/EditorUnit';
+import { SyntheticEvent, useState } from 'react';
 import './EventEditorDialogStyle.css';
 import clsx from 'clsx';
-import { Icons } from '../../../Platform/_types/Icons';
-import { SyntheticEvent, useState } from 'react';
-import { TimeEditorValueType } from '../../../Platform/_times/TimeEditor';
 
 type EventDitorDialogProps = {
     /**
@@ -17,18 +17,25 @@ type EventDitorDialogProps = {
     /**
      * Идентификатор события (задача или проект), по которому будет вычитана информация
      * для редактирования
-     * @remark 
-     * Если передан null - 
+     * @remark
+     * Если передан null -
      */
     eventId: string;
+
+    /**
+     * Айтем с данными события
+     */
+    item?: EventCardType;
 };
 
-function EventEditorDialog({ onClose }: EventDitorDialogProps) {
+function EventEditorDialog({ onClose, eventId, item }: EventDitorDialogProps) {
     const baseCN = 'eventEditorDialog';
     const wrapperCN = clsx(`${baseCN}__wrapper`);
     const crossCN = clsx(`${baseCN}__cross`);
     const buttonsCN = clsx(`${baseCN}__buttons`);
     const dialogOverlayCN = clsx(`${baseCN}__overlay`);
+    const actionButtonCN = clsx(`${baseCN}__actionButton`);
+    const saveButtonCN = clsx(actionButtonCN, `${actionButtonCN}_outlined`);
 
     const testUseTime = useState<TimeEditorValueType>({
         hours: 98,
@@ -41,11 +48,9 @@ function EventEditorDialog({ onClose }: EventDitorDialogProps) {
 
     const useChosedColorStatus = useState<ColorStatusType>(null);
 
-    const useTitle = useState<string | null>(
-        'Очень при очень длинное название при название при очень при очень'
-    );
+    const useTitle = useState<string | null>(item.title || null);
 
-    const crossClickHandler = (event: SyntheticEvent) => {
+    const closeClickHandler = (event: SyntheticEvent) => {
         onClose(event);
     };
 
@@ -53,12 +58,12 @@ function EventEditorDialog({ onClose }: EventDitorDialogProps) {
         <div className={wrapperCN}>
             <div className={dialogOverlayCN} />
             <div className={baseCN}>
-                <button onClick={crossClickHandler}>
+                <button onClick={closeClickHandler}>
                     <img className={crossCN} src={Icons.cross} />
                 </button>
                 <EventTitleEditor
                     useTitle={useTitle}
-                    eventType={EventType.Project}
+                    eventType={item.type}
                     disabled
                 />
                 {/* TODO: заменить на динамику eventType */}
@@ -66,9 +71,17 @@ function EventEditorDialog({ onClose }: EventDitorDialogProps) {
                     usePlannedTime={testUseTime}
                     useFactTime={test2UseTime}
                     useTimeStatus={useChosedColorStatus}
-                    eventType={EventType.Project}
+                    eventType={item.type}
                 />
-                <div className={buttonsCN}>ЗДЕСЬ БУДУТ КНОПОЧКИ!</div>
+                <div className={buttonsCN}>
+                    <button className={saveButtonCN}>Сохранить</button>
+                    <button
+                        className={actionButtonCN}
+                        onClick={closeClickHandler}
+                    >
+                        Отменить
+                    </button>
+                </div>
             </div>
         </div>
     );

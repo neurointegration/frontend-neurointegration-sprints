@@ -1,15 +1,17 @@
+import { NavLink, useLocation } from 'react-router-dom';
 import { Icons } from '../../../Platform/_types/Icons';
+import { Routes } from '../../../core/routing/routes';
 import { useState } from 'react';
 import './SidebarStyle.css';
 import clsx from 'clsx';
 
 const SELECTOR_ITEMS = [
-    { icon: Icons.pencil, title: 'Спринт' },
-    { icon: Icons.clock, title: 'Рефлексия (WIP)' },
-    { icon: Icons.calendar, title: 'История' },
+    { icon: Icons.pencil, routePath: Routes.Sprint, title: 'Спринт' },
+    { icon: Icons.clock, routePath: '', title: 'Рефлексия (WIP)' },
+    { icon: Icons.calendar, routePath: '', title: 'История' },
     // TODO: вкладка клиенты только для тренеров
-    { icon: Icons.person, title: 'Клиенты' },
-    { icon: Icons.settings, title: 'Настройки' },
+    { icon: Icons.person, routePath: '', title: 'Клиенты' },
+    { icon: Icons.settings, routePath: Routes.Settings, title: 'Настройки' },
 ];
 
 type SidebarProps = {
@@ -17,13 +19,17 @@ type SidebarProps = {
 };
 
 function Sidebar({ menuButtonClassName }: SidebarProps) {
+    const currentPath = useLocation();
     const [expanded, setExpanded] = useState<boolean>(false);
     // TODO: добавить обработку аватарки
     const avatarURL = null;
     const emptyAvatarURL = '/empty-avatar.gif';
 
     const baseCN = 'sidebar';
-    const menuIconCN = clsx(`${baseCN}__menuIcon`, menuButtonClassName && menuButtonClassName);
+    const menuIconCN = clsx(
+        `${baseCN}__menuIcon`,
+        menuButtonClassName && menuButtonClassName
+    );
     const menuCN = clsx('sidebarMenu');
     const menuOverlayCN = clsx(`${menuCN}__overlay`);
     const avatarCN = clsx(`${menuCN}__avatar`);
@@ -56,14 +62,19 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
             </div>
             <div className={menuSelectorCN}>
                 {SELECTOR_ITEMS.map((item) => (
-                    <button
+                    <NavLink
+                        to={item.routePath}
                         onClick={itemClickHandler}
                         key={item.title}
-                        className={menuItemCN}
+                        className={clsx(
+                            menuItemCN,
+                            currentPath.pathname === item.routePath &&
+                                `${menuItemCN}_active`
+                        )}
                     >
                         <img className={menuItemIconCN} src={item.icon} />
                         <span>{item.title}</span>
-                    </button>
+                    </NavLink>
                 ))}
             </div>
             <button className={exitCN}>

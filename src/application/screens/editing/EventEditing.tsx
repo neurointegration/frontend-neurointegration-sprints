@@ -1,5 +1,6 @@
-import { useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
+    EventCardType,
     EventType,
     TimeInfoType,
 } from '../../components/_cards/_types/EventCardType';
@@ -38,14 +39,20 @@ const SPOILER_UNITS = [
 ];
 
 function EventEditingScreen() {
+    const location = useLocation();
     const params = useParams();
+
+    const navigate = useNavigate();
+
+    const item = location.state.item as EventCardType;
     const eventId = params.id;
-    const eventType = params.type as EventType;
+    const eventType = params.eventType as EventType;
 
     // TODO: брать из натсроек пользователя настоящее количество недель
     const timeType = TimeInfoType.FourWeeks;
 
     useEffect(() => {
+        document.body.className = `body-color-white`;
         if (timeType !== TimeInfoType.FourWeeks) {
             SPOILER_UNITS.pop();
         }
@@ -60,9 +67,7 @@ function EventEditingScreen() {
         hours: 99,
         minutes: 1,
     });
-    const [eventTitle, setEventTitle] = useState<string | null>(
-        'Красивое название!'
-    );
+    const [eventTitle, setEventTitle] = useState<string | null>(item.title);
 
     const baseScreenCN = 'screen-EventEditing';
     const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
@@ -82,6 +87,7 @@ function EventEditingScreen() {
             <div className={pageHeaderCN}>
                 <div className={actionButtonsBlockCN}>
                     <Button
+                        onClick={() => navigate(-1)}
                         className={actionButtonCN}
                         caption='Отмена'
                         size='small'

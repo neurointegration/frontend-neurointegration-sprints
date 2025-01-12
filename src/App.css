@@ -17,6 +17,10 @@
     line-height: 1.5;
 }
 
+body.body-color-white {
+    background-color: white;
+}
+
 body.body-color-life {
     background-color: var(--colors-life);
 }

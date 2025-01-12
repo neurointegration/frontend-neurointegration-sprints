@@ -4,7 +4,7 @@ import {
     TimeInfoType,
 } from '../_cards/_types/EventCardType';
 import EventCard, { EventCardClickHandlerType } from '../_cards/EventCard';
-import { ExpanderClickHandlerType } from '../../screens/home/Home';
+import { ExpanderClickHandlerType } from '../../screens/home/Sprint';
 import Button from '../../../Platform/_buttons/Button';
 import { Icons } from '../../../Platform/_types/Icons';
 import './EventRegistryStyle.css';

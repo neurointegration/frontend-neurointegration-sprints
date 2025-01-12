@@ -2,13 +2,13 @@ import TimeComparer, {
     TimeDescriptor,
 } from '../../../Platform/_times/TimeComparer';
 import { EventCardType, EventType, TimeInfoType } from './_types/EventCardType';
-import { ExpanderClickHandlerType } from '../../screens/home/Home';
+import { ExpanderClickHandlerType } from '../../screens/home/Sprint';
 import { Icons } from '../../../Platform/_types/Icons';
 import { SyntheticEvent } from 'react';
 import './EventCardStyle.css';
 import clsx from 'clsx';
 
-export type EventCardClickHandlerType = (id: string, eventType: EventType) => void;
+export type EventCardClickHandlerType = (id: string, item: EventCardType) => void;
 
 type EventCardProps = {
     item: EventCardType;
@@ -92,7 +92,7 @@ function EventCard({
 
     const cardContentClickHandler = (event: SyntheticEvent) => {
         event.nativeEvent.stopImmediatePropagation();
-        cardClikHandler(id, item.type);
+        cardClikHandler(id, item);
     }
 
     return (
