@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import './Clients.css';
+import './ClientsStyle.css';
 import TextInput from '../../../Platform/_inputs/TextInput';
 import Sidebar from '../../components/_sidebar/Sidebar';
+import clsx from 'clsx';
 
 interface Client {
   username: string;
   name: string;
   comment?: string;
+  about?: string;
 }
 
 interface ClientCardProps {
@@ -15,7 +17,7 @@ interface ClientCardProps {
 }
 
 const ClientCard: React.FC<ClientCardProps> = ({ client, onCommentSubmit }) => {
-  const { username, name, comment } = client;
+  const { username, name, comment, about } = client;
   const [newComment, setNewComment] = useState(comment || '');
   const [isDirty, setIsDirty] = useState(false);
 
@@ -40,6 +42,7 @@ const ClientCard: React.FC<ClientCardProps> = ({ client, onCommentSubmit }) => {
         </div>
       </div>
       <div className="card-bottom">
+        {about ? <p className="about">{about}</p> : null}
         <TextInput
           useValue={[newComment, setNewComment]}
           onChange={handleCommentChange}
@@ -63,6 +66,7 @@ const ClientsScreen: React.FC = () => {
     {
       username: 'vilgelminka_rumyanaya_malinka',
       name: 'Вильгельмина Васильевна Румянцева-Задунайская',
+      about: 'О себе могу сказать что...'
     },
     {
       username: 'perepischitsa_voini_i_mira',
@@ -87,7 +91,12 @@ const ClientsScreen: React.FC = () => {
 
   return (
     <>
-      <Sidebar />
+      <Sidebar
+        menuButtonClassName={clsx(
+          'controls-margin_top-s',
+          'controls-margin_left-xl'
+        )}
+      />
       <div className="clients-container">
         <div className="client-list">
           {clients.map(client => (

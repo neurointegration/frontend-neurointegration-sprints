@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import "./Settings.css";
+import React, { useEffect, useState } from "react";
+import "./SettingsStyle.css";
 import TextInput from "../../../Platform/_inputs/TextInput";
 import Sidebar from "../../components/_sidebar/Sidebar";
+import clsx from "clsx";
 
 const SettingsScreen: React.FC = () => {
   const [username, setUsername] = useState("@Maria_Lisachenko");
@@ -17,13 +18,22 @@ const SettingsScreen: React.FC = () => {
     // TODO добавить запрос к бэку
   };
 
+  useEffect(() => {
+    document.body.className = 'body-color-white';
+  }, []);
+
   return (
     <>
-      <Sidebar />
+      <Sidebar
+        menuButtonClassName={clsx(
+          'controls-margin_top-s',
+          'controls-margin_left-xl'
+        )}
+      />
       <div className="settings-container">
         <form onSubmit={handleSubmit}>
           <div className="profile-picture-container">
-            <img src="/empty-avatar.jpg" alt="Profile" className="profile-picture" />
+            <img src="/empty-avatar.gif" alt="Profile" className="profile-picture" />
           </div>
           <h2 className="section-title">Личная информация</h2>
           <TextInput

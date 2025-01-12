@@ -1,5 +1,5 @@
 .clients-container {
-  padding: 64px 16px ;
+  padding: 64px 16px;
 }
 
 .client-list {
@@ -20,7 +20,7 @@
 .card-top {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .profile-pic {
@@ -40,16 +40,24 @@
 .username {
   color: #000;
   font-size: 12px;
+  font-weight: var(--fontweight-medium);
 }
 
 .name {
   font-size: 12px;
+  font-weight: var(--fontweight-medium);
   color: #000;
   margin: 5px 0;
 }
 
+.about {
+  font-size: 12px;
+  color: #000;
+  margin-bottom: 10px;
+}
+
 .card-bottom {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .submit-button {
