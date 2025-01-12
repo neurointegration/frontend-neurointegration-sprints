@@ -1,8 +1,10 @@
 .controls-textInput {
+    background: none;
     width: 100%;
 }
 
 .controls-textInput__input {
+    background: none;
     width: 100%;
     border: none;
     outline: none;

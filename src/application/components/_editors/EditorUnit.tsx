@@ -10,12 +10,14 @@ type EditorUnitProps = {
     usePlannedTime: UseTimeEditorValue;
     useFactTime: UseTimeEditorValue;
     useTimeStatus: UseTimeStatusType;
+    eventType: EventType;
 };
 
 function EditorUnit({
     usePlannedTime,
     useFactTime,
     useTimeStatus,
+    eventType,
 }: EditorUnitProps) {
     const baseCN = 'editorUnit';
     const timeBlockCN = clsx(`${baseCN}__timeBlock`);
@@ -26,17 +28,16 @@ function EditorUnit({
     return (
         <div className={baseCN}>
             <div className={plannedTimeBlockCN}>
-                <span className={timeBlockTitleCN}>Запланированное вермя</span>
+                <span className={timeBlockTitleCN}>Запланированное время</span>
                 <TimeEditor useTimeValue={usePlannedTime} />
             </div>
             <div className={factTimeBlockCN}>
-                <span className={timeBlockTitleCN}>Фактическое вермя</span>
+                <span className={timeBlockTitleCN}>Фактическое время</span>
                 <TimeEditor useTimeValue={useFactTime} />
             </div>
-            {/* TODO: изменить константу type на динамику */}
             <TimeStatusEditor
                 useTimeStatus={useTimeStatus}
-                eventType={EventType.Task}
+                eventType={eventType}
             />
         </div>
     );

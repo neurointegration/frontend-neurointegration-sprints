@@ -1,0 +1,20 @@
+.controls-spoiler__wrapper {
+    /* width: 100%; */
+    border-radius: var(--event-card-border-radius);
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.controls-spoiler__button {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.controls-spoiler__icon_opened {
+    transform: rotate(180deg);
+}

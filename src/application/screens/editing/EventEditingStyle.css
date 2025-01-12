@@ -1,0 +1,15 @@
+.screen-EventEditing__header {
+    position: relative;
+    display: flex;
+    justify-content: end;
+    margin: var(--controls-offset-s) var(--controls-offset-3xl);
+}
+
+.screen-EventEditing__actionButtonsBlock {
+    display: flex;
+    gap: 10px;
+}
+
+.screen-EventEditing__pageContent {
+    padding: 12px 20px;
+}

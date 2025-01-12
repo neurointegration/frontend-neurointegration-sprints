@@ -9,11 +9,6 @@ export type UseTimeStatusType = [
     React.Dispatch<React.SetStateAction<ColorStatusType>>
 ];
 
-type TimeStatusEditorProps = {
-    useTimeStatus: UseTimeStatusType;
-    eventType: EventType;
-};
-
 const ITEMS: {
     title: string;
     value: ColorStatusType;
@@ -23,6 +18,11 @@ const ITEMS: {
     { title: 'Продолжить так же', value: 'green', addVariative: false },
     { title: 'Скорректировать план', value: 'purple', addVariative: false },
 ];
+
+type TimeStatusEditorProps = {
+    useTimeStatus: UseTimeStatusType;
+    eventType: EventType;
+};
 
 function TimeStatusEditor({
     useTimeStatus: [status, setStatus],

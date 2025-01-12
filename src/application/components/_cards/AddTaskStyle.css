@@ -1,0 +1,11 @@
+.addTaskCard {
+    background-color: white;
+    border-radius: var(--event-card-border-radius);
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+}
+
+.addTaskCard__button {
+    width: 100%;
+}

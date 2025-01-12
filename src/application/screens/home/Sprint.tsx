@@ -1,29 +1,29 @@
 import DropdownSelector, {
     DropdownItem,
-} from '../../Platform/_dropdownSelector/DropdownSelector';
+} from '../../../Platform/_dropdownSelector/DropdownSelector';
 import {
     EventCardType,
     EventType,
-} from '../components/_cards/_types/EventCardType';
+    TimeInfoType,
+} from '../../components/_cards/_types/EventCardType';
 import EventRegistry, {
     RegistryItemType,
-} from '../components/_registry/EventRegistry';
-import { MainColorStatus } from '../../Platform/_types/Statuses';
-import TabSelector from '../../Platform/_tabs/TabSelector';
-import { Tab } from '../../Platform/_tabs/TabType';
+} from '../../components/_registry/EventRegistry';
+import { MainColorStatus } from '../../../Platform/_types/Statuses';
+import TabSelector from '../../../Platform/_tabs/TabSelector';
+import { Tab } from '../../../Platform/_tabs/TabType';
 import { useEffect, useState } from 'react';
-import Sidebar from '../components/_sidebar/Sidebar';
-import TimeEditor, {
-    TimeEditorValueType,
-} from '../../Platform/_times/TimeEditor';
-import EditorUnit from '../components/_editors/EditorUnit';
-import TimeStatusEditor, {
-    ColorStatusType,
-} from '../components/_editors/TimeStatusEditor';
-import EventTitleEditor from '../components/_editors/EventTitleEditor';
-import EventEditorDialog from '../components/_dialogs/EventEditorDialog';
+import Sidebar from '../../components/_sidebar/Sidebar';
+import { TimeEditorValueType } from '../../../Platform/_times/TimeEditor';
+import { ColorStatusType } from '../../components/_editors/TimeStatusEditor';
+import EventEditorDialog from '../../components/_dialogs/EventEditorDialog';
+import { EventCardClickHandlerType } from '../../components/_cards/EventCard';
+import clsx from 'clsx';
+import './SprintStyle.css';
+import { useNavigate } from 'react-router-dom';
+import { path, Routes } from '../../../core/routing/routes';
 
-const Tabs: Tab[] = [
+const SECTIONS_TABS: Tab[] = [
     {
         caption: 'Лайф',
         value: 'life',
@@ -38,7 +38,7 @@ const Tabs: Tab[] = [
     },
 ];
 
-const Items: DropdownItem[] = [
+const DROPDOWN_ITEMS: DropdownItem[] = [
     // {
     //     caption: 'Неделя 1',
     //     hint: '01.01–07.01',
@@ -67,27 +67,42 @@ const Items: DropdownItem[] = [
     {
         caption: 'Отображение 3 недель',
         hint: 'а тут подсказка...',
-        value: 4,
+        value: TimeInfoType.ThreeWeeks,
     },
     {
         caption: 'Отображение 1 пары',
-        value: 1,
+        value: TimeInfoType.Common,
     },
     {
         caption: 'Отображение без времени',
-        value: 0,
+        value: TimeInfoType.None,
     },
     {
         caption: 'Отображение 4 недель',
-        value: 5,
+        value: TimeInfoType.FourWeeks,
     },
 ];
 
+type DialogProps = {
+    opened: boolean;
+    eventId: string;
+    item: EventCardType | null;
+};
+
+const EmptyDialogProps: DialogProps = {
+    opened: false,
+    eventId: null,
+    item: null,
+};
+
 export type ExpanderClickHandlerType = (id: string, expanded: boolean) => void;
 
-function HomeScreen() {
-    const [activeTab, setActiveTab] = useState<Tab>(Tabs[0]);
-    const [selectedItem, setSelectedItem] = useState<DropdownItem>(Items[0]);
+function Sprint() {
+    const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState<Tab>(SECTIONS_TABS[0]);
+    const [selectedItem, setSelectedItem] = useState<DropdownItem>(
+        DROPDOWN_ITEMS[0]
+    );
 
     useEffect(() => {
         document.body.className = `body-color-${activeTab.value}`;
@@ -98,10 +113,10 @@ function HomeScreen() {
         timeValues: [
             { value: '12:34' },
             { value: '12:34', color: 'green' },
-            { value: '12:34' },
-            { value: '', color: 'gray' },
-            { value: '12:34' },
-            { value: '12:34' },
+            { value: null },
+            { value: null, color: 'gray' },
+            { value: null },
+            { value: null, color: 'gray' },
             { value: '12:34' },
             { value: '12:34', color: 'purple' },
             { value: '12:34' },
@@ -114,7 +129,7 @@ function HomeScreen() {
     const item2: EventCardType = {
         title: 'Задача в проекте',
         timeValues: [
-            { value: '12:34' },
+            { value: '2:34' },
             { value: '12:34', color: 'yellow' },
             { value: '12:34' },
             { value: '12:34', color: 'green' },
@@ -158,25 +173,33 @@ function HomeScreen() {
                 result = prevItems.filter((item) => item.project !== id);
                 result[index] = { ...prevItems[index], projectExpanded: false };
             } else {
+                // ОБЯЗАТЕЛЬНО! Добавляем карточку "Добавить задачу"
+                const newItems: RegistryItemType[] = [
+                    {
+                        item: { type: EventType.AddTasCpecial },
+                        id: null,
+                        project: id,
+                        projectExpanded: false,
+                    },
+                ];
+
                 // TODO: здесь просим новые элементы с сервера и причесываем их
                 // пока сэмулируем, что нам пришли новые карточки заданий
-                const newItems =
-                    id === '1'
-                        ? [
-                              {
-                                  item: item2,
-                                  id: '2',
-                                  project: '1',
-                                  projectExpanded: false,
-                              },
-                              {
-                                  item: item2,
-                                  id: '3',
-                                  project: '1',
-                                  projectExpanded: false,
-                              },
-                          ]
-                        : [];
+                if (id === '1') {
+                    newItems.push({
+                        item: item2,
+                        id: '2',
+                        project: '1',
+                        projectExpanded: false,
+                    });
+                    newItems.push({
+                        item: item2,
+                        id: '3',
+                        project: '1',
+                        projectExpanded: false,
+                    });
+                }
+
                 result = [
                     ...prevItems.slice(0, index),
                     { ...prevItems[index], projectExpanded: true },
@@ -200,30 +223,75 @@ function HomeScreen() {
 
     const useChosedColorStatus = useState<ColorStatusType>(null);
 
-    const useTitle = useState<string | null>('Очень при очень длинное название при название при очень при очень');
+    const useTitle = useState<string | null>(
+        'Очень при очень длинное название при название при очень при очень'
+    );
+
+    const [dialogProps, setDialogProps] =
+        useState<DialogProps>(EmptyDialogProps);
+
+    /**
+     * Обработчик клика по карточке события (по проекту или по задаче)
+     * В зависимости от выбранного отображения недели
+     * открывает диалоговое окно или производит редирект на страницу редактирования события
+     * @param id Идентификатор события
+     * @param item Дескриптор события
+     */
+    const eventCardClickHandler: EventCardClickHandlerType = (id, item) => {
+        if (
+            selectedItem.value === TimeInfoType.FourWeeks ||
+            selectedItem.value === TimeInfoType.ThreeWeeks
+        ) {
+            navigate(path(Routes.Editing, { eventType: item.type, id }), {
+                state: { item },
+            });
+        } else {
+            setDialogProps(() => ({
+                opened: true,
+                eventId: id,
+                item,
+            }));
+        }
+    };
 
     return (
         <>
-            <Sidebar />
+            {dialogProps.opened && (
+                <EventEditorDialog
+                    eventId={dialogProps.eventId}
+                    item={dialogProps.item}
+                    onClose={() => setDialogProps(() => EmptyDialogProps)}
+                />
+            )}
+            <Sidebar
+                menuButtonClassName={clsx(
+                    'controls-margin_top-s',
+                    'controls-margin_left-xl'
+                )}
+            />
             <DropdownSelector
-                items={Items}
+                items={DROPDOWN_ITEMS}
                 useSelectedItem={[selectedItem, setSelectedItem]}
-                selectedValueClassName='controls-margin_top-xl
-                controls-margin_bottom-4xl'
+                selectedValueClassName={clsx(
+                    'controls-margin_top-xl',
+                    'controls-margin_bottom-4xl'
+                )}
             />
             <TabSelector
-                tabs={Tabs}
+                tabs={SECTIONS_TABS}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
             />
             <EventRegistry
-                expanderClickHandler={expanderClickHandler}
                 items={items}
                 timeType={selectedItem.value}
+                expanderClickHandler={expanderClickHandler}
+                cardClickHandler={eventCardClickHandler}
+                className='controls-margin_bottom-3xl'
+                newProjectAvailable
             />
-            <EventEditorDialog />
         </>
     );
 }
 
-export default HomeScreen;
+export default Sprint;

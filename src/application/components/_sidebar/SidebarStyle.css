@@ -1,5 +1,9 @@
 .sidebar {
+    --sidebar-items-ident: 20px;
+
     position: absolute;
+    left: 0;
+    top: 0;
     z-index: 2;
 
     font-size: var(--fontsize-xl);
@@ -15,6 +19,8 @@
 
 .sidebarMenu__overlay {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     background-color: black;
@@ -23,9 +29,8 @@
 }
 
 .sidebar__menuIcon {
-    padding: 12px 9px;
-    margin-top: 8px;
-    margin-left: 20px;
+    width: 42px;
+    height: 42px;
 }
 
 .sidebarMenu {
@@ -42,7 +47,6 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-    padding-left: 20px;
     gap: 40px;
 
     box-shadow: 4px 4px 16px rgba(0, 0, 0, .15);
@@ -50,6 +54,7 @@
 }
 
 .sidebarMenu__avatar {
+    margin-left: var(--sidebar-items-ident);
     width: 68px;
     height: 68px;
     aspect-ratio: 1;
@@ -62,7 +67,7 @@
     overflow: hidden;
     position: relative;
     flex-shrink: 0;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2);
 }
 
 .sidebarMenu__avatarImg {
@@ -84,10 +89,18 @@
 }
 
 .sidebarMenu__item {
+    text-decoration: none;
+    color: black;
     display: flex;
     gap: 20px;
     padding: 12px 0;
     align-items: center;
+    width: 100%;
+    padding-left: var(--sidebar-items-ident);
+}
+
+.sidebarMenu__item_active {
+    background-color: var(--colors-light-gray);
 }
 
 .sidebarMenu__exit {
@@ -96,4 +109,5 @@
     display: flex;
     gap: 20px;
     margin-top: auto;
+    padding-left: var(--sidebar-items-ident);
 }
