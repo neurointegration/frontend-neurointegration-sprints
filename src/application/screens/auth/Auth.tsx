@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './AuthStyle.css';
 import { LoginButton } from '@telegram-auth/react';
 
