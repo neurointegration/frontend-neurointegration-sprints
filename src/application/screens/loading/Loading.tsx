@@ -12,7 +12,9 @@ const LoadingScreen = () => {
     return (
         <div className="loading-container">
             <div className="loading-wrapper">
-                <img src="/empty-avatar.gif" className="rotating-image" />
+                <div className="rounded-image-container">
+                    <img src="/empty-avatar.gif" alt="Rounded Image" />
+                </div>
                 <p className="loading-text">{LOADING_TEXT}</p>
             </div>
         </div>
