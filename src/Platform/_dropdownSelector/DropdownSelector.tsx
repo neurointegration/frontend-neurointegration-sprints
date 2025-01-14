@@ -3,12 +3,12 @@ import './DropdownSelectorStyle.css';
 import { useState } from 'react';
 import clsx from 'clsx';
 
-type DropdownSelectorProps = {
+type DropdownSelectorProps<T extends string | number> = {
     /**
      * Элементы для выбора в дропдауне
      * @remark В переданном массиве должен быть как минимум один элемент!
      */
-    items: DropdownItem[];
+    items: DropdownItem<T>[];
 
     /**
      * Хук хранения и изменения стейта "Выбранный элемент"
@@ -16,8 +16,8 @@ type DropdownSelectorProps = {
      *
      */
     useSelectedItem: [
-        DropdownItem,
-        React.Dispatch<React.SetStateAction<DropdownItem>>
+        DropdownItem<T> | null,
+        React.Dispatch<React.SetStateAction<DropdownItem<T> | null>>
     ];
 
     /**
@@ -34,7 +34,7 @@ type DropdownSelectorProps = {
 /**
  * Тип описывающий элемент выпадающего списка
  */
-export type DropdownItem = {
+export type DropdownItem<T extends string | number> = {
     /**
      * Отображаемый заголовок
      */
@@ -49,18 +49,18 @@ export type DropdownItem = {
     /**
      * Уникальное значение для идентификации и определения выбранного элемента
      */
-    value: string | number;
+    value: T;
 };
 
 /**
  * Компонент выбора из множественного значения с выпадающим списком
  */
-function DropdownSelector({
+function DropdownSelector<T extends string | number>({
     items,
     useSelectedItem: [selectedItem, setSelectedItem],
     className,
     selectedValueClassName,
-}: DropdownSelectorProps) {
+}: DropdownSelectorProps<T>) {
     const [isSelectorOpen, setIsSelectorOpen] = useState<boolean>(false);
 
     const dropdownClickHandler = () => {
@@ -116,29 +116,29 @@ function DropdownSelector({
             <button
                 className={selectorButtonCN}
                 onClick={dropdownClickHandler}
-                value={selectedItem.value}
+                value={selectedItem?.value}
             >
                 <div>
                     <div className={selectorHeaderCN}>
                         <span className={selectorHeaderCaptionCN}>
-                            {selectedItem.caption}
+                            {selectedItem?.caption}
                         </span>
                         <img
                             className={selectorArrowIconCN}
                             src={Icons.dropdownArrow}
                         />
                     </div>
-                    <span className={selectorHintCN}>{selectedItem.hint}</span>
+                    <span className={selectorHintCN}>{selectedItem?.hint}</span>
                 </div>
             </button>
 
             {isSelectorOpen && (
                 <div className={selectorSelectCN}>
-                    {items.map((item) => (
+                    {items.map((item, index) => (
                         <button
                             className={selectorOptionCN}
                             value={item.value}
-                            key={item.value}
+                            key={`dropdownTab${index}`}
                             onClick={dropdownItemClickHandler}
                         >
                             <span

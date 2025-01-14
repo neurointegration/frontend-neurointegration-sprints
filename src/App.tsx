@@ -11,23 +11,28 @@ import Sprint from './application/screens/home/Sprint';
 import EventEditingScreen from './application/screens/editing/EventEditing';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Routes as RoutesEnum } from './core/routing/routes';
+import AuthProvider from './core/api/components/AuthProvider';
+import { RecoilRoot } from 'recoil';
 
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<Navigate to={RoutesEnum.Sprint} />} />
-                <Route path={RoutesEnum.Sprint} element={<Sprint />} />
-                <Route
-                    path={RoutesEnum.Editing}
-                    element={<EventEditingScreen />}
-                />
-            </Routes>
-        </BrowserRouter>
-
-        // <div>
-        //     <HomeScreen />
-        // </div>
+        <RecoilRoot>
+            <AuthProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route
+                            path='/'
+                            element={<Navigate to={RoutesEnum.Sprint} />}
+                        />
+                        <Route path={RoutesEnum.Sprint} element={<Sprint />} />
+                        <Route
+                            path={RoutesEnum.Editing}
+                            element={<EventEditingScreen />}
+                        />
+                    </Routes>
+                </BrowserRouter>
+            </AuthProvider>
+        </RecoilRoot>
     );
 }
 

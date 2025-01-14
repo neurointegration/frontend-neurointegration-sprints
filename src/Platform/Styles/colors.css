@@ -1,11 +1,11 @@
 :root {
-    --colors-life: #F8F7C7;
-    --colors-kaif: #F0D4FA;
-    --colors-drive: #D9EEFF;
+    --colors-Life: #F8F7C7;
+    --colors-Fun: #F0D4FA;
+    --colors-Drive: #D9EEFF;
 
-    --colors-life-bright: #EDE253;
-    --colors-kaif-bright: #DB74FF;
-    --colors-drive-bright: #8CCBFF;
+    --colors-Life-bright: #EDE253;
+    --colors-Fun-bright: #DB74FF;
+    --colors-Drive-bright: #8CCBFF;
 
     --colors-font-hint: #656059;
     --colors-font-blue-button: #0073FF;

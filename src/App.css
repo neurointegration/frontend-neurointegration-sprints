@@ -21,16 +21,16 @@ body.body-color-white {
     background-color: white;
 }
 
-body.body-color-life {
-    background-color: var(--colors-life);
+body.body-color-Life {
+    background-color: var(--colors-Life);
 }
 
-body.body-color-kaif {
-    background-color: var(--colors-kaif);
+body.body-color-Fun {
+    background-color: var(--colors-Fun);
 }
 
-body.body-color-drive {
-    background-color: var(--colors-drive);
+body.body-color-Drive {
+    background-color: var(--colors-Drive);
 }
 
 button {

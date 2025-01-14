@@ -3,7 +3,7 @@ import EventEditingScreen from '../../application/screens/editing/EventEditing';
 import Sprint from '../../application/screens/home/Sprint';
 import { Routes as RoutesEnum } from './routes';
 
-function AppRouteer() {
+function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
@@ -21,4 +21,4 @@ function AppRouteer() {
     );
 }
 
-export default AppRouteer;
+export default AppRouter;

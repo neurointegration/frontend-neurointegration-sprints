@@ -41,18 +41,18 @@
     width: 100%;
 }
 
-.controls-timeComparer__time_yellow {
+.controls-timeComparer__time_Decline {
     background-color: var(--colors-status-yellow);
 }
 
-.controls-timeComparer__time_green {
+.controls-timeComparer__time_Continue {
     background-color: var(--colors-status-green);
 }
 
-.controls-timeComparer__time_purple {
+.controls-timeComparer__time_Modify {
     background-color: var(--colors-status-purple);
 }
 
-.controls-timeComparer__time_gray {
+.controls-timeComparer__time_Empty {
     background-color: var(--colors-status-gray);
 }
