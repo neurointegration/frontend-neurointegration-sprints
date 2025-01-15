@@ -2,20 +2,19 @@ import React, { useState } from 'react';
 import './OnboardingStyle.css';
 
 const images: string[] = [
+    '/onboarding/onboarding0.png',
     '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
-    '/onboarding/onboarding1.png',
+    '/onboarding/onboarding2.png',
+    '/onboarding/onboarding3.png',
+    '/onboarding/onboarding4.png',
+    '/onboarding/onboarding5.png',
+    '/onboarding/onboarding6.png',
+    '/onboarding/onboarding7.png',
+    '/onboarding/onboarding8.png',
+    '/onboarding/onboarding9.png'
 ];
 
-const totalImages: number = images.length;
+const totalImages: number = images.length + 1;
 
 function OnboardingScreen(): JSX.Element {
     const [currentImageIndex, setCurrentImageIndex] = useState<number>(1);
