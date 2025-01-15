@@ -53,16 +53,16 @@
     height: 100%;
 }
 
-.eventCard__sidebar_life {
-    background-color: var(--colors-life-bright);
+.eventCard__sidebar_Life {
+    background-color: var(--colors-Life-bright);
 }
 
-.eventCard__sidebar_kaif {
-    background-color: var(--colors-kaif-bright);
+.eventCard__sidebar_Fun {
+    background-color: var(--colors-Fun-bright);
 }
 
-.eventCard__sidebar_drive {
-    background-color: var(--colors-drive-bright);
+.eventCard__sidebar_Drive {
+    background-color: var(--colors-Drive-bright);
 }
 
 .eventCard__expanderIcon {

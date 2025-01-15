@@ -1,10 +1,10 @@
 import clsx from 'clsx';
-import { Tab } from './TabType';
+import { SectionType } from './TabType';
 
 type TabButtonProps = {
-    tab: Tab;
+    tab: SectionType;
     selected: boolean;
-    onClick: (value: Tab) => void;
+    onClick: (value: SectionType) => void;
 };
 
 function TabButton({ tab, selected, onClick }: TabButtonProps) {

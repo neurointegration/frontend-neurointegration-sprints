@@ -1,26 +1,12 @@
-import { TimeDescriptor } from '../../../../Platform/_times/TimeComparer';
-import { MainColorStatus } from '../../../../Platform/_types/Statuses';
+import { TimeDescriptorType } from '../../../../core/api/actions/projects';
+import { MainSectionType } from '../../../../Platform/_types/Statuses';
 
 type EventCardBaseType = {
     title: string;
-
-    /**
-     * Значения плашек времени. Каждая пара рассматривается как плановое и фактическое время
-     *
-     * TODO: подумать над моментом переключния недель и обсудить как это будет выглядеть: всегда ли у нас на карточке есть 5 времен?
-     * @remark Внимание! Количество пар времени должно совпадать с определением timeType!
-     *
-     * @example
-     * const timeValues: TimeDescriptor[] = [
-     *      { value: '12:00' },
-     *      { value: '14:00' }
-     * ]
-     *
-     * В первой паре значений:
-     * timeValues[0] - плановое время,
-     * timeValues[1] - фактическое
-     */
-    timeValues: TimeDescriptor[];
+    timeValues: {
+        planningTimes: TimeDescriptorType;
+        factTimes: TimeDescriptorType;
+    };
 };
 
 type EventCardProjectType = EventCardBaseType & {
@@ -29,7 +15,7 @@ type EventCardProjectType = EventCardBaseType & {
     /**
      * Цвет соответствует основным вкладкам
      */
-    color: MainColorStatus;
+    section: MainSectionType;
 };
 
 type EventCardTaskType = EventCardBaseType & {
@@ -37,7 +23,7 @@ type EventCardTaskType = EventCardBaseType & {
 };
 
 type EventCardAddTaskType = {
-    type: EventType.AddTasCpecial;
+    type: EventType.AddTaskSpecial;
 };
 
 /**
@@ -63,7 +49,7 @@ export enum EventType {
     /**
      * Карточка добавления задачи в проект. По сущности - кнопка в виде карточки
      */
-    AddTasCpecial = 'addTaskSpecial',
+    AddTaskSpecial = 'addTaskSpecial',
 }
 
 /**

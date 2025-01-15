@@ -1,8 +1,4 @@
-import {
-    EventType,
-    ExtendedCardType,
-    TimeInfoType,
-} from '../_cards/_types/EventCardType';
+import { EventType, ExtendedCardType } from '../_cards/_types/EventCardType';
 import EventCard, { EventCardClickHandlerType } from '../_cards/EventCard';
 import { ExpanderClickHandlerType } from '../../screens/home/Sprint';
 import Button from '../../../Platform/_buttons/Button';
@@ -10,6 +6,9 @@ import { Icons } from '../../../Platform/_types/Icons';
 import './EventRegistryStyle.css';
 import clsx from 'clsx';
 import AddTaskCard from '../_cards/AddTaskCard';
+import { useRecoilValue } from 'recoil';
+import MeInformationAtom from '../../../core/atoms/me.atom';
+import { CurrentSprintDropdownValue } from '../../screens/home/constants';
 
 const WEEK1 = 'Н1';
 const WEEK2 = 'Н2';
@@ -40,7 +39,7 @@ export type RegistryItemType = {
 
 type EventRegistryProps = {
     items: RegistryItemType[];
-    timeType: TimeInfoType;
+    chosedPeriod: keyof typeof CurrentSprintDropdownValue | null;
     expanderClickHandler: ExpanderClickHandlerType;
     cardClickHandler: EventCardClickHandlerType;
     className?: string;
@@ -49,15 +48,16 @@ type EventRegistryProps = {
 
 function EventRegistry({
     items,
-    timeType,
+    chosedPeriod,
     expanderClickHandler,
     cardClickHandler,
     className,
     newProjectAvailable,
 }: EventRegistryProps) {
+    const meInformation = useRecoilValue(MeInformationAtom);
+
     const showWeeksHeader =
-        timeType === TimeInfoType.ThreeWeeks ||
-        timeType === TimeInfoType.FourWeeks;
+        chosedPeriod === CurrentSprintDropdownValue.allWeeks;
     const baseCN = 'eventRegistry';
     const wrapperCN = clsx(`${baseCN}__wrapper`, className && className);
     const weeksHeaderCN = clsx(`${baseCN}__weeksHeader`);
@@ -83,7 +83,7 @@ function EventRegistry({
                         <div className={weeksHeaderWeekCN}>{WEEK1}</div>
                         <div className={weeksHeaderWeekCN}>{WEEK2}</div>
                         <div className={weeksHeaderWeekCN}>{WEEK3}</div>
-                        {timeType === TimeInfoType.FourWeeks && (
+                        {meInformation.sprintWeeksCount === 4 && (
                             <div className={weeksHeaderWeekCN}>{WEEK4}</div>
                         )}
                         <div></div>
@@ -92,15 +92,21 @@ function EventRegistry({
                 )}
                 <div>
                     {items.map((event) => {
-                        if (event.item.type === EventType.AddTasCpecial) {
-                            return <AddTaskCard project={event.project} />;
+                        if (event.item.type === EventType.AddTaskSpecial) {
+                            return (
+                                <AddTaskCard
+                                    key={event.id}
+                                    project={event.project}
+                                />
+                            );
                         } else {
                             return (
                                 <EventCard
+                                    key={event.id}
                                     item={event.item}
                                     id={event.id}
                                     expanded={event.projectExpanded}
-                                    timeType={timeType}
+                                    chosedPeriod={chosedPeriod}
                                     expanderClickHandler={expanderClickHandler}
                                     cardClikHandler={cardClickHandler}
                                 />

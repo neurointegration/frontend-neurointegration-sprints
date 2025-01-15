@@ -1,1 +1,1 @@
-export type MainColorStatus = 'life' | 'kaif' | 'drive';
+export type MainSectionType = 'Life' | 'Fun' | 'Drive';

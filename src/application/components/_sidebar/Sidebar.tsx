@@ -1,6 +1,9 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { Icons } from '../../../Platform/_types/Icons';
 import { Routes } from '../../../core/routing/routes';
+import authAtom from '../../../core/atoms/auth.atom';
+import { API } from '../../../core/api/handles';
+import { useResetRecoilState } from 'recoil';
 import { useState } from 'react';
 import './SidebarStyle.css';
 import clsx from 'clsx';
@@ -19,6 +22,7 @@ type SidebarProps = {
 };
 
 function Sidebar({ menuButtonClassName }: SidebarProps) {
+    const resetAuthState = useResetRecoilState(authAtom);
     const currentPath = useLocation();
     const [expanded, setExpanded] = useState<boolean>(false);
     // TODO: добавить обработку аватарки
@@ -39,7 +43,6 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
     const menuItemIconCN = clsx(`${menuCN}__itemIcon`);
     const exitCN = clsx(`${menuCN}__exit`);
 
-    // TODO: Добавить обработку роутинга на другие страницы
     const itemClickHandler = () => {
         setExpanded((prev) => !prev);
     };
@@ -50,6 +53,17 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
 
     const overlayClickHandler = () => {
         setExpanded((prev) => !prev);
+    };
+
+    const exitClickHandler = () => {
+        API.AUTH.Logout().then((resp) => {
+            if (resp.isSuccess) {
+                resetAuthState();
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+                location.reload();
+            }
+        });
     };
 
     const menuEl = (
@@ -77,7 +91,7 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
                     </NavLink>
                 ))}
             </div>
-            <button className={exitCN}>
+            <button className={exitCN} onClick={exitClickHandler}>
                 <img className={menuItemIconCN} src={Icons.exitArrow} />
                 <span>Выход</span>
             </button>

@@ -5,7 +5,7 @@ import { Routes as RoutesEnum } from './routes';
 import SettingsScreen from '../../application/screens/settings/Settings';
 import ClientsScreen from '../../application/screens/clients/Clients';
 
-function AppRouteer() {
+function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
@@ -31,4 +31,4 @@ function AppRouteer() {
     );
 }
 
-export default AppRouteer;
+export default AppRouter;
