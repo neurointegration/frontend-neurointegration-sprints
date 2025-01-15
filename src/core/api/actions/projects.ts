@@ -14,7 +14,7 @@ export type TimeType = {
     status?: TimeStatusType;
 };
 
-export type TimeDescriptorType =
+export type TaskOrProjectTimeDescriptorType =
     | null
     | {
           [key in keyof PossibleTimeResponceKeysType]?: TimeType;
@@ -28,8 +28,8 @@ type ProjectResponseType = {
     id: string;
     title: string;
     sectionName: MainSectionType;
-    planningTimes: TimeDescriptorType;
-    factTimes: TimeDescriptorType;
+    planningTimes: TaskOrProjectTimeDescriptorType;
+    factTimes: TaskOrProjectTimeDescriptorType;
 };
 
 export const GetAllSprintProjects = (sprintId: string) => {

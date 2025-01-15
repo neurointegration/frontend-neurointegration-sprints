@@ -1,11 +1,11 @@
-import { TimeDescriptorType } from '../../../../core/api/actions/projects';
+import { TaskOrProjectTimeDescriptorType } from '../../../../core/api/actions/projects';
 import { MainSectionType } from '../../../../Platform/_types/Statuses';
 
 type EventCardBaseType = {
     title: string;
     timeValues: {
-        planningTimes: TimeDescriptorType;
-        factTimes: TimeDescriptorType;
+        planningTimes: TaskOrProjectTimeDescriptorType;
+        factTimes: TaskOrProjectTimeDescriptorType;
     };
 };
 

@@ -9,6 +9,8 @@ import AddTaskCard from '../_cards/AddTaskCard';
 import { useRecoilValue } from 'recoil';
 import MeInformationAtom from '../../../core/atoms/me.atom';
 import { CurrentSprintDropdownValue } from '../../screens/home/constants';
+import uuid from 'react-uuid';
+import { MainSectionType } from '../../../Platform/_types/Statuses';
 
 const WEEK1 = 'Н1';
 const WEEK2 = 'Н2';
@@ -35,6 +37,11 @@ export type RegistryItemType = {
      * Примечание: false для событий задач
      */
     projectExpanded: boolean;
+
+    /**
+     * К какой секции относится проект или задача
+     */
+    sectionName: MainSectionType;
 };
 
 type EventRegistryProps = {
@@ -95,17 +102,19 @@ function EventRegistry({
                         if (event.item.type === EventType.AddTaskSpecial) {
                             return (
                                 <AddTaskCard
-                                    key={event.id}
+                                    key={event.id || uuid()}
                                     project={event.project}
                                 />
                             );
                         } else {
                             return (
                                 <EventCard
-                                    key={event.id}
-                                    item={event.item}
-                                    id={event.id}
-                                    expanded={event.projectExpanded}
+                                    key={event.id || uuid()}
+                                    event={event}
+                                    // item={event.item}
+                                    // id={event.id}
+                                    // sectionName={event.sectionName}
+                                    // expanded={event.projectExpanded}
                                     chosedPeriod={chosedPeriod}
                                     expanderClickHandler={expanderClickHandler}
                                     cardClikHandler={cardClickHandler}

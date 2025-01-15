@@ -11,7 +11,7 @@ const MeInformationAtom = atom<MeResponseType>({
         photoUrl: null,
         isOnboardingComplete: false,
         // TODO: узнать про значение по умолчанию, что если с бэка ничего не придет здесь
-        sprintWeeksCount: 4,
+        sprintWeeksCount: 3,
     },
 });
 

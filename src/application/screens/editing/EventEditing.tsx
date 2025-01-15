@@ -14,6 +14,9 @@ import './EventEditingStyle.css';
 import Spoiler from '../../../Platform/_buttons/Spoiler';
 import { TimeEditorValueType } from '../../../Platform/_times/TimeEditor';
 import EditorUnit from '../../components/_editors/EditorUnit';
+import { RegistryItemType } from '../../components/_registry/EventRegistry';
+import { useRecoilValue } from 'recoil';
+import MeInformationAtom from '../../../core/atoms/me.atom';
 
 const SPOILER_UNITS = [
     {
@@ -44,17 +47,25 @@ function EventEditingScreen() {
 
     const navigate = useNavigate();
 
-    const item = location.state.item as EventCardType;
-    const eventId = params.id;
+    const itemDescriptor = location.state.eventDescriptor as RegistryItemType;
+    const eventId = itemDescriptor.id;
     const eventType = params.eventType as EventType;
 
+    const [spoilerUnits, setSpoilerUnits] =
+        useState<{ title: string; defaultOpen: boolean }[]>(SPOILER_UNITS);
+
     // TODO: брать из натсроек пользователя настоящее количество недель
-    const timeType = TimeInfoType.FourWeeks;
+
+    const timeType = useRecoilValue(MeInformationAtom); //TimeInfoType.FourWeeks;
 
     useEffect(() => {
         document.body.className = `body-color-white`;
-        if (timeType !== TimeInfoType.FourWeeks) {
-            SPOILER_UNITS.pop();
+        if (timeType.sprintWeeksCount !== 4) {
+            setSpoilerUnits(() => {
+                const res = [...SPOILER_UNITS];
+                delete res[4];
+                return res;
+            });
         }
     }, []);
 
@@ -67,7 +78,9 @@ function EventEditingScreen() {
         hours: 99,
         minutes: 1,
     });
-    const [eventTitle, setEventTitle] = useState<string | null>(item.title);
+    const [eventTitle, setEventTitle] = useState<string | null>(
+        (itemDescriptor.item as EventCardType).title
+    );
 
     const baseScreenCN = 'screen-EventEditing';
     const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
@@ -81,6 +94,9 @@ function EventEditingScreen() {
         'controls-margin_bottom-2xl',
         'controls-margin_top-3xl'
     );
+
+    const factTimes = (itemDescriptor.item as EventCardType).timeValues.factTimes;
+    const planningTimes = (itemDescriptor.item as EventCardType).timeValues.planningTimes;
 
     return (
         <>
@@ -106,14 +122,17 @@ function EventEditingScreen() {
                     eventType={eventType}
                     useTitle={[eventTitle, setEventTitle]}
                 />
-                {SPOILER_UNITS.map((spoilerItem) => (
+                {spoilerUnits.map((spoilerItem, index) => (
                     // TODO: написать обработку всех времен проекта/задачи и передавать в спойлеры нужные компоненты времени
                     <Spoiler
+                        key={`spoilerItem_${index}`}
                         title={spoilerItem.title}
                         buttonClassName={spoilerButtonCN}
                         defaultOpen={spoilerItem.defaultOpen}
                     >
                         <EditorUnit
+                            // defaultFactTime={}
+                            // defaultPlanningTime={}
                             usePlannedTime={[plannedTime, setPlannedTime]}
                             useFactTime={[factTime, setFactTime]}
                             useTimeStatus={[timeStatus, setTimeStatus]}

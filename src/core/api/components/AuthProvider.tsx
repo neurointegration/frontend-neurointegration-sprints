@@ -37,38 +37,40 @@ const AuthProvider = (props: PropsWithChildren) => {
                         refreshToken: resp.data.refreshToken,
                     },
                 }));
-            }
-        }).then(() => {
-            wait(API.ME.Roles(), (resp) => {
-                if (resp.isSuccess) {
-                    if (resp.body.includes('Trainer')) {
-                        setRolesState(() => ({ isTrainer: true }));
+
+                wait(API.ME.Roles(), (resp) => {
+                    if (resp.isSuccess) {
+                        if (resp.body.includes('Trainer')) {
+                            setRolesState(() => ({ isTrainer: true }));
+                        } else {
+                            setRolesState(() => ({ isTrainer: false }));
+                        }
                     } else {
                         setRolesState(() => ({ isTrainer: false }));
                     }
-                } else {
-                    setRolesState(() => ({ isTrainer: false }));
-                }
-            });
-            wait(API.ME.Me(), (resp) => {
-                if (resp.isSuccess) {
-                    setMeInformationaState(() => resp.body);
-                } else {
-                    resetMeInformationState();
-                }
-            });
-            wait(API.SPRINTS.Sprints(), (resp) => {
-                // TODO: атом состояния всех спринтов
-                if (resp.isSuccess) {
-                    if (resp.body.length) {
-                        // если есть хотя бы первый спринт - он основной, остальные - история
-                        setCurrentSprintState(() => resp.body[0]);
-                        setHistorySprintsState(() => resp.body.slice(1));
+                });
+
+                wait(API.ME.Me(), (resp) => {
+                    if (resp.isSuccess) {
+                        setMeInformationaState(() => resp.body);
+                    } else {
+                        resetMeInformationState();
                     }
-                } else {
-                    return;
-                }
-            });
+                });
+                
+                wait(API.SPRINTS.Sprints(), (resp) => {
+                    // TODO: атом состояния всех спринтов
+                    if (resp.isSuccess) {
+                        if (resp.body.length) {
+                            // если есть хотя бы первый спринт - он основной, остальные - история
+                            setCurrentSprintState(() => resp.body[0]);
+                            setHistorySprintsState(() => resp.body.slice(1));
+                        }
+                    } else {
+                        return;
+                    }
+                });
+            }
         });
     }, []);
 

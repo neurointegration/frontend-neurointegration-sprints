@@ -7,6 +7,7 @@ import {
 import { GetMyInformation, GetMyRoles } from './actions/me';
 import { GetAllSprintProjects, GetProject } from './actions/projects';
 import { GetAllSprints, GetSprint } from './actions/sprints';
+import { GetAllProjectTasks } from './actions/tasks';
 
 /**
  * Объект доступных методов обращения к севреру.
@@ -60,6 +61,12 @@ export const API = {
          */
         Project: GetProject,
     },
+    TASKS: {
+        /**
+         * Получение всех задач проекта по его projectId
+         */
+        Tasks: GetAllProjectTasks,
+    },
     ME: {
         /**
          * Получение списка ролей текущего пользователя
@@ -92,6 +99,9 @@ export const APIRoutes = {
     Projects: {
         ProjectsSprint: '/api/Projects/sprint/:sprintId',
         Project: '/api/Projects/:projectId',
+    },
+    Tasks: {
+        TasksProject: '/api/Tasks/project/:projectId',
     },
     Me: {
         Roles: '/api/Me/roles',

@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Resetter } from 'recoil';
 import { ROOT_API_URL } from '../../../config';
 import decodeToken from './tokenDecoder';
@@ -16,11 +16,6 @@ type IHTTPErrorResponse = {
     message: string;
     code: number | undefined;
 };
-
-// response.setHeader("Access-Control-Allow-Origin", "*");
-// response.setHeader("Access-Control-Allow-Credentials", "true");
-// response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-// response.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
 const http = axios.create({
     baseURL: ROOT_API_URL,
@@ -55,43 +50,47 @@ export const applyInterceptors = (
         },
     });
 
+    
+    
     const decodedTokenPayload = decodeToken(authState.data.accessToken);
-
-    const refreshToken = async (): Promise<AuthWithoutStatusType> => {
-        if (isRefreshing) {
-            return refreshRequest;
-        }
-
-        isRefreshing = true;
-
-        refreshRequest = API.AUTH.Refresh().finally(
-            () => (isRefreshing = false)
-        );
-
-        return refreshRequest;
-    };
-
     let tokenExpirationTime: Date;
+    
     const ensureAuthorization = (): Promise<AuthWithoutStatusType> => {
         if (decodedTokenPayload) {
             tokenExpirationTime = new Date(decodedTokenPayload.exp * 1000);
         }
-
+        
         const shouldRefreshToken =
-            authState.data.accessToken === '' ||
-            tokenExpirationTime < new Date();
-
+        authState.data.accessToken === '' ||
+        tokenExpirationTime < new Date();
+        
         return shouldRefreshToken ? refreshToken() : Promise.resolve(authState);
     };
+    
+    const refreshToken = async (): Promise<AuthWithoutStatusType> => {
+        if (isRefreshing) {
+            return refreshRequest;
+        }
+        
+        isRefreshing = true;
+        
+        refreshRequest = API.AUTH.Refresh().finally(
+            () => (isRefreshing = false)
+        );
+        
+        return refreshRequest;
+    };
 
-    http.interceptors.request.use(async (config) => {
-        const { data } = await ensureAuthorization();
-        setAuthState((prevAuthState) => ({
-            ...prevAuthState,
-            data,
-        }));
-        config.headers.Authorization = `Bearer ${data.accessToken}`;
-        return config;
+    http.interceptors.request.use((config) => {
+        return ensureAuthorization().then(({ data }) => {
+            setAuthState((prevAuthState) => ({
+                ...prevAuthState,
+                data,
+            }));
+
+            config.headers.Authorization = `Bearer ${data.accessToken}`;
+            return config;
+        });
     });
 
     http.interceptors.response.use(

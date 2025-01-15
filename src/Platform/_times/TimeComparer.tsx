@@ -68,23 +68,24 @@ function TimeComparer({
         horizontal ? `${baseCN}__time_horizontal` : `${baseCN}__time_vertical`
     );
 
-    const planningValue = `${_doblelize(planning?.hours)}:${_doblelize(
-        planning?.minutes
-    )}`;
-    const factValue = `${_doblelize(fact?.hours)}:${_doblelize(fact?.minutes)}`;
+    const planningValue = planning
+        ? `${_formatValue(planning.hours)}:${_formatValue(planning.minutes)}`
+        : EMPTY_TIME;
+    const factValue = fact
+        ? `${_formatValue(fact.hours)}:${_formatValue(fact.minutes)}`
+        : EMPTY_TIME;
 
     return (
         <div className={wrapperCN}>
-            <span className={planningTimeCN}>
-                {planning ? planningValue : EMPTY_TIME}
-            </span>
-            <span className={factTimeCN}>{fact ? factValue : EMPTY_TIME}</span>
+            <span className={planningTimeCN}>{planningValue}</span>
+            <span className={factTimeCN}>{factValue}</span>
         </div>
     );
 }
 
-const _doblelize = (value: number): string => {
-    return `0${value}`.slice(-2);
+const _formatValue = (value: number): string => {
+    const isThreeDigit = value / 100 >= 1;
+    return isThreeDigit ? `${value}` : `0${value}`.slice(-2);
 };
 
 export default TimeComparer;

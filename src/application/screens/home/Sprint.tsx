@@ -28,6 +28,7 @@ import {
     DROPDOWN_DATES_SEPARATOR,
     SECTIONS,
 } from './constants';
+import { MainSectionType } from '../../../Platform/_types/Statuses';
 
 type DialogProps = {
     opened: boolean;
@@ -41,7 +42,17 @@ const EmptyDialogProps: DialogProps = {
     item: null,
 };
 
-export type ExpanderClickHandlerType = (id: string, expanded: boolean) => void;
+export type ExpanderClickHandlerType = (
+    id: string,
+    expanded: boolean,
+    sectionName: MainSectionType
+) => void;
+
+type MainItemsType = {
+    Life: RegistryItemType[];
+    Fun: RegistryItemType[];
+    Drive: RegistryItemType[];
+};
 
 function Sprint() {
     const navigate = useNavigate();
@@ -55,7 +66,11 @@ function Sprint() {
     const [dropdownItems, setdropdownItems] = useState<
         DropdownItem<keyof typeof CurrentSprintDropdownValue>[]
     >([]);
-    const [items, setItems] = useState<RegistryItemType[]>([]);
+    const [items, setItems] = useState<MainItemsType>({
+        Life: [],
+        Drive: [],
+        Fun: [],
+    });
 
     const currentSprint = useRecoilValue(CurrentSprintAtom);
 
@@ -95,7 +110,11 @@ function Sprint() {
         if (currentSprint.id) {
             API.PROJECTS.Projects(currentSprint.id).then((res) => {
                 if (res.isSuccess) {
-                    const newItems: RegistryItemType[] = [];
+                    const newItemsByTabs: MainItemsType = {
+                        Life: [],
+                        Fun: [],
+                        Drive: [],
+                    };
 
                     res.body.map((resProj) => {
                         const item: EventCardType = {
@@ -108,143 +127,141 @@ function Sprint() {
                             section: resProj.sectionName,
                         };
 
-                        newItems.push({
-                            item,
-                            id: resProj.id,
-                            project: null,
-                            projectExpanded: false,
-                        });
+                        if (
+                            ['Life', 'Fun', 'Drive'].includes(
+                                resProj.sectionName
+                            )
+                        ) {
+                            newItemsByTabs[resProj.sectionName].push({
+                                item,
+                                id: resProj.id,
+                                project: null,
+                                projectExpanded: false,
+                                sectionName: resProj.sectionName,
+                            });
+                        }
                     });
 
-                    setItems(() => [...newItems]);
+                    setItems(() => ({ ...newItemsByTabs }));
                 }
             });
         }
     }, [currentSprint]);
 
-    // { item: item, id: '1', project: null, projectExpanded: false },
-    //     {
-    //         item: { ...item, title: 'Ещё какой-то проект' },
-    //         id: 'abracadabra',
-    //         project: null,
-    //         projectExpanded: false,
-    //     }
-
-    // useLayoutEffect(() => {
-    //     API.SPRINTS.GetAllSprints().then((resp) => {
-    //         if (resp.isSuccess) {
-    //             console.log('МЫ ПОЛУЧИЛИ ЧТО-ТО!');
-    //             const test = resp.body[0];
-    //             console.log(test);
-    //         } else {
-    //             console.log('мы ничего не получили(');
-    //         }
-    //     });
-    // }, []);
-
-    // =================================
-
-    // const item: EventCardType = {
-    //     title: 'Диспансериазация',
-    //     timeValues: [
-    //         { value: '12:34' },
-    //         { value: '12:34', color: 'green' },
-    //         { value: null },
-    //         { value: null, color: 'gray' },
-    //         { value: null },
-    //         { value: null, color: 'gray' },
-    //         { value: '12:34' },
-    //         { value: '12:34', color: 'purple' },
-    //         { value: '12:34' },
-    //         { value: '12:34' },
-    //     ],
-    //     type: EventType.Project,
-    //     color: activeTab.value as MainSectionType,
-    // };
-
-    // const item2: EventCardType = {
-    //     title: 'Задача в проекте',
-    //     timeValues: [
-    //         { value: '2:34' },
-    //         { value: '12:34', color: 'yellow' },
-    //         { value: '12:34' },
-    //         { value: '12:34', color: 'green' },
-    //         { value: '12:34' },
-    //         { value: '12:34' },
-    //         { value: '12:34' },
-    //         { value: '12:34', color: 'purple' },
-    //         { value: '12:34' },
-    //         { value: '12:34' },
-    //     ],
-    //     type: EventType.Task,
-    // };
-
-    // const [items, setItems] = useState<RegistryItemType[]>([
-    //     { item: item, id: '1', project: null, projectExpanded: false },
-    //     {
-    //         item: { ...item, title: 'Ещё какой-то проект' },
-    //         id: 'abracadabra',
-    //         project: null,
-    //         projectExpanded: false,
-    //     },
-    // ]);
-
     /*
-        Обработчик клика по экспандеру на карточке проекта
-        делает запрос на сервер за задачами из проекта по uuid проекта
-
-        Затем изменяет основной массив items, добавляя новые значение и устанавливая
-        projectExpanded на true
+        
     */
 
-    const expanderClickHandler: ExpanderClickHandlerType = (id, expanded) => {
-        setItems((prevItems) => {
-            const index = prevItems.findIndex((item) => item.id === id);
-            if (index === -1) {
-                return;
+    /**
+     * Обработчик клика по экспандеру на карточке проекта.
+     *
+     * Делает запрос на сервер за задачами из проекта по его projectId.
+     * Затем изменяет основной массив items, добавляя новые значение и устанавливая
+     * projectExpanded у айтема проекта в true
+     *
+     * @param projectId Идентификатор проекта, у которого кликнули по экспандеру
+     * @param expanded Текущее состояние карточки проекта. Развернута ли
+     */
+    const expanderClickHandler: ExpanderClickHandlerType = (
+        projectId,
+        expanded,
+        sectionName
+    ) => {
+        /*
+            Если проект развернут, зачистим items удалив карточки задач этого проекта,
+            т.к. при нажатии на экспандер открытого проекта мы его закрываем
+            Делать запрос к API в таком случае не нужно.
+        */
+        if (expanded) {
+            setItems((prevItemsDescriptor) => {
+                const oldItems = prevItemsDescriptor[sectionName];
+
+                const index = oldItems.findIndex(
+                    (item) => item.id === projectId
+                );
+
+                if (index === -1) {
+                    return;
+                }
+
+                const result = oldItems.filter(
+                    (item) => item.project !== projectId
+                );
+
+                result[index] = {
+                    ...oldItems[index],
+                    projectExpanded: false,
+                };
+
+                return { ...prevItemsDescriptor, [sectionName]: [...result] };
+            });
+
+            // выход из обработчика для игнорирования последующего кода
+            return;
+        }
+
+        API.TASKS.Tasks(projectId).then((res) => {
+            if (res.isSuccess) {
+                const respItems = res.body;
+                // если запрос успешен, добавим задачи в items в нужную позицию
+                setItems((prevItemsDescriptor) => {
+                    const oldItems = prevItemsDescriptor[sectionName];
+
+                    const index = oldItems.findIndex(
+                        (item) => item.id === projectId
+                    );
+
+                    if (index === -1) {
+                        return;
+                    }
+
+                    // ОБЯЗАТЕЛЬНО! Добавляем карточку "Добавить задачу"
+                    const newItems: RegistryItemType[] = [
+                        {
+                            item: { type: EventType.AddTaskSpecial },
+                            id: null,
+                            project: projectId,
+                            projectExpanded: false,
+                            sectionName,
+                        },
+                    ];
+
+                    // Затем проходимся по полученным элементам и причесываем их
+                    respItems?.map((respItem) => {
+                        const item: EventCardType = {
+                            type: EventType.Task,
+                            title: respItem.title,
+                            timeValues: {
+                                planningTimes: respItem.planningTimes,
+                                factTimes: respItem.factTimes,
+                            },
+                        };
+                        newItems.push({
+                            item,
+                            id: respItem.id,
+                            project: projectId,
+                            projectExpanded: false,
+                            sectionName,
+                        });
+                    });
+
+                    // формируем новый массив items
+                    const result = [
+                        ...oldItems.slice(0, index),
+                        {
+                            ...oldItems[index],
+                            projectExpanded: true,
+                        },
+                        ...newItems,
+                        ...oldItems.slice(index + 1),
+                    ];
+
+                    return {
+                        ...prevItemsDescriptor,
+                        [sectionName]: [...result],
+                    };
+                });
             }
-
-            let result;
-            if (expanded) {
-                result = prevItems.filter((item) => item.project !== id);
-                result[index] = { ...prevItems[index], projectExpanded: false };
-            } else {
-                // ОБЯЗАТЕЛЬНО! Добавляем карточку "Добавить задачу"
-                const newItems: RegistryItemType[] = [
-                    {
-                        item: { type: EventType.AddTaskSpecial },
-                        id: null,
-                        project: id,
-                        projectExpanded: false,
-                    },
-                ];
-
-                // TODO: здесь просим новые элементы с сервера и причесываем их
-                // пока сэмулируем, что нам пришли новые карточки заданий
-                // if (id === '1') {
-                //     newItems.push({
-                //         item: item2,
-                //         id: '2',
-                //         project: '1',
-                //         projectExpanded: false,
-                //     });
-                //     newItems.push({
-                //         item: item2,
-                //         id: '3',
-                //         project: '1',
-                //         projectExpanded: false,
-                //     });
-                // }
-
-                result = [
-                    ...prevItems.slice(0, index),
-                    { ...prevItems[index], projectExpanded: true },
-                    ...newItems,
-                    ...prevItems.slice(index + 1),
-                ];
-            }
-
-            return result;
         });
     };
 
@@ -255,18 +272,26 @@ function Sprint() {
      * @param id Идентификатор события
      * @param item Дескриптор события
      */
-    const eventCardClickHandler: EventCardClickHandlerType = (id, item) => {
+    const eventCardClickHandler: EventCardClickHandlerType = (
+        eventDescriptor
+    ) => {
         if (
             selectedDropdownItem.value === CurrentSprintDropdownValue.allWeeks
         ) {
-            navigate(path(Routes.Editing, { eventType: item.type, id }), {
-                state: { item },
-            });
+            navigate(
+                path(Routes.Editing, {
+                    eventType: eventDescriptor.item.type,
+                    id: eventDescriptor.id,
+                }),
+                {
+                    state: { eventDescriptor },
+                }
+            );
         } else {
             setDialogProps(() => ({
                 opened: true,
-                eventId: id,
-                item,
+                eventId: eventDescriptor.id,
+                item: eventDescriptor.item as EventCardType,
             }));
         }
     };
@@ -303,7 +328,7 @@ function Sprint() {
                 setActiveTab={setActiveTab}
             />
             <EventRegistry
-                items={items}
+                items={items[activeTab.value]}
                 chosedPeriod={
                     selectedDropdownItem
                         ? selectedDropdownItem?.value

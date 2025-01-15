@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import TabButton from './TabButton';
 import { SectionType } from './TabType';
 import './TabsStyle.css';
+import React, { useCallback } from 'react';
 
 type TabSelectorProps = {
     tabs: SectionType[];
@@ -10,9 +11,9 @@ type TabSelectorProps = {
 };
 
 function TabSelector({ tabs, activeTab, setActiveTab }: TabSelectorProps) {
-    const tabClickHandler = (tab: SectionType) => {
+    const tabClickHandler = useCallback((tab: SectionType) => {
         setActiveTab(() => tab);
-    };
+    }, []);
 
     const tabSelectorCN = clsx('controls-tabSelector');
 
@@ -30,4 +31,4 @@ function TabSelector({ tabs, activeTab, setActiveTab }: TabSelectorProps) {
     );
 }
 
-export default TabSelector;
+export default React.memo(TabSelector);

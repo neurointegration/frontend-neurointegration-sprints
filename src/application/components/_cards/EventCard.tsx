@@ -6,20 +6,21 @@ import { Fragment, SyntheticEvent } from 'react';
 import './EventCardStyle.css';
 import clsx from 'clsx';
 import {
-    TimeDescriptorType,
+    TaskOrProjectTimeDescriptorType,
     TimeType,
 } from '../../../core/api/actions/projects';
 import { useRecoilValue } from 'recoil';
 import MeInformationAtom from '../../../core/atoms/me.atom';
 import { CurrentSprintDropdownValue } from '../../screens/home/constants';
+import { RegistryItemType } from '../_registry/EventRegistry';
 
-export type EventCardClickHandlerType = (
-    id: string,
-    item: EventCardType
-) => void;
+export type EventCardClickHandlerType = (event: RegistryItemType) => void;
 
 type EventCardProps = {
-    item: EventCardType;
+    /**
+     * Дескриптор события
+     */
+    event: RegistryItemType;
 
     /**
      * Обработчик клика по кнопки "Развернуть", которая есть только на карточке проекта
@@ -32,16 +33,6 @@ type EventCardProps = {
     cardClikHandler: EventCardClickHandlerType;
 
     /**
-     * Идентификатор события (задачи или проекта)
-     */
-    id: string;
-
-    /**
-     * Развернут ли проект на задачи
-     */
-    expanded: boolean;
-
-    /**
      * Выбранный период в дропдауне дял отображение (Неделя 1, Неделя 2, ...)
      */
     chosedPeriod: keyof typeof CurrentSprintDropdownValue;
@@ -51,29 +42,32 @@ type EventCardProps = {
 // возможно, задача без проекта - тогда укажем в parent null
 
 function EventCard({
-    item,
-    id,
-    expanded,
+    // item,
+    // id,
+    // expanded,
     chosedPeriod,
+    // sectionName,
+    event,
     expanderClickHandler,
     cardClikHandler,
 }: EventCardProps) {
-    const PROJECT_INCLUDES_TASKS = item.type === EventType.Project;
+    const PROJECT_INCLUDES_TASKS = event.item.type === EventType.Project;
     const mainCN = 'eventCard';
     const wrapperCN = clsx(
         mainCN,
-        item.type === EventType.Project && `${mainCN}_project`
+        event.item.type === EventType.Project && `${mainCN}_project`
     );
     const sideBarCN = clsx(
         `${mainCN}__sidebar`,
-        item.type === EventType.Project && `${mainCN}__sidebar_${item.section}`
+        event.item.type === EventType.Project &&
+            `${mainCN}__sidebar_${event.item.section}`
     );
     const cardContentCN = clsx(`${mainCN}__cardContent`);
     const headerCN = clsx(`${mainCN}__header`);
     const titleCN = clsx(`${mainCN}__title`);
     const expanderIconCN = clsx(
         `${mainCN}__expanderIcon`,
-        expanded && `${mainCN}__expanderIcon_rotated`
+        event.projectExpanded && `${mainCN}__expanderIcon_rotated`
     );
     const timeInfoCN = clsx(`${mainCN}__timeInfo`);
     const separatorCN = clsx(`${mainCN}__timeSeparator`);
@@ -87,25 +81,33 @@ function EventCard({
         meInformation.sprintWeeksCount,
         separatorCN,
         noneTimeCN,
-        item.timeValues
+        (event.item as EventCardType).timeValues
     );
 
-    const expanderButtonClickHandler = (event: SyntheticEvent) => {
-        event.stopPropagation();
-        expanderClickHandler(id, expanded);
+    const expanderButtonClickHandler = (e: SyntheticEvent) => {
+        e.stopPropagation();
+        expanderClickHandler(
+            event.id,
+            event.projectExpanded,
+            event.sectionName
+        );
     };
 
-    const cardContentClickHandler = (event: SyntheticEvent) => {
-        event.nativeEvent.stopImmediatePropagation();
-        cardClikHandler(id, item);
+    const cardContentClickHandler = (e: SyntheticEvent) => {
+        e.nativeEvent.stopImmediatePropagation();
+        cardClikHandler(event);
     };
 
     return (
         <div className={wrapperCN}>
-            {item.type === EventType.Project && <div className={sideBarCN} />}
+            {event.item.type === EventType.Project && (
+                <div className={sideBarCN} />
+            )}
             <div className={cardContentCN} onClick={cardContentClickHandler}>
                 <div className={headerCN}>
-                    <span className={titleCN}>{item.title}</span>
+                    <span className={titleCN}>
+                        {(event.item as EventCardType).title}
+                    </span>
                     {PROJECT_INCLUDES_TASKS && (
                         <button
                             className={expanderBtnCN}
@@ -120,7 +122,9 @@ function EventCard({
                 </div>
                 <div className={timeInfoCN}>
                     {timeInfo.map((item, index) => (
-                        <Fragment key={`timeComparer_event_${id}_${index}`}>
+                        <Fragment
+                            key={`timeComparer_event_${event.id}_${index}`}
+                        >
                             {item}
                         </Fragment>
                     ))}
@@ -136,8 +140,8 @@ function _getTimeInfoComponent(
     separatorCN: string,
     noneTimeCN: string,
     values: {
-        planningTimes: TimeDescriptorType;
-        factTimes: TimeDescriptorType;
+        planningTimes: TaskOrProjectTimeDescriptorType;
+        factTimes: TaskOrProjectTimeDescriptorType;
     }
 ): JSX.Element[] {
     const planningTimes = values.planningTimes;
@@ -204,45 +208,5 @@ function _getTimeInfoComponent(
         />,
     ];
 }
-
-// function _getTimeInfoComponent(
-//     timeInfoType: TimeInfoType,
-//     separatorCN: string,
-//     noneTimeCN: string,
-//     values?: TimeDescriptor[]
-// ): JSX.Element[] {
-//     const maxIterator: number = timeInfoType * 2;
-//     const result = [];
-//     const withoutTimeEl = <div className={noneTimeCN}>Без времени</div>;
-
-//     if (values.length < maxIterator) {
-//         return [withoutTimeEl];
-//     }
-
-//     // TODO: задать key на списочные элементы. нужен uuid?
-//     for (let i = 0; i < maxIterator; i += 2) {
-//         result.push(
-//             <TimeComparer
-//                 firstTime={values[i]}
-//                 secontTime={values[i + 1]}
-//                 horizontal={timeInfoType === TimeInfoType.Common}
-//             />
-//         );
-
-//         if (
-//             (timeInfoType === TimeInfoType.FourWeeks ||
-//                 timeInfoType === TimeInfoType.ThreeWeeks) &&
-//             i === maxIterator - 4
-//         ) {
-//             result.push(<div className={separatorCN}></div>);
-//         }
-//     }
-
-//     if (timeInfoType === TimeInfoType.None) {
-//         result.push(withoutTimeEl);
-//     }
-
-//     return result;
-// }
 
 export default EventCard;

@@ -1,7 +1,4 @@
-import {
-    handleHttpError,
-    handleHttpResponse,
-} from '../utils/httpHandlers';
+import { handleHttpError, handleHttpResponse } from '../utils/httpHandlers';
 import { ROOT_API_URL } from '../../../config';
 import { APIRoutes } from '../handles';
 import axios from 'axios';
@@ -42,13 +39,7 @@ export const RefreshToken = (): Promise<AuthResponseType> => {
             accessToken: localStorage.getItem('accessToken'),
             refreshToken: localStorage.getItem('refreshToken'),
         })
-        .then((response) => ({
-            isSucceed: true,
-            data: {
-                accessToken: response.data['accessToken'],
-                refreshToken: response.data['refreshToken'],
-            },
-        }))
+        .then((response) => response.data)
         .catch(() => ({
             isSucceed: false,
             data: {
