@@ -1,0 +1,99 @@
+.settings-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+  color: #333;
+  position: relative;
+}
+
+.primary-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background-color: #ccc;
+}
+
+.profile-picture-container {
+  display: flex;
+  align-items: center;
+  margin-top: 48px;
+  margin-bottom: 16px;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  border: 2px #ccc;
+  margin-right: 16px;
+}
+
+.section-title {
+  font-size: 16px;
+  margin: 16px 0 8px;
+}
+
+.text-input {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.radio-group {
+  margin-bottom: 16px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  gap: 8px;
+}
+
+input[type="radio"]:checked {
+  accent-color: black;
+}
+
+.secondary-button {
+  width: 100%;
+  padding: 8px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.secondary-button:hover {
+  background-color: #e0e0e0;
+}
+
+select.text-input {
+  appearance: none;
+  background-color: #fff;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path d="M0 0l5 6 5-6z" fill="%23aaa"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px;
+}

@@ -33,6 +33,10 @@ body.body-color-Drive {
     background-color: var(--colors-Drive);
 }
 
+body.body-color-card-active-gray {
+    background-color: var(--colors-card-active-gray);
+}
+
 button {
     cursor: pointer;
     border: none;

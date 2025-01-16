@@ -13,7 +13,7 @@ const SELECTOR_ITEMS = [
     { icon: Icons.clock, routePath: '', title: 'Рефлексия (WIP)' },
     { icon: Icons.calendar, routePath: '', title: 'История' },
     // TODO: вкладка клиенты только для тренеров
-    { icon: Icons.person, routePath: '', title: 'Клиенты' },
+    { icon: Icons.person, routePath: Routes.Clients, title: 'Клиенты' },
     { icon: Icons.settings, routePath: Routes.Settings, title: 'Настройки' },
 ];
 
