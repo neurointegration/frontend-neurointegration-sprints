@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './OnboardingStyle.css';
 
 const images: string[] = [
@@ -72,20 +72,17 @@ function OnboardingScreen(): JSX.Element {
                     <button className="start-button">Начать работу</button>
                 </div>
             )}
-            <div className={`controls ${isLastScreen ? 'center-controls' : ''}`}>
-                {currentImageIndex > 1 && (
-                    <button className={`prev-button ${buttonColorClass}`} onClick={handlePrev}>
-                        &lt;
-                    </button>
-                )}
+            <div className={`controls`}>
+                <button className={`prev-button ${buttonColorClass} ${currentImageIndex === 1 ? 'button-hidden' : ''}`}
+                    onClick={handlePrev}>
+                    &lt;
+                </button>
                 <div className={`counter ${isLastScreen ? 'counter-last-screen' : ''}`}>
                     {currentImageIndex}/{totalImages}
                 </div>
-                {currentImageIndex < totalImages && (
-                    <button className={`next-button ${buttonColorClass}`} onClick={handleNext}>
-                        &gt;
-                    </button>
-                )}
+                <button className={`next-button ${buttonColorClass} ${isLastScreen ? 'button-hidden' : ''}`} onClick={handleNext}>
+                    &gt;
+                </button>
             </div>
         </div>
     );
