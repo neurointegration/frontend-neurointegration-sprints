@@ -6,12 +6,12 @@ import decodeToken from './tokenDecoder';
 import { API } from '../handles';
 import { AuthWithoutStatusType } from '../actions/auth';
 
-type IHTTPSuccessResponse<T = undefined> = {
+export type HTTPSuccessResponse<T = undefined> = {
     isSuccess: true;
     body: T;
 };
 
-type IHTTPErrorResponse = {
+export type HTTPErrorResponse = {
     isSuccess: false;
     message: string;
     code: number | undefined;
@@ -109,14 +109,14 @@ export const applyInterceptors = (
 
 export const handleHttpResponse = <T>(
     response: AxiosResponse<T>
-): IHTTPSuccessResponse<T> => {
+): HTTPSuccessResponse<T> => {
     return {
         isSuccess: true,
         body: response.data,
     };
 };
 
-export const handleHttpError = (error: AxiosError): IHTTPErrorResponse => {
+export const handleHttpError = (error: AxiosError): HTTPErrorResponse => {
     return {
         isSuccess: false,
         message: error?.message ?? '',

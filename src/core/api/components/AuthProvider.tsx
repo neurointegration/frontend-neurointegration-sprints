@@ -10,6 +10,7 @@ import MeInformationAtom from '../../atoms/me.atom';
 import CurrentSprintAtom from '../../atoms/sprint.atom';
 import HistorySprintsAtom from '../../atoms/historySprints.atom';
 import LoadingScreen from '../../../application/screens/loading/Loading';
+import AuthScreen from '../../../application/screens/auth/Auth';
 
 const AuthProvider = (props: PropsWithChildren) => {
     const { wait, loading } = useHttpLoader();
@@ -85,7 +86,7 @@ const AuthProvider = (props: PropsWithChildren) => {
     if (!authState.data.accessToken || authState.data.accessToken === '') {
         // TODO: здесь нужно вставить настоящую страницу авторизации!
         // return <Auth />;
-        return <TEMPAuthScreen />;
+        return <AuthScreen />;
     }
 
     return <>{props.children}</>;

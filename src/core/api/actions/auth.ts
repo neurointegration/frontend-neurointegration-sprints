@@ -13,7 +13,7 @@ export type AuthResponseType = {
 
 export type AuthWithoutStatusType = Omit<AuthResponseType, 'isSucceed'>;
 
-type TelegramAuthDataType = {
+export type TelegramRequestDataType = {
     id: string;
     firstName: string;
     lastName: string;
@@ -23,7 +23,7 @@ type TelegramAuthDataType = {
     hash: string;
 };
 
-export const LoginByTelegram = (data: TelegramAuthDataType) => {
+export const LoginByTelegram = (data: TelegramRequestDataType) => {
     return axios
         .post<AuthResponseType>(
             ROOT_API_URL + APIRoutes.User.ExternalTelegramLogin,
