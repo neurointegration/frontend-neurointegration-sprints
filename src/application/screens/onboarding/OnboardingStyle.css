@@ -106,3 +106,19 @@
 input[type="radio"]:checked {
   accent-color: black;
 }
+
+.secondary-title {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.last-screen-content-return {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  background-color: white;
+  padding: 40px;
+}
