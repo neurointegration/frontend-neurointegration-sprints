@@ -1,6 +1,7 @@
 .controls-textInput {
     background: none;
     width: 100%;
+    position: relative;
 }
 
 .controls-textInput__input {
@@ -28,3 +29,18 @@
     background: none;
     color: var(--colors-border-gray);
 }
+
+/* .controls-textInput__input_empty {
+    border: solid #CD4A4C 2px;
+    border-radius: 4px; */
+/* } */
+
+/* .controls-textInput__input_empty ~ .controls-textInput__hint {
+    font-size: var(--fontsize-m);
+    color: #CD4A4C;
+    position: absolute;
+    bottom: 0;
+    content: 'test! nelzya pustoe!';
+    width: 100%;
+    transform: translateY(100%);
+} */

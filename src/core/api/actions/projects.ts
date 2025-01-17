@@ -14,15 +14,16 @@ export type TimeType = {
     status?: TimeStatusType;
 };
 
-export type TaskOrProjectTimeDescriptorType =
-    | null
-    | {
-          [key in keyof PossibleTimeResponceKeysType]?: TimeType;
-      };
+type PartialKeys<K extends string, T> = Partial<Record<K, T>>;
 
 export type PossibleTimeResponceKeysType =
     | PossibleDatesResponseKeysType
     | 'total';
+
+export type TaskOrProjectTimeDescriptorType = null | PartialKeys<
+    PossibleTimeResponceKeysType,
+    TimeType
+>;
 
 type ProjectResponseType = {
     id: string;
@@ -30,6 +31,22 @@ type ProjectResponseType = {
     sectionName: MainSectionType;
     planningTimes: TaskOrProjectTimeDescriptorType;
     factTimes: TaskOrProjectTimeDescriptorType;
+};
+
+type ProjectRequestType = {
+    title: string;
+    sectionName: string;
+    sprintId: string;
+    planningTimes?: TaskOrProjectTimeDescriptorType;
+    factTimes?: TaskOrProjectTimeDescriptorType;
+};
+
+type PutProjectRequest = {
+    id: string;
+    title?: string;
+    sectionName?: MainSectionType;
+    planningTimes?: TaskOrProjectTimeDescriptorType;
+    factTimes?: TaskOrProjectTimeDescriptorType;
 };
 
 export const GetAllSprintProjects = (sprintId: string) => {
@@ -48,6 +65,20 @@ export const GetProject = (projectId: string) => {
     });
     return http
         .get<ProjectResponseType[]>(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
+
+export const PostProject = (projectData: ProjectRequestType) => {
+    return http
+        .post(APIRoutes.Projects.Projects, { ...projectData })
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
+
+export const PutProject = (projectData: PutProjectRequest) => {
+    return http
+        .put(APIRoutes.Projects.Projects, { ...projectData })
         .then(handleHttpResponse)
         .catch(handleHttpError);
 };

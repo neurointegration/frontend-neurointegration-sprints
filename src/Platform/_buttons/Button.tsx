@@ -13,6 +13,7 @@ type ButtonProps = {
     iconPosition?: IconPosition;
     className?: string;
     disabled?: boolean;
+    type?: 'submit' | 'reset' | 'button';
     onClick?: (event: SyntheticEvent) => void;
 };
 
@@ -25,6 +26,7 @@ function Button({
     iconPosition = 'left',
     className,
     disabled = false,
+    type,
     onClick,
 }: ButtonProps) {
     const buttonCN = clsx(
@@ -42,7 +44,12 @@ function Button({
 
     const iconIMG = <img src={icon} />;
     return (
-        <button onClick={onClick} disabled={disabled} className={buttonCN}>
+        <button
+            type={type}
+            onClick={onClick}
+            disabled={disabled}
+            className={buttonCN}
+        >
             {icon && iconPosition === 'left' && iconIMG}
 
             <div className={captionCN}>{caption}</div>

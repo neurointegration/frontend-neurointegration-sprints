@@ -11,6 +11,8 @@ import MeInformationAtom from '../../../core/atoms/me.atom';
 import { CurrentSprintDropdownValue } from '../../screens/home/constants';
 import uuid from 'react-uuid';
 import { MainSectionType } from '../../../Platform/_types/Statuses';
+import { useNavigate } from 'react-router-dom';
+import { path, Routes } from '../../../core/routing/routes';
 
 const WEEK1 = 'Н1';
 const WEEK2 = 'Н2';
@@ -51,6 +53,7 @@ type EventRegistryProps = {
     cardClickHandler: EventCardClickHandlerType;
     className?: string;
     newProjectAvailable?: boolean;
+    activeSection: MainSectionType;
 };
 
 function EventRegistry({
@@ -60,8 +63,10 @@ function EventRegistry({
     cardClickHandler,
     className,
     newProjectAvailable,
+    activeSection
 }: EventRegistryProps) {
     const meInformation = useRecoilValue(MeInformationAtom);
+    const navigate = useNavigate();
 
     const showWeeksHeader =
         chosedPeriod === CurrentSprintDropdownValue.allWeeks;
@@ -74,11 +79,18 @@ function EventRegistry({
         'controls-fontsize-l',
         'controls-fontweight-medium'
     );
+    const newProjectClickHandler = () => {
+        navigate(path(Routes.Creation, { eventType: EventType.Project }), {
+            state: { section: activeSection },
+        });
+    };
+
     return (
         <div className={wrapperCN}>
             <div className={baseCN}>
                 {newProjectAvailable && (
                     <Button
+                        onClick={newProjectClickHandler}
                         className={addProjectButtonCN}
                         icon={Icons.plus}
                         showMode='common'
@@ -104,6 +116,7 @@ function EventRegistry({
                                 <AddTaskCard
                                     key={event.id || uuid()}
                                     project={event.project}
+                                    section={event.sectionName}
                                 />
                             );
                         } else {

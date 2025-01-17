@@ -1,147 +1,164 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import {
-    EventCardType,
-    EventType,
-    TimeInfoType,
-} from '../../components/_cards/_types/EventCardType';
+import { EventType } from '../../components/_cards/_types/EventCardType';
 import EventTitleEditor from '../../components/_editors/EventTitleEditor';
-import { ColorStatusType } from '../../components/_editors/TimeStatusEditor';
 import Sidebar from '../../components/_sidebar/Sidebar';
-import { useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import Button from '../../../Platform/_buttons/Button';
 import './EventEditingStyle.css';
 import Spoiler from '../../../Platform/_buttons/Spoiler';
-import { TimeEditorValueType } from '../../../Platform/_times/TimeEditor';
 import EditorUnit from '../../components/_editors/EditorUnit';
 import { RegistryItemType } from '../../components/_registry/EventRegistry';
 import { useRecoilValue } from 'recoil';
 import MeInformationAtom from '../../../core/atoms/me.atom';
+import {
+    EDITING_SPOILER_UNITS,
+    EditingScreenFormContext,
+    EditingFormContextPropertyChangedFuncType,
+    EditingSpoilerUnitType,
+} from './EventEditingContext';
+import { Routes } from '../../../core/routing/routes';
+import EditorFormController from '../../components/_controllers/EditorFormController';
 
-const SPOILER_UNITS = [
-    {
-        title: 'Общее',
-        defaultOpen: true,
-    },
-    {
-        title: 'Неделя 1',
-        defaultOpen: false,
-    },
-    {
-        title: 'Неделя 2',
-        defaultOpen: false,
-    },
-    {
-        title: 'Неделя 3',
-        defaultOpen: false,
-    },
-    {
-        title: 'Неделя 4',
-        defaultOpen: false,
-    },
-];
+const baseScreenCN = 'screen-EventEditing';
+const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
+const pageHeaderCN = clsx(`${baseScreenCN}__header`);
+const pageContentCN = clsx(`${baseScreenCN}__pageContent`);
+const actionButtonCN = clsx(
+    'controls-fontsize-m',
+    'controls-fontweight-medium'
+);
+const spoilerButtonCN = clsx(
+    'controls-margin_bottom-2xl',
+    'controls-margin_top-3xl'
+);
 
+/**
+ * Экран редактирования события.
+ * Может открываться в режиме только для просмотра или в режиме создания события
+ */
 function EventEditingScreen() {
     const location = useLocation();
     const params = useParams();
-
+    const eventType = params.eventType as EventType;
+    const eventId = params.id;
+    const creationMode = location.pathname.includes('creation');
     const navigate = useNavigate();
 
-    const itemDescriptor = location.state.eventDescriptor as RegistryItemType;
-    const eventId = itemDescriptor.id;
-    const eventType = params.eventType as EventType;
+    const timeType = useRecoilValue(MeInformationAtom);
 
-    const [spoilerUnits, setSpoilerUnits] =
-        useState<{ title: string; defaultOpen: boolean }[]>(SPOILER_UNITS);
+    const registryItemDescriptor = creationMode
+        ? null
+        : (location.state.eventDescriptor as RegistryItemType);
 
-    // TODO: брать из натсроек пользователя настоящее количество недель
+    const parentProjectId =
+        creationMode && eventType === EventType.Task
+            ? (location.state.parentProjectId as string)
+            : null;
+    const sectionName = creationMode ? location.state.section : null;
 
-    const timeType = useRecoilValue(MeInformationAtom); //TimeInfoType.FourWeeks;
+    const CONTROLLER = EditorFormController(
+        registryItemDescriptor,
+        creationMode,
+        eventType,
+        sectionName,
+        parentProjectId
+    );
 
+    const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
+    const [spoilerUnits, setSpoilerUnits] = useState<EditingSpoilerUnitType[]>(
+        EDITING_SPOILER_UNITS
+    );
+
+    // ============== USE EFFECTS =================
+    // В случае тренера добавим вкладку "Клиенты"
     useEffect(() => {
         document.body.className = `body-color-white`;
         if (timeType.sprintWeeksCount !== 4) {
             setSpoilerUnits(() => {
-                const res = [...SPOILER_UNITS];
+                const res = [...EDITING_SPOILER_UNITS];
                 delete res[4];
                 return res;
             });
         }
     }, []);
 
-    const [timeStatus, setTimeStatus] = useState<ColorStatusType>(null);
-    const [plannedTime, setPlannedTime] = useState<TimeEditorValueType>({
-        hours: 98,
-        minutes: 17,
-    });
-    const [factTime, setFactTime] = useState<TimeEditorValueType>({
-        hours: 99,
-        minutes: 1,
-    });
-    const [eventTitle, setEventTitle] = useState<string | null>(
-        (itemDescriptor.item as EventCardType).title
-    );
+    // Если в переданном стейте нет данных о событии и страница
+    // открыта не на создание, редиректим на главную
+    useEffect(() => {
+        if (
+            (!eventId || !location?.state?.eventDescriptor) &&
+            !location.pathname.includes('creation')
+        ) {
+            navigate(Routes.Base);
+        }
+    }, []);
 
-    const baseScreenCN = 'screen-EventEditing';
-    const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
-    const pageHeaderCN = clsx(`${baseScreenCN}__header`);
-    const pageContentCN = clsx(`${baseScreenCN}__pageContent`);
-    const actionButtonCN = clsx(
-        'controls-fontsize-m',
-        'controls-fontweight-medium'
-    );
-    const spoilerButtonCN = clsx(
-        'controls-margin_bottom-2xl',
-        'controls-margin_top-3xl'
-    );
+    // ============================================
 
-    const factTimes = (itemDescriptor.item as EventCardType).timeValues.factTimes;
-    const planningTimes = (itemDescriptor.item as EventCardType).timeValues.planningTimes;
+    const submitHandler = (event: SyntheticEvent) => {
+        event.preventDefault();
+        CONTROLLER.saveHandler();
+    };
+
+    const propertyChanged: EditingFormContextPropertyChangedFuncType = (
+        propertyKey,
+        newValue
+    ): void => {
+        CONTROLLER.useChanges[1]((prev) => {
+            const newChanges = { ...prev, [propertyKey]: newValue };
+            // console.log(newChanges);
+
+            setSaveButtonDisabled(() => !Object.keys(newChanges).length);
+            return newChanges;
+        });
+    };
 
     return (
-        <>
-            <div className={pageHeaderCN}>
-                <div className={actionButtonsBlockCN}>
-                    <Button
-                        onClick={() => navigate(-1)}
-                        className={actionButtonCN}
-                        caption='Отмена'
-                        size='small'
-                    />
-                    <Button
-                        disabled
-                        className={actionButtonCN}
-                        caption='Сохранить'
-                        size='small'
-                    />
-                </div>
-                <Sidebar />
-            </div>
-            <div className={pageContentCN}>
-                <EventTitleEditor
-                    eventType={eventType}
-                    useTitle={[eventTitle, setEventTitle]}
-                />
-                {spoilerUnits.map((spoilerItem, index) => (
-                    // TODO: написать обработку всех времен проекта/задачи и передавать в спойлеры нужные компоненты времени
-                    <Spoiler
-                        key={`spoilerItem_${index}`}
-                        title={spoilerItem.title}
-                        buttonClassName={spoilerButtonCN}
-                        defaultOpen={spoilerItem.defaultOpen}
-                    >
-                        <EditorUnit
-                            // defaultFactTime={}
-                            // defaultPlanningTime={}
-                            usePlannedTime={[plannedTime, setPlannedTime]}
-                            useFactTime={[factTime, setFactTime]}
-                            useTimeStatus={[timeStatus, setTimeStatus]}
-                            eventType={eventType}
+        <EditingScreenFormContext.Provider value={{ propertyChanged }}>
+            <form onSubmit={submitHandler}>
+                <div className={pageHeaderCN}>
+                    <div className={actionButtonsBlockCN}>
+                        <Button
+                            onClick={() => navigate(Routes.Base)}
+                            className={actionButtonCN}
+                            caption='Отмена'
+                            size='small'
+                            type='button'
                         />
-                    </Spoiler>
-                ))}
-            </div>
-        </>
+                        <Button
+                            disabled={saveButtonDisabled}
+                            className={actionButtonCN}
+                            caption='Сохранить'
+                            size='small'
+                            type='submit'
+                        />
+                    </div>
+                    <Sidebar />
+                </div>
+                <div className={pageContentCN}>
+                    <EventTitleEditor
+                        useTitle={CONTROLLER.useEventTitle}
+                        eventType={eventType}
+                    />
+                    {spoilerUnits.map((spoilerItem, index) => (
+                        <Spoiler
+                            key={`spoilerItem_${index}`}
+                            title={spoilerItem.title}
+                            buttonClassName={spoilerButtonCN}
+                            defaultOpen={spoilerItem.defaultOpen}
+                        >
+                            <EditorUnit
+                                timeKey={spoilerItem.timeKey}
+                                usePlanningTimes={CONTROLLER.usePlanningTimes}
+                                useFactTimes={CONTROLLER.useFactTimes}
+                                eventType={eventType}
+                            />
+                        </Spoiler>
+                    ))}
+                </div>
+            </form>
+        </EditingScreenFormContext.Provider>
     );
 }
 

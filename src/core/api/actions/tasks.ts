@@ -15,11 +15,41 @@ type TaskResponse = {
     factTimes: TaskOrProjectTimeDescriptorType;
 };
 
+type TaskRequest = {
+    title: string;
+    projectId: string;
+    sectionName: MainSectionType;
+    planningTimes?: TaskOrProjectTimeDescriptorType;
+    factTimes?: TaskOrProjectTimeDescriptorType;
+};
+
+type PutTaskRequest = {
+    id: string;
+    title?: string;
+    sectionName?: MainSectionType;
+    planningTimes?: TaskOrProjectTimeDescriptorType;
+    factTimes?: TaskOrProjectTimeDescriptorType;
+};
+
 export const GetAllProjectTasks = (projectId: string) => {
     const url = path(APIRoutes.Tasks.TasksProject, { projectId });
 
     return http
         .get<TaskResponse[]>(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
+
+export const PostTask = (taskData: TaskRequest) => {
+    return http
+        .post(APIRoutes.Tasks.Tasks, { ...taskData })
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
+
+export const PutTask = (taskData: PutTaskRequest) => {
+    return http
+        .put(APIRoutes.Tasks.Tasks, { ...taskData })
         .then(handleHttpResponse)
         .catch(handleHttpError);
 };

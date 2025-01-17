@@ -5,9 +5,14 @@ import {
     TestLogin,
 } from './actions/auth';
 import { GetMyInformation, GetMyRoles } from './actions/me';
-import { GetAllSprintProjects, GetProject } from './actions/projects';
+import {
+    GetAllSprintProjects,
+    GetProject,
+    PostProject,
+    PutProject,
+} from './actions/projects';
 import { GetAllSprints, GetSprint } from './actions/sprints';
-import { GetAllProjectTasks } from './actions/tasks';
+import { GetAllProjectTasks, PostTask, PutTask } from './actions/tasks';
 
 /**
  * Объект доступных методов обращения к севреру.
@@ -60,12 +65,32 @@ export const API = {
          * Получения проекта по его projectId
          */
         Project: GetProject,
+
+        /**
+         * Создает новый проект
+         */
+        CreateProject: PostProject,
+
+        /**
+         * Обновить существующий проект
+         */
+        UpdateProject: PutProject,
     },
     TASKS: {
         /**
          * Получение всех задач проекта по его projectId
          */
         Tasks: GetAllProjectTasks,
+
+        /**
+         * Создание новой задачи
+         */
+        CreateTask: PostTask,
+
+        /**
+         * Обновление существующей задачи
+         */
+        UpdateTask: PutTask,
     },
     ME: {
         /**
@@ -99,9 +124,11 @@ export const APIRoutes = {
     Projects: {
         ProjectsSprint: '/api/Projects/sprint/:sprintId',
         Project: '/api/Projects/:projectId',
+        Projects: '/api/Projects',
     },
     Tasks: {
         TasksProject: '/api/Tasks/project/:projectId',
+        Tasks: '/api/Tasks',
     },
     Me: {
         Roles: '/api/Me/roles',

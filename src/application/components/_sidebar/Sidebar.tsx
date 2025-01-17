@@ -1,19 +1,24 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { Icons } from '../../../Platform/_types/Icons';
 import { Routes } from '../../../core/routing/routes';
-import authAtom from '../../../core/atoms/auth.atom';
+import AuthAtom from '../../../core/atoms/auth.atom';
 import { API } from '../../../core/api/handles';
-import { useResetRecoilState } from 'recoil';
-import { useState } from 'react';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
 import './SidebarStyle.css';
 import clsx from 'clsx';
+import RolesAtom from '../../../core/atoms/roles.atom';
 
-const SELECTOR_ITEMS = [
+type SelectorItemType = {
+    icon: Icons;
+    routePath: Routes | '';
+    title: string;
+};
+
+const SELECTOR_ITEMS_BASE: SelectorItemType[] = [
     { icon: Icons.pencil, routePath: Routes.Sprint, title: 'Спринт' },
-    { icon: Icons.clock, routePath: '', title: 'Рефлексия (WIP)' },
+    // { icon: Icons.clock, routePath: '', title: 'Рефлексия (WIP)' },
     { icon: Icons.calendar, routePath: '', title: 'История' },
-    // TODO: вкладка клиенты только для тренеров
-    { icon: Icons.person, routePath: Routes.Clients, title: 'Клиенты' },
     { icon: Icons.settings, routePath: Routes.Settings, title: 'Настройки' },
 ];
 
@@ -22,9 +27,12 @@ type SidebarProps = {
 };
 
 function Sidebar({ menuButtonClassName }: SidebarProps) {
-    const resetAuthState = useResetRecoilState(authAtom);
+    const resetAuthState = useResetRecoilState(AuthAtom);
+    const rolesValue = useRecoilValue(RolesAtom);
     const currentPath = useLocation();
     const [expanded, setExpanded] = useState<boolean>(false);
+    const [selectorItems, setSelectorItems] =
+        useState<SelectorItemType[]>(SELECTOR_ITEMS_BASE);
     // TODO: добавить обработку аватарки
     const avatarURL = null;
     const emptyAvatarURL = '/empty-avatar.gif';
@@ -42,6 +50,21 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
     const menuItemCN = clsx(`${menuCN}__item`);
     const menuItemIconCN = clsx(`${menuCN}__itemIcon`);
     const exitCN = clsx(`${menuCN}__exit`);
+
+    useEffect(() => {
+        if (rolesValue.isTrainer) {
+            setSelectorItems(() => {
+                const newItems = [...SELECTOR_ITEMS_BASE];
+                newItems.splice(2, 0, {
+                    icon: Icons.person,
+                    routePath: Routes.Clients,
+                    title: 'Клиенты',
+                });
+
+                return newItems;
+            });
+        }
+    }, [rolesValue]);
 
     const itemClickHandler = () => {
         setExpanded((prev) => !prev);
@@ -75,7 +98,7 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
                 />
             </div>
             <div className={menuSelectorCN}>
-                {SELECTOR_ITEMS.map((item) => (
+                {selectorItems.map((item) => (
                     <NavLink
                         to={item.routePath}
                         onClick={itemClickHandler}

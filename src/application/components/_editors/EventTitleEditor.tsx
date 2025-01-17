@@ -1,6 +1,9 @@
 import './EventTitleEditorStyle.css';
 import { EventType } from '../_cards/_types/EventCardType';
 import TextInput from '../../../Platform/_inputs/TextInput';
+import { useContext } from 'react';
+import { EditingScreenFormContext } from '../../screens/editing/EventEditingContext';
+import React from 'react';
 
 type EventTitleEditorProps = {
     useTitle: [
@@ -9,13 +12,16 @@ type EventTitleEditorProps = {
     ];
     eventType: EventType;
     disabled?: boolean;
+    onEmptyChange?: (isEmpty: boolean) => void;
 };
 
 function EventTitleEditor({
-    useTitle: [title, setTitle],
+    useTitle,
     eventType,
     disabled,
+    onEmptyChange
 }: EventTitleEditorProps) {
+    const formContext = useContext(EditingScreenFormContext);
     const baseCN = 'eventTitleEditor';
 
     return (
@@ -26,12 +32,17 @@ function EventTitleEditor({
                     : 'Название задачи'}
             </span>
             <TextInput
-                useValue={[title, setTitle]}
-                multiline
+                useValue={useTitle}
+                notifier={{
+                    propertyChanged: formContext.propertyChanged,
+                    propertyKey: 'title',
+                }}
                 disabled={disabled}
+                onEmptyChange={onEmptyChange}
+                required
             />
         </div>
     );
 }
 
-export default EventTitleEditor;
+export default React.memo(EventTitleEditor);

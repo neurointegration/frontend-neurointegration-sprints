@@ -6,6 +6,8 @@ export enum Routes {
     Settings = '/settigs',
     Clients = '/clients',
     Editing = '/editing/:eventType/:id',
+    Creation = '/creation/:eventType',
+    Onboarding = '/onboarding',
 }
 
 /**

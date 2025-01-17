@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import './TextInputStyle.css';
-import { ChangeEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useWindowDimensions from './_hooks/useWindowDimentions';
 
 type TextInputProps = {
@@ -15,6 +15,13 @@ type TextInputProps = {
     multiline?: boolean;
     placeholder?: string;
     disabled?: boolean;
+    notifier?: {
+        propertyChanged: (propertyKey: string, newValue: string) => void;
+        propertyKey: string;
+    };
+    allowEmpty?: boolean;
+    required?: boolean;
+    onEmptyChange?: (isEmpty: boolean) => void;
 };
 
 /**
@@ -31,10 +38,17 @@ function TextInput({
     multiline = false,
     placeholder,
     disabled,
+    notifier,
+    allowEmpty = false,
+    required = false,
+    onEmptyChange,
 }: TextInputProps) {
+    const [empty, setEmpty] = useState<boolean>(false);
+
     const baseCN = 'controls-textInput';
     const wrapperCN = clsx(baseCN, className && className);
-    const inputCN = clsx(`${baseCN}__input`);
+    const inputCN = clsx(`${baseCN}__input`, empty && `${baseCN}__input_empty`);
+    const hintCN = clsx(`${baseCN}__hint`);
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const windowDimentions = useWindowDimensions();
@@ -49,7 +63,20 @@ function TextInput({
         event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ) => {
         _changeAreaHeight(textAreaRef, multiline);
-        setValue(() => event.target.value);
+
+        setValue(() => {
+            const newVal = event.target.value;
+            if (!allowEmpty) {
+                setEmpty(() => {
+                    onEmptyChange?.(!newVal.length);
+                    return !newVal.length;
+                });
+            }
+
+            notifier?.propertyChanged(notifier.propertyKey, newVal);
+
+            return newVal;
+        });
 
         onChange?.(event);
     };
@@ -77,6 +104,7 @@ function TextInput({
             value={value}
             onFocus={focusHandler}
             onChange={changeHandler}
+            required={required}
         />
     ) : (
         <input
@@ -87,10 +115,18 @@ function TextInput({
             value={value}
             onFocus={focusHandler}
             onChange={changeHandler}
+            required={required}
         />
     );
 
-    return <div className={wrapperCN}>{renderEl}</div>;
+    return (
+        <div className={wrapperCN}>
+            {renderEl}
+            {/* {empty && (
+                <div className={hintCN}>Значение не может быть пустым!</div>
+            )} */}
+        </div>
+    );
 }
 
 const _changeAreaHeight = (

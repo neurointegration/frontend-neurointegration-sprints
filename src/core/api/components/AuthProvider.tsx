@@ -57,7 +57,7 @@ const AuthProvider = (props: PropsWithChildren) => {
                         resetMeInformationState();
                     }
                 });
-                
+
                 wait(API.SPRINTS.Sprints(), (resp) => {
                     // TODO: атом состояния всех спринтов
                     if (resp.isSuccess) {

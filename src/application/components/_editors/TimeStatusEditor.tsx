@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import './TimeStatusEditorStyle.css';
 import { EventType } from '../_cards/_types/EventCardType';
 import { Icons } from '../../../Platform/_types/Icons';
+import { TimeStatusType } from '../../../Platform/_times/TimeComparer';
 
 export type ColorStatusType = 'yellow' | 'green' | 'purple' | null;
 export type UseTimeStatusType = [
@@ -11,22 +12,24 @@ export type UseTimeStatusType = [
 
 const ITEMS: {
     title: string;
-    value: ColorStatusType;
+    value: TimeStatusType;
     addVariative: boolean;
 }[] = [
-    { title: 'Отказаться от', value: 'yellow', addVariative: true },
-    { title: 'Продолжить так же', value: 'green', addVariative: false },
-    { title: 'Скорректировать план', value: 'purple', addVariative: false },
+    { title: 'Отказаться от', value: 'Decline', addVariative: true },
+    { title: 'Продолжить так же', value: 'Continue', addVariative: false },
+    { title: 'Скорректировать план', value: 'Modify', addVariative: false },
 ];
 
 type TimeStatusEditorProps = {
-    useTimeStatus: UseTimeStatusType;
+    value: TimeStatusType;
     eventType: EventType;
+    onChangeCallback: (newStatus: TimeStatusType) => void;
 };
 
 function TimeStatusEditor({
-    useTimeStatus: [status, setStatus],
+    value,
     eventType,
+    onChangeCallback,
 }: TimeStatusEditorProps) {
     const baseCN = 'timeStatusEditor';
     const statusItemCN = clsx(`${baseCN}__statusItem`);
@@ -34,14 +37,14 @@ function TimeStatusEditor({
     const checkedButtonCN = clsx(`${statusPickerButtonCN}_checked`);
     const statusTitleCN = clsx(`${baseCN}__title`);
 
-    const statusClickHandler = (value: ColorStatusType) => {
-        setStatus(() => (value === status ? null : value));
+    const statusClickHandler = (eventValue: TimeStatusType) => {
+        onChangeCallback(value === eventValue ? null : eventValue);
     };
 
     return (
         <div className={baseCN}>
             {ITEMS.map((item) => {
-                const checked = item.value === status;
+                const checked = item.value === value;
                 let title = item.title;
 
                 if (item.addVariative) {
@@ -54,6 +57,7 @@ function TimeStatusEditor({
                 return (
                     <div key={item.value} className={statusItemCN}>
                         <button
+                            type='button'
                             className={clsx(
                                 statusPickerButtonCN,
                                 `${statusPickerButtonCN}_${item.value}`,

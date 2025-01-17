@@ -4,6 +4,7 @@ import Sprint from '../../application/screens/home/Sprint';
 import { Routes as RoutesEnum } from './routes';
 import SettingsScreen from '../../application/screens/settings/Settings';
 import ClientsScreen from '../../application/screens/clients/Clients';
+import OnboardingScreen from '../../application/screens/onboarding/Onboarding';
 
 function AppRouter() {
     return (
@@ -22,9 +23,14 @@ function AppRouter() {
                     path={RoutesEnum.Settings}
                     element={<SettingsScreen />}
                 />
+                <Route path={RoutesEnum.Clients} element={<ClientsScreen />} />
                 <Route
-                    path={RoutesEnum.Clients}
-                    element={<ClientsScreen />}
+                    path={RoutesEnum.Onboarding}
+                    element={<OnboardingScreen />}
+                />
+                <Route
+                    path={RoutesEnum.Creation}
+                    element={<EventEditingScreen />}
                 />
             </Routes>
         </BrowserRouter>

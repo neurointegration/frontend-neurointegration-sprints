@@ -1,3 +1,8 @@
+import {
+    CurrentSprintDropdownValue,
+    DROPDOWN_DATES_SEPARATOR,
+    SECTIONS,
+} from './constants';
 import DropdownSelector, {
     DropdownItem,
 } from '../../../Platform/_dropdownSelector/DropdownSelector';
@@ -8,38 +13,35 @@ import {
 import EventRegistry, {
     RegistryItemType,
 } from '../../components/_registry/EventRegistry';
+import { PossibleDatesResponseKeysType } from '../../../core/api/actions/sprints';
+import { EventCardClickHandlerType } from '../../components/_cards/EventCard';
+import EventEditorDialog from '../../components/_dialogs/EventEditorDialog';
+import { MainSectionType } from '../../../Platform/_types/Statuses';
+import CurrentSprintAtom from '../../../core/atoms/sprint.atom';
 import TabSelector from '../../../Platform/_tabs/TabSelector';
 import { SectionType } from '../../../Platform/_tabs/TabType';
-import { useEffect, useState } from 'react';
-import Sidebar from '../../components/_sidebar/Sidebar';
-import EventEditorDialog from '../../components/_dialogs/EventEditorDialog';
-import { EventCardClickHandlerType } from '../../components/_cards/EventCard';
-import clsx from 'clsx';
-import './SprintStyle.css';
-import { useNavigate } from 'react-router-dom';
 import { path, Routes } from '../../../core/routing/routes';
-import CurrentSprintAtom from '../../../core/atoms/sprint.atom';
 import cutDate from '../../../core/api/utils/dateCutter';
-import { useRecoilValue } from 'recoil';
+import Sidebar from '../../components/_sidebar/Sidebar';
 import { API } from '../../../core/api/handles';
-import { PossibleDatesResponseKeysType } from '../../../core/api/actions/sprints';
-import {
-    CurrentSprintDropdownValue,
-    DROPDOWN_DATES_SEPARATOR,
-    SECTIONS,
-} from './constants';
-import { MainSectionType } from '../../../Platform/_types/Statuses';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import './SprintStyle.css';
+import clsx from 'clsx';
+import { PossibleTimeResponceKeysType } from '../../../core/api/actions/projects';
+import MainSectionAtom from '../../../core/atoms/mainSection.atom';
 
 type DialogProps = {
     opened: boolean;
-    eventId: string;
-    item: EventCardType | null;
+    itemDescriptor: RegistryItemType | null;
+    timeKey: PossibleTimeResponceKeysType;
 };
 
 const EmptyDialogProps: DialogProps = {
     opened: false,
-    eventId: null,
-    item: null,
+    itemDescriptor: null,
+    timeKey: 'total',
 };
 
 export type ExpanderClickHandlerType = (
@@ -54,9 +56,17 @@ type MainItemsType = {
     Drive: RegistryItemType[];
 };
 
+const dropDownMapper = {
+    week1: '1',
+    week2: '2',
+    week3: '3',
+    week4: '4',
+    allWeeks: 'total',
+};
+
 function Sprint() {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<SectionType>(SECTIONS[0]);
+    const [{ selectedSectionTab }, setActiveTab] = useRecoilState(MainSectionAtom);
     const [selectedDropdownItem, setSelectedDropdownItem] =
         useState<DropdownItem<keyof typeof CurrentSprintDropdownValue> | null>(
             null
@@ -103,8 +113,8 @@ function Sprint() {
     }, [currentSprint]);
 
     useEffect(() => {
-        document.body.className = `body-color-${activeTab.value}`;
-    }, [activeTab]);
+        document.body.className = `body-color-${selectedSectionTab.value}`;
+    }, [selectedSectionTab]);
 
     useEffect(() => {
         if (currentSprint.id) {
@@ -147,10 +157,6 @@ function Sprint() {
             });
         }
     }, [currentSprint]);
-
-    /*
-        
-    */
 
     /**
      * Обработчик клика по экспандеру на карточке проекта.
@@ -290,8 +296,10 @@ function Sprint() {
         } else {
             setDialogProps(() => ({
                 opened: true,
-                eventId: eventDescriptor.id,
-                item: eventDescriptor.item as EventCardType,
+                itemDescriptor: eventDescriptor,
+                timeKey: dropDownMapper[
+                    selectedDropdownItem.value
+                ] as PossibleTimeResponceKeysType,
             }));
         }
     };
@@ -300,15 +308,15 @@ function Sprint() {
         <>
             {dialogProps.opened && (
                 <EventEditorDialog
-                    eventId={dialogProps.eventId}
-                    item={dialogProps.item}
+                    itemDescriptor={dialogProps.itemDescriptor}
+                    timeKey={dialogProps.timeKey}
                     onClose={() => setDialogProps(() => EmptyDialogProps)}
                 />
             )}
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',
-                    'controls-margin_left-xl'
+                    'controls-margin_left-3xl'
                 )}
             />
             <DropdownSelector
@@ -324,11 +332,11 @@ function Sprint() {
             />
             <TabSelector
                 tabs={SECTIONS}
-                activeTab={activeTab}
+                activeTab={selectedSectionTab}
                 setActiveTab={setActiveTab}
             />
             <EventRegistry
-                items={items[activeTab.value]}
+                items={items[selectedSectionTab.value]}
                 chosedPeriod={
                     selectedDropdownItem
                         ? selectedDropdownItem?.value
@@ -337,6 +345,7 @@ function Sprint() {
                 expanderClickHandler={expanderClickHandler}
                 cardClickHandler={eventCardClickHandler}
                 className={clsx('controls-margin_bottom-3xl')}
+                activeSection={selectedSectionTab.value}
                 newProjectAvailable
             />
         </>

@@ -18,26 +18,26 @@
     border-radius: 4px;
 }
 
-.timeStatusEditor__pickerButton_yellow {
+.timeStatusEditor__pickerButton_Decline {
     background-color: var(--colors-status-light-yellow);
 }
 
-.timeStatusEditor__pickerButton_green {
+.timeStatusEditor__pickerButton_Continue {
     background-color: var(--colors-status-light-green);
 }
 
-.timeStatusEditor__pickerButton_purple {
+.timeStatusEditor__pickerButton_Modify {
     background-color: var(--colors-status-light-purple);
 }
 
-.timeStatusEditor__pickerButton_checked.timeStatusEditor__pickerButton_yellow {
+.timeStatusEditor__pickerButton_checked.timeStatusEditor__pickerButton_Decline {
     background-color: var(--colors-status-yellow);
 }
 
-.timeStatusEditor__pickerButton_checked.timeStatusEditor__pickerButton_green {
+.timeStatusEditor__pickerButton_checked.timeStatusEditor__pickerButton_Continue {
     background-color: var(--colors-status-green);
 }
 
-.timeStatusEditor__pickerButton_checked.timeStatusEditor__pickerButton_purple {
+.timeStatusEditor__pickerButton_checked.timeStatusEditor__pickerButton_Modify {
     background-color: var(--colors-status-purple);
 }

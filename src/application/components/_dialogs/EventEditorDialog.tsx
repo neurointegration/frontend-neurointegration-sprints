@@ -1,12 +1,17 @@
-import { TimeEditorValueType } from '../../../Platform/_times/TimeEditor';
-import { ColorStatusType } from '../_editors/TimeStatusEditor';
-import { EventCardType } from '../_cards/_types/EventCardType';
+import { EventCardType, EventType } from '../_cards/_types/EventCardType';
 import EventTitleEditor from '../_editors/EventTitleEditor';
 import { Icons } from '../../../Platform/_types/Icons';
 import EditorUnit from '../_editors/EditorUnit';
 import { SyntheticEvent, useState } from 'react';
 import './EventEditorDialogStyle.css';
 import clsx from 'clsx';
+import { RegistryItemType } from '../_registry/EventRegistry';
+import {
+    EditingFormContextPropertyChangedFuncType,
+    EditingScreenFormContext,
+} from '../../screens/editing/EventEditingContext';
+import EditorFormController from '../_controllers/EditorFormController';
+import { PossibleTimeResponceKeysType } from '../../../core/api/actions/projects';
 
 type EventDitorDialogProps = {
     /**
@@ -15,20 +20,22 @@ type EventDitorDialogProps = {
     onClose: (event: SyntheticEvent) => void;
 
     /**
-     * Идентификатор события (задача или проект), по которому будет вычитана информация
-     * для редактирования
-     * @remark
-     * Если передан null -
-     */
-    eventId: string;
-
-    /**
      * Айтем с данными события
      */
-    item?: EventCardType;
+    itemDescriptor?: RegistryItemType;
+
+    /**
+     * Ключ к нужному эдитору времени
+     */
+    timeKey: PossibleTimeResponceKeysType;
 };
 
-function EventEditorDialog({ onClose, eventId, item }: EventDitorDialogProps) {
+function EventEditorDialog({
+    onClose,
+    itemDescriptor,
+    timeKey,
+}: EventDitorDialogProps) {
+    const item = itemDescriptor.item as EventCardType;
     const baseCN = 'eventEditorDialog';
     const wrapperCN = clsx(`${baseCN}__wrapper`);
     const crossCN = clsx(`${baseCN}__cross`);
@@ -37,53 +44,76 @@ function EventEditorDialog({ onClose, eventId, item }: EventDitorDialogProps) {
     const actionButtonCN = clsx(`${baseCN}__actionButton`);
     const saveButtonCN = clsx(actionButtonCN, `${actionButtonCN}_outlined`);
 
-    const testUseTime = useState<TimeEditorValueType>({
-        hours: 98,
-        minutes: 17,
-    });
-    const test2UseTime = useState<TimeEditorValueType>({
-        hours: 99,
-        minutes: 1,
-    });
+    const CONTROLLER = EditorFormController(
+        itemDescriptor,
+        false,
+        itemDescriptor.project ? EventType.Task : EventType.Project,
+        itemDescriptor.sectionName,
+        itemDescriptor.project
+    );
 
-    const useChosedColorStatus = useState<ColorStatusType>(null);
-
-    const useTitle = useState<string | null>(item.title || null);
-
+    const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const closeClickHandler = (event: SyntheticEvent) => {
         onClose(event);
     };
 
+    const submitHandler = (event: SyntheticEvent) => {
+        event.preventDefault();
+        CONTROLLER.saveHandler();
+    }
+
+    const propertyChanged: EditingFormContextPropertyChangedFuncType = (
+        propertyKey,
+        newValue
+    ): void => {
+        CONTROLLER.useChanges[1]((prev) => {
+            const newChanges = { ...prev, [propertyKey]: newValue };
+            // console.log(newChanges);
+
+            setSaveButtonDisabled(() => !Object.keys(newChanges).length);
+            return newChanges;
+        });
+    };
+
     return (
-        <div className={wrapperCN}>
-            <div className={dialogOverlayCN} />
-            <div className={baseCN}>
-                <button onClick={closeClickHandler}>
-                    <img className={crossCN} src={Icons.cross} />
-                </button>
-                <EventTitleEditor
-                    useTitle={useTitle}
-                    eventType={item.type}
-                    disabled
-                />
-                {/* TODO: заменить на динамику eventType */}
-                <EditorUnit
-                    usePlannedTime={testUseTime}
-                    useFactTime={test2UseTime}
-                    useTimeStatus={useChosedColorStatus}
-                    eventType={item.type}
-                />
-                <div className={buttonsCN}>
-                    <button className={saveButtonCN}>Сохранить</button>
-                    <button
-                        className={actionButtonCN}
-                        onClick={closeClickHandler}
-                    >
-                        Отменить
-                    </button>
+        <EditingScreenFormContext.Provider value={{ propertyChanged }}>
+            <form onSubmit={submitHandler}>
+                <div className={wrapperCN}>
+                    <div className={dialogOverlayCN} />
+                    <div className={baseCN}>
+                        <button type='button' onClick={closeClickHandler}>
+                            <img className={crossCN} src={Icons.cross} />
+                        </button>
+                        <EventTitleEditor
+                            useTitle={CONTROLLER.useEventTitle}
+                            eventType={item.type}
+                        />
+                        <EditorUnit
+                            timeKey={timeKey}
+                            usePlanningTimes={CONTROLLER.usePlanningTimes}
+                            useFactTimes={CONTROLLER.useFactTimes}
+                            eventType={item.type}
+                        />
+                        <div className={buttonsCN}>
+                            <button
+                                type='submit'
+                                className={saveButtonCN}
+                                disabled={saveButtonDisabled}
+                            >
+                                Сохранить
+                            </button>
+                            <button
+                                type='button'
+                                className={actionButtonCN}
+                                onClick={closeClickHandler}
+                            >
+                                Отменить
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </form>
+        </EditingScreenFormContext.Provider>
     );
 }
 
