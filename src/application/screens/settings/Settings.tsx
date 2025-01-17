@@ -35,7 +35,7 @@ const SettingsScreen: React.FC = () => {
                 <form onSubmit={handleSubmit}>
                     <div className='profile-picture-container'>
                         <img
-                            src='/empty-avatar.gif'
+                            src='/logo.svg'
                             alt='Profile'
                             className='profile-picture'
                         />

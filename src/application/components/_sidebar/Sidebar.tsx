@@ -35,7 +35,7 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
     const [expanded, setExpanded] = useState<boolean>(false);
     const [selectorItems, setSelectorItems] =
         useState<SelectorItemType[]>(SELECTOR_ITEMS_BASE);
-    const emptyAvatarURL = '/empty-avatar.gif';
+    const emptyAvatarURL = '/logo.svg';
 
     const baseCN = 'sidebar';
     const menuIconCN = clsx(
