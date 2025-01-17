@@ -7,7 +7,7 @@ import http, {
 } from '../utils/httpHandlers';
 import { TaskOrProjectTimeDescriptorType } from './projects';
 
-type TaskResponse = {
+export type TaskResponse = {
     id: string;
     title: string;
     sectionName: MainSectionType;

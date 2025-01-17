@@ -1,4 +1,3 @@
-
 import { path } from '../../routing/routes';
 import { APIRoutes } from '../handles';
 import http, {
@@ -13,14 +12,14 @@ type DatesResponseType = {
 
 export type PossibleDatesResponseKeysType = '1' | '2' | '3' | '4';
 
+type PartialKeys<K extends string, T> = Partial<Record<K, T>>;
+
 export type SprintResponseType = {
     id: string;
     weeksCount: number;
     beginDate: string;
     endDate: string;
-    weeks: {
-        [key in keyof PossibleDatesResponseKeysType]?: DatesResponseType;
-    };
+    weeks: PartialKeys<PossibleDatesResponseKeysType, DatesResponseType>;
 };
 
 export const GetAllSprints = () => {

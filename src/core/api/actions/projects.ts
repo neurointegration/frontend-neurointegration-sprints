@@ -25,7 +25,7 @@ export type TaskOrProjectTimeDescriptorType = null | PartialKeys<
     TimeType
 >;
 
-type ProjectResponseType = {
+export type ProjectResponseType = {
     id: string;
     title: string;
     sectionName: MainSectionType;

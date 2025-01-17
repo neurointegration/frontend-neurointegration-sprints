@@ -13,6 +13,15 @@ import {
 } from './actions/projects';
 import { GetAllSprints, GetSprint } from './actions/sprints';
 import { GetAllProjectTasks, PostTask, PutTask } from './actions/tasks';
+import {
+    EditTrainerCientComment,
+    GetTrainerClientComment,
+    GetTrainerClients,
+} from './actions/trainer.clients';
+import {
+    GetTrainerClientSprints,
+    GetTrainerClienttProjectTasks,
+} from './actions/trainer.events';
 
 /**
  * Объект доступных методов обращения к севреру.
@@ -103,6 +112,36 @@ export const API = {
          */
         Me: GetMyInformation,
     },
+    TRAINER: {
+        CLIENTS: {
+            /**
+             * Получение информации о клиентах тренера
+             */
+            Clients: GetTrainerClients,
+        },
+        SPRINTS: {
+            /**
+             * Получение информации о спринтах клиента по клиентскому userId
+             */
+            Sprints: GetTrainerClientSprints,
+        },
+        PROJECTS: {
+            /**
+             * Получение информации о проектах клиента по userId и sprintId
+             */
+            Projects: GetTrainerClienttProjectTasks,
+        },
+        TASKS: {
+            /**
+             * Получение информации о задачах клиента по userId и projectId
+             */
+            Tasks: GetTrainerClienttProjectTasks,
+        },
+        COMMENTS: {
+            GetComment: GetTrainerClientComment,
+            EditComment: EditTrainerCientComment,
+        },
+    },
 };
 
 /**
@@ -133,5 +172,23 @@ export const APIRoutes = {
     Me: {
         Roles: '/api/Me/roles',
         Me: '/api/Me',
+    },
+    Trainer: {
+        Clients: {
+            Clients: '/api/Trainer/clients',
+        },
+        Sprints: {
+            Sprints: '/api/Trainer/clients/:userId/sprints/',
+        },
+        Projects: {
+            ProjectsSprint:
+                '/api/Trainer/clients/:userId/projects/sprint/:sprintId',
+        },
+        Tasks: {
+            TasksProject: '/api/Trainer/clients/:userId/tasks/:projectId',
+        },
+        Comments: {
+            Comment: '/api/Trainer/:userId/comment',
+        },
     },
 };

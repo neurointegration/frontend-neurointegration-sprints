@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import './SidebarStyle.css';
 import clsx from 'clsx';
 import RolesAtom from '../../../core/atoms/roles.atom';
+import MeInformationAtom from '../../../core/atoms/me.atom';
 
 type SelectorItemType = {
     icon: Icons;
@@ -29,12 +30,11 @@ type SidebarProps = {
 function Sidebar({ menuButtonClassName }: SidebarProps) {
     const resetAuthState = useResetRecoilState(AuthAtom);
     const rolesValue = useRecoilValue(RolesAtom);
+    const meInformation = useRecoilValue(MeInformationAtom);
     const currentPath = useLocation();
     const [expanded, setExpanded] = useState<boolean>(false);
     const [selectorItems, setSelectorItems] =
         useState<SelectorItemType[]>(SELECTOR_ITEMS_BASE);
-    // TODO: добавить обработку аватарки
-    const avatarURL = null;
     const emptyAvatarURL = '/empty-avatar.gif';
 
     const baseCN = 'sidebar';
@@ -94,7 +94,7 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
             <div className={avatarCN}>
                 <img
                     className={avatarImgCN}
-                    src={avatarURL ?? emptyAvatarURL}
+                    src={meInformation.photoUrl ?? emptyAvatarURL}
                 />
             </div>
             <div className={menuSelectorCN}>
