@@ -9,6 +9,7 @@ import AuthAtom from '../../../core/atoms/auth.atom';
 import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
 
 const BOT_USERNAME = 'neurosprints_test_bot';
+const TELEGRAM_BOT_URL = 'https://t.me/neurointegration_kontur_test_bot';
 
 const AuthScreen = () => {
     // const { wait, loading } = useHttpLoader();
@@ -59,6 +60,10 @@ const AuthScreen = () => {
         });
     };
 
+    const handleLinkClick = () => {
+        window.open(TELEGRAM_BOT_URL, '_blank');
+    };
+
     return (
         <div className='auth-container'>
             <div className='auth-wrapper'>
@@ -66,7 +71,13 @@ const AuthScreen = () => {
                 <p className='secondary-text'>
                     Приложение работает вместе
                     <br />
-                    с Telegram-ботом, нужна
+                    с&nbsp;
+                    <span
+                        style={{ color: 'blue', cursor: 'pointer' }}
+                        onClick={handleLinkClick}
+                    >Telegram-ботом
+                    </span>
+                    , нужна
                     <br />
                     авторизация
                 </p>

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './OnboardingStyle.css';
 import TextInput from '../../../Platform/_inputs/TextInput';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../../../core/routing/routes';
 
 const images: string[] = [
     '/onboarding/onboarding0.png',
@@ -18,6 +20,7 @@ const images: string[] = [
 const totalImages: number = images.length + 1;
 
 function OnboardingScreen(): JSX.Element {
+    const navigate = useNavigate();
     const showRoleSelection = false // todo присваивать реальное значение
 
     const [currentImageIndex, setCurrentImageIndex] = useState<number>(1);
@@ -48,7 +51,7 @@ function OnboardingScreen(): JSX.Element {
     };
 
     const handleReturn = () => {
-        // todo добавить навигацию на экран настроек
+        navigate(Routes.Settings)
     };
 
     const isLastScreen = currentImageIndex === totalImages;
@@ -105,7 +108,7 @@ function OnboardingScreen(): JSX.Element {
                     <div className='last-screen-content-return'>
                         <button className='start-button'
                             onClick={handleReturn}
-                        >Вернуться
+                        >Вернуться к настройкам
                         </button>
                     </div>
                 )
