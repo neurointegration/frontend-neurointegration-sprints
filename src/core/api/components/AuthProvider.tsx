@@ -86,7 +86,11 @@ const AuthProvider = (props: PropsWithChildren) => {
     if (!authState.data.accessToken || authState.data.accessToken === '') {
         // TODO: здесь нужно вставить настоящую страницу авторизации!
         // return <Auth />;
-        return <AuthScreen />;
+        return localStorage.getItem('isAutotest') ? (
+            <TEMPAuthScreen />
+        ) : (
+            <AuthScreen />
+        );
     }
 
     return <>{props.children}</>;
