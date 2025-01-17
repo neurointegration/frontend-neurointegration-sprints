@@ -5,8 +5,12 @@ import { Routes as RoutesEnum } from './routes';
 import SettingsScreen from '../../application/screens/settings/Settings';
 import ClientsScreen from '../../application/screens/clients/Clients';
 import OnboardingScreen from '../../application/screens/onboarding/Onboarding';
+import PrivateRoute from './PrivateRoute';
+import { useRecoilValue } from 'recoil';
+import RolesAtom from '../atoms/roles.atom';
 
 function AppRouter() {
+    const { isTrainer } = useRecoilValue(RolesAtom);
     return (
         <BrowserRouter>
             <Routes>
@@ -23,7 +27,14 @@ function AppRouter() {
                     path={RoutesEnum.Settings}
                     element={<SettingsScreen />}
                 />
-                <Route path={RoutesEnum.Clients} element={<ClientsScreen />} />
+                <Route
+                    path={RoutesEnum.Clients}
+                    element={
+                        <PrivateRoute access={isTrainer}>
+                            <ClientsScreen />
+                        </PrivateRoute>
+                    }
+                />
                 <Route
                     path={RoutesEnum.Onboarding}
                     element={<OnboardingScreen />}

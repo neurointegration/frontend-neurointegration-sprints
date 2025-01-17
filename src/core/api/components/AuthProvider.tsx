@@ -9,6 +9,7 @@ import RolesAtom from '../../atoms/roles.atom';
 import MeInformationAtom from '../../atoms/me.atom';
 import CurrentSprintAtom from '../../atoms/sprint.atom';
 import HistorySprintsAtom from '../../atoms/historySprints.atom';
+import LoadingScreen from '../../../application/screens/loading/Loading';
 
 const AuthProvider = (props: PropsWithChildren) => {
     const { wait, loading } = useHttpLoader();
@@ -77,10 +78,7 @@ const AuthProvider = (props: PropsWithChildren) => {
     if (loading) {
         return (
             // TODO: страница с крутящимся лоадером
-            <div>ИДЕТ АВТОРИЗАЦИЯ... НЕ ЛЕЗЬ!</div>
-            // <LoaderPage
-            //     inscription={`Кажется, вы тут уже были...\nПытаемся авторизоваться...`}
-            // />
+            <LoadingScreen />
         );
     }
 

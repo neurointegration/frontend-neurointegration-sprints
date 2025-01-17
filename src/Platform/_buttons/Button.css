@@ -22,7 +22,7 @@
 }
 
 .controls-button_filled-showMode {
-    background-color: var(--colors-light-skin);
+    background-color: var(--colors-light-gray);
 }
 
 .controls-button_outlined-showMode {
@@ -36,7 +36,7 @@
 }
 
 .controls-button_filled-showMode:active {
-    background-color: var(--colors-dark-skin);
+    opacity: .5;
 }
 
 .controls-button_icon {
