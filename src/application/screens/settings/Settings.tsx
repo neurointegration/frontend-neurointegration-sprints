@@ -129,7 +129,7 @@ const SettingsScreen: React.FC = () => {
                                 name='role'
                                 value='client'
                                 checked={role === 'client'}
-                                onChange={() => setRole('client')}
+                                onChange={() => setRole(() => 'client')}
                             />{' '}
                             Только клиент
                         </label>
@@ -139,7 +139,7 @@ const SettingsScreen: React.FC = () => {
                                 name='role'
                                 value='both'
                                 checked={role === 'both'}
-                                onChange={() => setRole('both')}
+                                onChange={() => setRole(() => 'both')}
                             />{' '}
                             И клиент, и тренер
                         </label>
@@ -154,7 +154,7 @@ const SettingsScreen: React.FC = () => {
                     </h2>
                     <select
                         value={sprintWeeks}
-                        onChange={(e) => setSprintWeeks(e.target.value)}
+                        onChange={(e) => setSprintWeeks(() => e.target.value)}
                         className='text-input'
                     >
                         <option value={3}>3</option>
