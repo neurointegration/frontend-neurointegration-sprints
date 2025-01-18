@@ -1,13 +1,15 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import EventEditingScreen from '../../application/screens/editing/EventEditing';
+import OnboardingScreen from '../../application/screens/onboarding/Onboarding';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import SettingsScreen from '../../application/screens/settings/Settings';
+import HistoryScreen from '../../application/screens/history/History';
+import ClientsScreen from '../../application/screens/clients/Clients';
 import Sprint from '../../application/screens/home/Sprint';
 import { Routes as RoutesEnum } from './routes';
-import SettingsScreen from '../../application/screens/settings/Settings';
-import ClientsScreen from '../../application/screens/clients/Clients';
-import OnboardingScreen from '../../application/screens/onboarding/Onboarding';
+import RolesAtom from '../atoms/roles.atom';
 import PrivateRoute from './PrivateRoute';
 import { useRecoilValue } from 'recoil';
-import RolesAtom from '../atoms/roles.atom';
+import ClientSprintScreen from '../../application/screens/clients/ClientSprint';
 
 function AppRouter() {
     const { isTrainer } = useRecoilValue(RolesAtom);
@@ -21,6 +23,14 @@ function AppRouter() {
                 <Route path={RoutesEnum.Sprint} element={<Sprint />} />
                 <Route
                     path={RoutesEnum.Editing}
+                    element={<EventEditingScreen />}
+                />
+                <Route
+                    path={RoutesEnum.Creation}
+                    element={<EventEditingScreen />}
+                />
+                <Route
+                    path={RoutesEnum.Readonly}
                     element={<EventEditingScreen />}
                 />
                 <Route
@@ -40,9 +50,10 @@ function AppRouter() {
                     element={<OnboardingScreen />}
                 />
                 <Route
-                    path={RoutesEnum.Creation}
-                    element={<EventEditingScreen />}
+                    path={RoutesEnum.ClientSprint}
+                    element={<ClientSprintScreen />}
                 />
+                <Route path={RoutesEnum.History} element={<HistoryScreen />} />
             </Routes>
         </BrowserRouter>
     );

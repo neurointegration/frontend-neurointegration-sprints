@@ -63,20 +63,20 @@ function TextInput({
         event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ) => {
         _changeAreaHeight(textAreaRef, multiline);
+        const newVal = event.target.value;
 
         setValue(() => {
-            const newVal = event.target.value;
-            if (!allowEmpty) {
-                setEmpty(() => {
-                    onEmptyChange?.(!newVal.length);
-                    return !newVal.length;
-                });
-            }
-
             notifier?.propertyChanged(notifier.propertyKey, newVal);
 
             return newVal;
         });
+
+        if (!allowEmpty) {
+            setEmpty(() => {
+                onEmptyChange?.(!newVal.length);
+                return !newVal.length;
+            });
+        }
 
         onChange?.(event);
     };

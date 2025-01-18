@@ -23,6 +23,7 @@ type TimeEditorProps = {
     timeKey: PossibleTimeResponceKeysType;
     planningTime?: boolean;
     className?: string;
+    disabled?: boolean;
 };
 
 const MAX_MINUTES = 59;
@@ -37,6 +38,7 @@ function TimeEditor({
     changeTimeCallback,
     planningTime = false,
     className,
+    disabled,
 }: TimeEditorProps) {
     const baseCN = 'controls-timeEditor';
     const rootCN = clsx(baseCN, className && className);
@@ -111,7 +113,11 @@ function TimeEditor({
      * Обработчик клика по крестику сброса
      */
     const resetClickHandler = () => {
-        changeTimeCallback(planningTime, { ...value, minutes: NaN, hours: NaN });
+        changeTimeCallback(planningTime, {
+            ...value,
+            minutes: NaN,
+            hours: NaN,
+        });
     };
 
     const hoursChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,6 +167,7 @@ function TimeEditor({
                     value={isNaN(value?.hours) ? '' : value?.hours}
                     onChange={hoursChange}
                     onClick={inputClickSelectValueHandler}
+                    disabled={disabled}
                 />
                 <span className={inputSeparatorCN}>:</span>
                 <input
@@ -172,16 +179,32 @@ function TimeEditor({
                     value={isNaN(value?.minutes) ? '' : value?.minutes}
                     onChange={minutesChange}
                     onClick={inputClickSelectValueHandler}
+                    disabled={disabled}
                 />
             </div>
             <div className={addButtonsBlockCN}>
-                <button type='button' onClick={minutesClickHandler} className={addButtonCN}>
+                <button
+                    disabled={disabled}
+                    type='button'
+                    onClick={minutesClickHandler}
+                    className={addButtonCN}
+                >
                     +{PLUS_MINUTES_BUTTON} <span className={minutesHintCN} />
                 </button>
-                <button type='button' onClick={hoursClickHandler} className={addButtonCN}>
+                <button
+                    disabled={disabled}
+                    type='button'
+                    onClick={hoursClickHandler}
+                    className={addButtonCN}
+                >
                     +{PLUS_HOURS_BUTTON} <span className={hoursHintCN} />
                 </button>
-                <button type='button' onClick={resetClickHandler} className={addButtonCN}>
+                <button
+                    disabled={disabled}
+                    type='button'
+                    onClick={resetClickHandler}
+                    className={addButtonCN}
+                >
                     {RESET_TIME_CROSS}
                 </button>
             </div>

@@ -1,0 +1,11 @@
+.clientButtonSpoiler {
+    border-bottom: 1px solid var(--colors-border-gray);
+    width: 100%;
+    padding: 20px;
+    margin-top: 44px;
+}
+
+.clientButton__comment {
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--colors-border-gray);
+}

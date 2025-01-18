@@ -76,7 +76,9 @@ function DropdownSelector<T extends string | number>({
     ) => {
         setIsSelectorOpen(() => false);
         const newSelectedItem = items.find(
-            (item) => item.value == event.currentTarget.value
+            (item) =>
+                `${item.value}` === event.currentTarget.value ||
+                (item.value === null && event.currentTarget.value === '')
         );
         setSelectedItem(() => newSelectedItem);
     };

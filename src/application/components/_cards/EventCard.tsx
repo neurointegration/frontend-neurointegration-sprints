@@ -11,7 +11,6 @@ import {
 } from '../../../core/api/actions/projects';
 import { useRecoilValue } from 'recoil';
 import MeInformationAtom from '../../../core/atoms/me.atom';
-import { CurrentSprintDropdownValue } from '../../screens/home/constants';
 import { RegistryItemType } from '../_registry/EventRegistry';
 
 export type EventCardClickHandlerType = (event: RegistryItemType) => void;
@@ -33,20 +32,15 @@ type EventCardProps = {
     cardClikHandler: EventCardClickHandlerType;
 
     /**
-     * Выбранный период в дропдауне дял отображение (Неделя 1, Неделя 2, ...)
+     * Времена какой недели отображать на карточке.
+     * Например, если выбрана "Неделя 1", следует передать 1
+     * Если выбраны "Все недели", следует передать null
      */
-    chosedPeriod: keyof typeof CurrentSprintDropdownValue;
+    weekToShow?: 1 | 2 | 3 | 4 | null;
 };
 
-// TODO: будем задавать для карточек задач указатель project: uuid, т.е. указание на карточку проекта
-// возможно, задача без проекта - тогда укажем в parent null
-
 function EventCard({
-    // item,
-    // id,
-    // expanded,
-    chosedPeriod,
-    // sectionName,
+    weekToShow,
     event,
     expanderClickHandler,
     cardClikHandler,
@@ -77,7 +71,7 @@ function EventCard({
     const meInformation = useRecoilValue(MeInformationAtom);
 
     const timeInfo = _getTimeInfoComponent(
-        chosedPeriod,
+        weekToShow,
         meInformation.sprintWeeksCount,
         separatorCN,
         noneTimeCN,
@@ -135,7 +129,7 @@ function EventCard({
 }
 
 function _getTimeInfoComponent(
-    chosedPeriod: keyof typeof CurrentSprintDropdownValue,
+    weekToShow: 1 | 2 | 3 | 4 | null,
     sprintWeeksCount: number,
     separatorCN: string,
     noneTimeCN: string,
@@ -148,7 +142,9 @@ function _getTimeInfoComponent(
     const factTimes = values.factTimes;
     const withoutTimeEl = <div className={noneTimeCN}>Без времени</div>;
 
-    if ((!planningTimes && !factTimes) || !chosedPeriod) {
+    // TODO: проверить старое условие было:
+    // if ((!planningTimes && !factTimes) || !chosedPeriod) {
+    if (!planningTimes && !factTimes) {
         return [withoutTimeEl];
     }
 
@@ -176,7 +172,7 @@ function _getTimeInfoComponent(
     });
 
     // Если выбрано отображение всех недель - их и отобразим
-    if (chosedPeriod === CurrentSprintDropdownValue.allWeeks) {
+    if (weekToShow === null) {
         timeComparerItems.map((item) => {
             result.push(
                 <TimeComparer
@@ -189,21 +185,25 @@ function _getTimeInfoComponent(
         return result;
     }
 
-    const chosedPeriodIndexMapper = {
-        [CurrentSprintDropdownValue.week1]: 0,
-        [CurrentSprintDropdownValue.week2]: 1,
-        [CurrentSprintDropdownValue.week3]: 2,
-        [CurrentSprintDropdownValue.week4]: 3,
-    };
+    // const chosedPeriodIndexMapper = {
+    //     [CurrentSprintDropdownValue.week1]: 0,
+    //     [CurrentSprintDropdownValue.week2]: 1,
+    //     [CurrentSprintDropdownValue.week3]: 2,
+    //     [CurrentSprintDropdownValue.week4]: 3,
+    // };
 
-    const neededItem = timeComparerItems[chosedPeriodIndexMapper[chosedPeriod]];
+    const neededItem = timeComparerItems[weekToShow - 1];
+
+    if (weekToShow === timeComparerItems.length) {
+        return [withoutTimeEl];
+    }
 
     return [
         <TimeComparer
             horizontal
             times={{
-                planning: neededItem.planning,
-                fact: neededItem.fact,
+                planning: neededItem?.planning,
+                fact: neededItem?.fact,
             }}
         />,
     ];

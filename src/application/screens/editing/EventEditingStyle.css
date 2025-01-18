@@ -10,6 +10,10 @@
     gap: 10px;
 }
 
+.screen-EventEditing__actionButton_hidden {
+    display: hidden;
+}
+
 .screen-EventEditing__pageContent {
     padding: 12px 20px;
 }

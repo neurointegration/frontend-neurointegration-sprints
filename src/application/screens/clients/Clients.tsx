@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import './ClientsStyle.css';
 import TextInput from '../../../Platform/_inputs/TextInput';
 import Sidebar from '../../components/_sidebar/Sidebar';
@@ -6,6 +6,8 @@ import clsx from 'clsx';
 import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
 import { API } from '../../../core/api/handles';
 import { ClientResponseType } from '../../../core/api/actions/trainer.clients';
+import { useNavigate } from 'react-router-dom';
+import { path, Routes } from '../../../core/routing/routes';
 
 type ClientCardProps = {
     comment: string;
@@ -20,6 +22,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
     clientRecord,
     onCommentSubmit,
 }) => {
+    const navigate = useNavigate();
     const { username, firstName, aboutMe, id } = clientRecord;
     const [newComment, setNewComment] = useState(() => comment);
     const [isDirty, setIsDirty] = useState(false);
@@ -27,17 +30,23 @@ const ClientCard: React.FC<ClientCardProps> = ({
     useEffect(() => setNewComment(() => comment), [comment]);
 
     const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        e.nativeEvent.stopImmediatePropagation();
         setIsDirty(() => e.target.value !== comment);
     };
 
-    const handleCommentSubmit = () => {
+    const handleCommentSubmit = (e: SyntheticEvent) => {
+        e.nativeEvent.stopImmediatePropagation();
         onCommentSubmit(id, newComment);
         setIsDirty(false);
     };
 
+    const cardClickHandler = () => {
+        navigate(path(Routes.ClientSprint, { clientId: id }));
+    };
+
     return (
         <div className='client-card'>
-            <div className='card-top'>
+            <div className='card-top' onClick={cardClickHandler}>
                 <div className='profile-pic'></div>
                 <div className='client-info'>
                     <p className='username'>@{username}</p>

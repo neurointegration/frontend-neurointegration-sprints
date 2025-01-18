@@ -8,7 +8,6 @@ import clsx from 'clsx';
 import AddTaskCard from '../_cards/AddTaskCard';
 import { useRecoilValue } from 'recoil';
 import MeInformationAtom from '../../../core/atoms/me.atom';
-import { CurrentSprintDropdownValue } from '../../screens/home/constants';
 import uuid from 'react-uuid';
 import { MainSectionType } from '../../../Platform/_types/Statuses';
 import { useNavigate } from 'react-router-dom';
@@ -48,28 +47,28 @@ export type RegistryItemType = {
 
 type EventRegistryProps = {
     items: RegistryItemType[];
-    chosedPeriod: keyof typeof CurrentSprintDropdownValue | null;
+    weekToShow: 1 | 2 | 3 | 4 | null;
     expanderClickHandler: ExpanderClickHandlerType;
     cardClickHandler: EventCardClickHandlerType;
     className?: string;
     newProjectAvailable?: boolean;
+    newTasksAvailable?: boolean;
     activeSection: MainSectionType;
 };
 
 function EventRegistry({
     items,
-    chosedPeriod,
+    weekToShow,
     expanderClickHandler,
     cardClickHandler,
     className,
     newProjectAvailable,
-    activeSection
+    newTasksAvailable,
+    activeSection,
 }: EventRegistryProps) {
     const meInformation = useRecoilValue(MeInformationAtom);
     const navigate = useNavigate();
 
-    const showWeeksHeader =
-        chosedPeriod === CurrentSprintDropdownValue.allWeeks;
     const baseCN = 'eventRegistry';
     const wrapperCN = clsx(`${baseCN}__wrapper`, className && className);
     const weeksHeaderCN = clsx(`${baseCN}__weeksHeader`);
@@ -97,7 +96,7 @@ function EventRegistry({
                         caption='Добавить новый проект'
                     />
                 )}
-                {showWeeksHeader && (
+                {weekToShow === null && (
                     <div className={weeksHeaderCN}>
                         <div className={weeksHeaderWeekCN}>{WEEK1}</div>
                         <div className={weeksHeaderWeekCN}>{WEEK2}</div>
@@ -112,12 +111,14 @@ function EventRegistry({
                 <div>
                     {items.map((event) => {
                         if (event.item.type === EventType.AddTaskSpecial) {
-                            return (
+                            return newTasksAvailable ? (
                                 <AddTaskCard
                                     key={event.id || uuid()}
                                     project={event.project}
                                     section={event.sectionName}
                                 />
+                            ) : (
+                                <div key={uuid()}></div>
                             );
                         } else {
                             return (
@@ -128,7 +129,7 @@ function EventRegistry({
                                     // id={event.id}
                                     // sectionName={event.sectionName}
                                     // expanded={event.projectExpanded}
-                                    chosedPeriod={chosedPeriod}
+                                    weekToShow={weekToShow}
                                     expanderClickHandler={expanderClickHandler}
                                     cardClikHandler={cardClickHandler}
                                 />

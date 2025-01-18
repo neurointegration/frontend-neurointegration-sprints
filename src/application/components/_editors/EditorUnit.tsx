@@ -18,6 +18,7 @@ type EditorUnitProps = {
     usePlanningTimes: UseTimeEditorValue;
     useFactTimes: UseTimeEditorValue;
     eventType: EventType;
+    disabled?: boolean;
 };
 
 function EditorUnit({
@@ -25,6 +26,7 @@ function EditorUnit({
     usePlanningTimes: [planning, setPlanning],
     useFactTimes: [fact, setFact],
     eventType,
+    disabled,
 }: EditorUnitProps) {
     const baseCN = 'editorUnit';
     const timeBlockCN = clsx(`${baseCN}__timeBlock`);
@@ -86,6 +88,7 @@ function EditorUnit({
                     value={planning?.[timeKey]}
                     changeTimeCallback={changeTimeValues}
                     planningTime
+                    disabled={disabled}
                 />
             </div>
             <div className={factTimeBlockCN}>
@@ -94,12 +97,14 @@ function EditorUnit({
                     timeKey={timeKey}
                     value={fact?.[timeKey]}
                     changeTimeCallback={changeTimeValues}
+                    disabled={disabled}
                 />
             </div>
             <TimeStatusEditor
                 value={fact?.[timeKey]?.status}
                 onChangeCallback={changeStatus}
                 eventType={eventType}
+                disabled={disabled}
             />
         </div>
     );

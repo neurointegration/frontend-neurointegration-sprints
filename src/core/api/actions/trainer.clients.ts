@@ -41,3 +41,11 @@ export const EditTrainerCientComment = (userId: string, newComment: string) => {
         .then(handleHttpResponse)
         .catch(handleHttpError);
 };
+
+export const GetClient = (clientId: string) => {
+    const url = path(APIRoutes.Trainer.Clients.Client, { userId: clientId });
+    return http
+        .get<ClientResponseType>(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};

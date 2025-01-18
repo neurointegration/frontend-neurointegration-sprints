@@ -25,6 +25,7 @@ const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
 const pageHeaderCN = clsx(`${baseScreenCN}__header`);
 const pageContentCN = clsx(`${baseScreenCN}__pageContent`);
 const actionButtonCN = clsx(
+    `${baseScreenCN}__actionButton`,
     'controls-fontsize-m',
     'controls-fontweight-medium'
 );
@@ -43,6 +44,7 @@ function EventEditingScreen() {
     const eventType = params.eventType as EventType;
     const eventId = params.id;
     const creationMode = location.pathname.includes('creation');
+    const readonly = location.pathname.includes('history');
     const navigate = useNavigate();
 
     const timeType = useRecoilValue(MeInformationAtom);
@@ -114,20 +116,28 @@ function EventEditingScreen() {
         });
     };
 
+    const actionButtonsDisabled = (
+        readonly && eventType === EventType.Task
+    );
+
     return (
         <EditingScreenFormContext.Provider value={{ propertyChanged }}>
             <form onSubmit={submitHandler}>
                 <div className={pageHeaderCN}>
                     <div className={actionButtonsBlockCN}>
                         <Button
-                            onClick={() => navigate(Routes.Base)}
+                            onClick={() => navigate(-1)}
                             className={actionButtonCN}
                             caption='Отмена'
                             size='small'
                             type='button'
                         />
                         <Button
-                            disabled={saveButtonDisabled}
+                            disabled={
+                                actionButtonsDisabled
+                                    ? true
+                                    : saveButtonDisabled
+                            }
                             className={actionButtonCN}
                             caption='Сохранить'
                             size='small'
@@ -140,6 +150,7 @@ function EventEditingScreen() {
                     <EventTitleEditor
                         useTitle={CONTROLLER.useEventTitle}
                         eventType={eventType}
+                        disabled={readonly}
                     />
                     {spoilerUnits.map((spoilerItem, index) => (
                         <Spoiler
@@ -153,6 +164,7 @@ function EventEditingScreen() {
                                 usePlanningTimes={CONTROLLER.usePlanningTimes}
                                 useFactTimes={CONTROLLER.useFactTimes}
                                 eventType={eventType}
+                                disabled={readonly}
                             />
                         </Spoiler>
                     ))}

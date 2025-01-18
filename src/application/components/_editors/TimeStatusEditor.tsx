@@ -24,12 +24,14 @@ type TimeStatusEditorProps = {
     value: TimeStatusType;
     eventType: EventType;
     onChangeCallback: (newStatus: TimeStatusType) => void;
+    disabled?: boolean;
 };
 
 function TimeStatusEditor({
     value,
     eventType,
     onChangeCallback,
+    disabled,
 }: TimeStatusEditorProps) {
     const baseCN = 'timeStatusEditor';
     const statusItemCN = clsx(`${baseCN}__statusItem`);
@@ -57,6 +59,7 @@ function TimeStatusEditor({
                 return (
                     <div key={item.value} className={statusItemCN}>
                         <button
+                            disabled={disabled}
                             type='button'
                             className={clsx(
                                 statusPickerButtonCN,

@@ -61,7 +61,6 @@ const AuthProvider = (props: PropsWithChildren) => {
                 });
 
                 wait(API.SPRINTS.Sprints(), (resp) => {
-                    // TODO: атом состояния всех спринтов
                     if (resp.isSuccess) {
                         if (resp.body.length) {
                             // если есть хотя бы первый спринт - он основной, остальные - история
@@ -78,14 +77,11 @@ const AuthProvider = (props: PropsWithChildren) => {
 
     if (loading) {
         return (
-            // TODO: страница с крутящимся лоадером
             <LoadingScreen />
         );
     }
 
     if (!authState.data.accessToken || authState.data.accessToken === '') {
-        // TODO: здесь нужно вставить настоящую страницу авторизации!
-        // return <Auth />;
         return localStorage.getItem('isAutotest') ? (
             <TEMPAuthScreen />
         ) : (

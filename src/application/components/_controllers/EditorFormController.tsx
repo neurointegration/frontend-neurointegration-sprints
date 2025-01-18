@@ -9,7 +9,6 @@ import { MainSectionType } from '../../../Platform/_types/Statuses';
 import { useRecoilValue } from 'recoil';
 import CurrentSprintAtom from '../../../core/atoms/sprint.atom';
 import { useNavigate } from 'react-router-dom';
-import { Routes } from '../../../core/routing/routes';
 
 export type FormControllerType = {
     usePlanningTimes: UseTimeEditorValue;
@@ -19,7 +18,7 @@ export type FormControllerType = {
         FlatEditingItemChangesType,
         React.Dispatch<React.SetStateAction<FlatEditingItemChangesType>>
     ];
-    saveHandler: () => void;
+    saveHandler: (navigateTo?: number) => void;
 };
 
 // const API_METHODS = {
@@ -55,9 +54,9 @@ const EditorFormController = (
         restructuredItem?.factTimes
     );
 
-    const useEventTitle = useState<string | null>(restructuredItem?.title);
+    const useEventTitle = useState<string>(restructuredItem?.title || '');
 
-    const saveHandler = () => {
+    const saveHandler = (navigateTo = -1) => {
         // const apiMethod:
         //     | typeof API.PROJECTS.CreateProject
         //     | typeof API.PROJECTS.UpdateProject
@@ -100,7 +99,7 @@ const EditorFormController = (
         }
 
         methodCall.finally(() => {
-            navigate(Routes.Base);
+            navigate(navigateTo);
         });
     };
 

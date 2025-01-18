@@ -3,30 +3,38 @@ import TabButton from './TabButton';
 import { SectionType } from './TabType';
 import './TabsStyle.css';
 import React, { useCallback } from 'react';
-import { SetterOrUpdater } from 'recoil';
+import { useRecoilState } from 'recoil';
+import ScreensSectionsAtom from '../../core/atoms/screensSections.atom';
+import { BaseRegistryType } from '../../application/screens/home/constants';
 
 type TabSelectorProps = {
     tabs: SectionType[];
-    activeTab: SectionType;
-    setActiveTab: SetterOrUpdater<{
-        selectedSectionTab: SectionType;
-    }>;
+    registryType: BaseRegistryType;
 };
 
-function TabSelector({ tabs, activeTab, setActiveTab }: TabSelectorProps) {
+function SectionSelector({ tabs, registryType }: TabSelectorProps) {
+    const [selectedScreensSections, setSelectedScreensSections] =
+        useRecoilState(ScreensSectionsAtom);
+
     const tabClickHandler = useCallback((tab: SectionType) => {
-        setActiveTab(() => ({ selectedSectionTab: tab }));
+        setSelectedScreensSections((prev) => ({
+            ...prev,
+            [registryType]: tab,
+        }));
     }, []);
 
     const tabSelectorCN = clsx('controls-tabSelector');
 
     return (
         <div className={tabSelectorCN}>
-            {tabs.map((tab) => (
+            {tabs.map((section) => (
                 <TabButton
-                    key={tab.value}
-                    tab={tab}
-                    selected={activeTab.value === tab.value}
+                    key={section.value}
+                    tab={section}
+                    selected={
+                        selectedScreensSections[registryType].value ===
+                        section.value
+                    }
                     onClick={tabClickHandler}
                 />
             ))}
@@ -34,4 +42,4 @@ function TabSelector({ tabs, activeTab, setActiveTab }: TabSelectorProps) {
     );
 }
 
-export default React.memo(TabSelector);
+export default React.memo(SectionSelector);

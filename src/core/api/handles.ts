@@ -4,7 +4,14 @@ import {
     RefreshToken,
     TestLogin,
 } from './actions/auth';
-import { GetMyInformation, GetMyRoles } from './actions/me';
+import {
+    GetMyInformation,
+    GetMyRoles,
+    GetMyTrainer,
+    PostMyTrainer,
+    PutMyInformation,
+    SetMyRoles,
+} from './actions/me';
 import {
     GetAllSprintProjects,
     GetProject,
@@ -15,12 +22,14 @@ import { GetAllSprints, GetSprint } from './actions/sprints';
 import { GetAllProjectTasks, PostTask, PutTask } from './actions/tasks';
 import {
     EditTrainerCientComment,
+    GetClient,
     GetTrainerClientComment,
     GetTrainerClients,
 } from './actions/trainer.clients';
 import {
     GetTrainerClientSprints,
-    GetTrainerClienttProjectTasks,
+    GetTrainerClientProjectTasks,
+    GetTrainerClientSprintProjects,
 } from './actions/trainer.events';
 
 /**
@@ -111,6 +120,11 @@ export const API = {
          * Получение персольнах данных и настроек текущего пользователя
          */
         Me: GetMyInformation,
+
+        Trainer: GetMyTrainer,
+        PutMe: PutMyInformation,
+        SetTrainer: PostMyTrainer,
+        SetRoles: SetMyRoles,
     },
     TRAINER: {
         CLIENTS: {
@@ -118,6 +132,11 @@ export const API = {
              * Получение информации о клиентах тренера
              */
             Clients: GetTrainerClients,
+
+            /**
+             * Получение информации об одном клиенте
+             */
+            Client: GetClient,
         },
         SPRINTS: {
             /**
@@ -129,13 +148,13 @@ export const API = {
             /**
              * Получение информации о проектах клиента по userId и sprintId
              */
-            Projects: GetTrainerClienttProjectTasks,
+            Projects: GetTrainerClientSprintProjects,
         },
         TASKS: {
             /**
              * Получение информации о задачах клиента по userId и projectId
              */
-            Tasks: GetTrainerClienttProjectTasks,
+            Tasks: GetTrainerClientProjectTasks,
         },
         COMMENTS: {
             GetComment: GetTrainerClientComment,
@@ -172,10 +191,12 @@ export const APIRoutes = {
     Me: {
         Roles: '/api/Me/roles',
         Me: '/api/Me',
+        Trainer: '/api/Me/trainer',
     },
     Trainer: {
         Clients: {
             Clients: '/api/Trainer/clients',
+            Client: '/api/Trainer/clients/:userId',
         },
         Sprints: {
             Sprints: '/api/Trainer/clients/:userId/sprints/',

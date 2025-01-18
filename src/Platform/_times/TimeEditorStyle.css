@@ -55,6 +55,10 @@
     font-size: var(--fontsize-l);
 }
 
+.controls-timeEditor__addButton:disabled {
+    color: var(--colors-border-gray);
+}
+
 .controls-timeEditor__minutesHint::before {
     content: 'минут';
 }

@@ -18,6 +18,10 @@
     border-radius: 4px;
 }
 
+.timeStatusEditor__pickerButton:disabled ~ .timeStatusEditor__title {
+    color: var(--colors-border-gray);
+}
+
 .timeStatusEditor__pickerButton_Decline {
     background-color: var(--colors-status-light-yellow);
 }

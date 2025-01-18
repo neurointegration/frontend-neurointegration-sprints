@@ -1,4 +1,4 @@
-const cutDate = (date: string): string => {
+export const cutDate = (date: string): string => {
     try {
         const parts = date.split('-');
         return `${parts?.[2]}.${parts?.[1]}`;
@@ -7,4 +7,11 @@ const cutDate = (date: string): string => {
     }
 };
 
-export default cutDate;
+export const formatDate = (date: string): string => {
+    try {
+        const parts = date.split('-');
+        return `${parts[2]}.${parts[1]}.${parts[0]}`;
+    } catch {
+        return date;
+    }
+};

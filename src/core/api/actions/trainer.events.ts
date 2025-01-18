@@ -30,7 +30,7 @@ export const GetTrainerClientSprintProjects = (
         .catch(handleHttpError);
 };
 
-export const GetTrainerClienttProjectTasks = (
+export const GetTrainerClientProjectTasks = (
     userId: string,
     projectId: string
 ) => {
