@@ -60,7 +60,7 @@ const SettingsScreen: React.FC = () => {
         });
         API.ME.Trainer().then((res) => {
             if (res.isSuccess) {
-                setTrainer(() => `@${res.body.trainerUsername}`);
+                setTrainer(() => `@${res.body.username}`);
             }
         });
         API.ME.Roles().then((res) => {

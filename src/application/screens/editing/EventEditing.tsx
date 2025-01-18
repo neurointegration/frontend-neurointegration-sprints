@@ -21,6 +21,8 @@ import { Routes } from '../../../core/routing/routes';
 import EditorFormController from '../../components/_controllers/EditorFormController';
 import { API } from '../../../core/api/handles';
 import CurrentSprintAtom from '../../../core/atoms/sprint.atom';
+import { BaseRegistryProps } from '../home/BaseRegistry';
+import { BaseRegistryType } from '../home/constants';
 
 const baseScreenCN = 'screen-EventEditing';
 const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
@@ -50,6 +52,9 @@ function EventEditingScreen() {
     const navigate = useNavigate();
 
     const timeType = useRecoilValue(MeInformationAtom);
+
+    const registryType = location.state.registryType as BaseRegistryType;
+    const userSprintId = location.state.userSprintId;
 
     const registryItemDescriptor = creationMode
         ? null
@@ -102,7 +107,7 @@ function EventEditingScreen() {
 
     const submitHandler = (event: SyntheticEvent) => {
         event.preventDefault();
-        CONTROLLER.saveHandler();
+        CONTROLLER.saveHandler(userSprintId);
     };
 
     const propertyChanged: EditingFormContextPropertyChangedFuncType = (

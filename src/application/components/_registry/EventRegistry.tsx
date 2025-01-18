@@ -54,6 +54,7 @@ type EventRegistryProps = {
     newProjectAvailable?: boolean;
     newTasksAvailable?: boolean;
     activeSection: MainSectionType;
+    userSprintId?: string;
 };
 
 function EventRegistry({
@@ -65,6 +66,7 @@ function EventRegistry({
     newProjectAvailable,
     newTasksAvailable,
     activeSection,
+    userSprintId = null
 }: EventRegistryProps) {
     const meInformation = useRecoilValue(MeInformationAtom);
     const navigate = useNavigate();
@@ -80,7 +82,7 @@ function EventRegistry({
     );
     const newProjectClickHandler = () => {
         navigate(path(Routes.Creation, { eventType: EventType.Project }), {
-            state: { section: activeSection },
+            state: { section: activeSection, userSprintId },
         });
     };
 

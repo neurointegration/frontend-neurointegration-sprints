@@ -59,7 +59,7 @@ function EventEditorDialog({
 
     const submitHandler = (event: SyntheticEvent) => {
         event.preventDefault();
-        CONTROLLER.saveHandler(0);
+        CONTROLLER.saveHandler(null, 0);
     }
 
     const propertyChanged: EditingFormContextPropertyChangedFuncType = (

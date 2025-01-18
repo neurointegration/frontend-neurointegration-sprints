@@ -137,8 +137,8 @@ function ClientSprintScreen() {
             editTasks: true,
             editInDialogMode: true,
         },
-        registryType: BaseRegistryType.MainSprint,
-
+        registryType: BaseRegistryType.ClientSprint,
+        userSprintId: currentSprint.id,
         useDropdownItems: [
             dropdownItems,
             selectedDropdownItem,

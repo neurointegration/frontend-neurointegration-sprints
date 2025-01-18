@@ -58,7 +58,7 @@ type TrainerResponseType = {
 
 export const GetMyTrainer = () => {
     return http
-        .get<TrainerResponseType>(APIRoutes.Me.Trainer)
+        .get<{ username: string }>(APIRoutes.Me.Trainer)
         .then(handleHttpResponse)
         .catch(handleHttpError);
 };

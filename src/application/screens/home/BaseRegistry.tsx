@@ -98,6 +98,7 @@ export type BaseRegistryProps<T extends string | number> = {
      * Поддерживаются типы: 'mainSprint', 'history', 'clientSprint';
      */
     registryType: BaseRegistryType;
+    userSprintId?: string;
 
     /**
      * Управление состоянием выбранного элемента выпадающего списка.
@@ -124,6 +125,7 @@ export type BaseRegistryProps<T extends string | number> = {
 function BaseRegistry<T extends string | number>({
     editingSettings,
     registryType,
+    userSprintId,
     useDropdownItems: [
         dropdownItems,
         selectedDropdownItem,
@@ -388,7 +390,7 @@ function BaseRegistry<T extends string | number>({
                     }
                 ),
                 {
-                    state: { eventDescriptor },
+                    state: { eventDescriptor, registryType, userSprintId },
                 }
             );
         }
@@ -434,6 +436,7 @@ function BaseRegistry<T extends string | number>({
                 className={clsx('controls-margin_bottom-3xl')}
                 newProjectAvailable={editingSettings.editProjects}
                 newTasksAvailable={editingSettings.editTasks}
+                userSprintId={userSprintId}
             />
         </>
     );

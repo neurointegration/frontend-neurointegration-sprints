@@ -18,7 +18,7 @@ export type FormControllerType = {
         FlatEditingItemChangesType,
         React.Dispatch<React.SetStateAction<FlatEditingItemChangesType>>
     ];
-    saveHandler: (navigateTo?: number) => void;
+    saveHandler: (sprintId?: string, navigateTo?: number) => void;
 };
 
 // const API_METHODS = {
@@ -56,7 +56,7 @@ const EditorFormController = (
 
     const useEventTitle = useState<string>(restructuredItem?.title || '');
 
-    const saveHandler = (navigateTo = -1) => {
+    const saveHandler = (clientSprintId: string = null, navigateTo = -1) => {
         // const apiMethod:
         //     | typeof API.PROJECTS.CreateProject
         //     | typeof API.PROJECTS.UpdateProject
@@ -70,7 +70,7 @@ const EditorFormController = (
             params = {
                 title: useEventTitle[0],
                 sectionName,
-                sprintId: currentSprint.id,
+                sprintId: clientSprintId || currentSprint.id,
                 ...useChanges[0],
             };
             methodCall = API.PROJECTS.CreateProject(params);
