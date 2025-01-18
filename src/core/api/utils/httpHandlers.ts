@@ -45,8 +45,8 @@ export const applyInterceptors = (
 
     let refreshRequest: Promise<AuthWithoutStatusType> = Promise.resolve({
         data: {
-            accessToken: authState.data.accessToken,
-            refreshToken: authState.data.refreshToken,
+            accessToken: authState?.data?.accessToken,
+            refreshToken: authState?.data?.refreshToken,
         },
     });
 

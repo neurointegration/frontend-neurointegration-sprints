@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect, useLayoutEffect } from 'react';
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { applyInterceptors } from '../utils/httpHandlers';
 import useHttpLoader from '../hooks/useHttpLoader';
 import AuthAtom from '../../atoms/auth.atom';
@@ -21,6 +21,7 @@ const AuthProvider = (props: PropsWithChildren) => {
     const setRolesState = useSetRecoilState(RolesAtom);
     const setMeInformationaState = useSetRecoilState(MeInformationAtom);
     const resetMeInformationState = useResetRecoilState(MeInformationAtom);
+
     const setCurrentSprintState = useSetRecoilState(CurrentSprintAtom);
     const setHistorySprintsState = useSetRecoilState(HistorySprintsAtom);
 

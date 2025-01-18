@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SettingsStyle.css';
 import TextInput from '../../../Platform/_inputs/TextInput';
 import Sidebar from '../../components/_sidebar/Sidebar';
@@ -9,9 +9,12 @@ import MeInformationAtom from '../../../core/atoms/me.atom';
 import { API } from '../../../core/api/handles';
 import RolesAtom from '../../../core/atoms/roles.atom';
 import { MePutRequestType } from '../../../core/api/actions/me';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../../../core/routing/routes';
 
 const SettingsScreen: React.FC = () => {
-    const [username, setUsername] = useState('');
+    const navigate = useNavigate();
+
     const [fullName, setFullName] = useState('');
     const [about, setAbout] = useState('');
     const [role, setRole] = useState('client');
@@ -28,7 +31,7 @@ const SettingsScreen: React.FC = () => {
         };
 
         const trainerData = {
-            trainerUsername: trainer.includes('@') ? trainer : `@${trainer}`,
+            trainerUsername: trainer.startsWith('@') ? trainer : `@${trainer}`,
         };
 
         const promises = [
@@ -41,7 +44,7 @@ const SettingsScreen: React.FC = () => {
     };
 
     const setMeInfo = useSetRecoilState(MeInformationAtom);
-    const [isTrainer, setIsTrainer] = useRecoilState(RolesAtom);
+    const [_, setIsTrainer] = useRecoilState(RolesAtom);
 
     useEffect(() => {
         document.body.className = 'body-color-white';
@@ -116,6 +119,7 @@ const SettingsScreen: React.FC = () => {
                         )}
                         showMode='filled'
                         type='button'
+                        onClick={() => navigate(Routes.Onboarding)}
                     />
                     <h2 className='section-title'>Роль</h2>
                     <div className='radio-group'>

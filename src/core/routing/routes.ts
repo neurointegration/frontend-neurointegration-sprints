@@ -9,6 +9,7 @@ export enum Routes {
     Readonly = '/history/:eventType/:id',
     Creation = '/creation/:eventType',
     Onboarding = '/onboarding',
+    OnboardingShort = '/short/onboarding',
     History = '/history',
     ClientSprint = '/sprint/:clientId'
 }

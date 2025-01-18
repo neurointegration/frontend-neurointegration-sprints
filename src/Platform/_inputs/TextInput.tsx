@@ -48,7 +48,6 @@ function TextInput({
     const baseCN = 'controls-textInput';
     const wrapperCN = clsx(baseCN, className && className);
     const inputCN = clsx(`${baseCN}__input`, empty && `${baseCN}__input_empty`);
-    const hintCN = clsx(`${baseCN}__hint`);
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const windowDimentions = useWindowDimensions();

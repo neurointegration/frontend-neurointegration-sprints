@@ -19,6 +19,8 @@ import {
 } from './EventEditingContext';
 import { Routes } from '../../../core/routing/routes';
 import EditorFormController from '../../components/_controllers/EditorFormController';
+import { API } from '../../../core/api/handles';
+import CurrentSprintAtom from '../../../core/atoms/sprint.atom';
 
 const baseScreenCN = 'screen-EventEditing';
 const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
@@ -116,33 +118,64 @@ function EventEditingScreen() {
         });
     };
 
-    const actionButtonsDisabled = (
-        readonly && eventType === EventType.Task
-    );
+    const currentSprint = useRecoilValue(CurrentSprintAtom);
+    const restoreClickHandler = () => {
+        if (currentSprint.id) {
+            API.PROJECTS.Project(eventId).then((res) => {
+                if (res.isSuccess) {
+                    const data = {
+                        sprintId: currentSprint.id,
+                        title: res.body.title,
+                        sectionName: res.body.sectionName,
+                        planningTimes: res.body.planningTimes,
+                        factTimes: res.body.factTimes,
+                    };
+                    API.PROJECTS.CreateProject(data).then((createRes) => {
+                        if (createRes.isSuccess) {
+                            navigate(Routes.Base);
+                        }
+                    });
+                }
+            });
+        }
+    };
+
+    const showRestoreButton = readonly && eventType === EventType.Project;
 
     return (
         <EditingScreenFormContext.Provider value={{ propertyChanged }}>
             <form onSubmit={submitHandler}>
                 <div className={pageHeaderCN}>
                     <div className={actionButtonsBlockCN}>
-                        <Button
-                            onClick={() => navigate(-1)}
-                            className={actionButtonCN}
-                            caption='Отмена'
-                            size='small'
-                            type='button'
-                        />
-                        <Button
-                            disabled={
-                                actionButtonsDisabled
-                                    ? true
-                                    : saveButtonDisabled
-                            }
-                            className={actionButtonCN}
-                            caption='Сохранить'
-                            size='small'
-                            type='submit'
-                        />
+                        {!showRestoreButton && (
+                            <>
+                                <Button
+                                    onClick={() => navigate(-1)}
+                                    className={actionButtonCN}
+                                    caption='Отмена'
+                                    size='small'
+                                    type='button'
+                                />
+                                <Button
+                                    disabled={
+                                        showRestoreButton
+                                            ? true
+                                            : saveButtonDisabled
+                                    }
+                                    className={actionButtonCN}
+                                    caption='Сохранить'
+                                    size='small'
+                                    type='submit'
+                                />
+                            </>
+                        )}
+                        {showRestoreButton && (
+                            <Button
+                                caption='Добавить в текущий спринт'
+                                type='button'
+                                onClick={restoreClickHandler}
+                            />
+                        )}
                     </div>
                     <Sidebar />
                 </div>

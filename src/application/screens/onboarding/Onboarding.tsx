@@ -3,6 +3,10 @@ import './OnboardingStyle.css';
 import TextInput from '../../../Platform/_inputs/TextInput';
 import { useNavigate } from 'react-router-dom';
 import { Routes } from '../../../core/routing/routes';
+import { API } from '../../../core/api/handles';
+import { useSetRecoilState } from 'recoil';
+import RolesAtom from '../../../core/atoms/roles.atom';
+import MeInformationAtom from '../../../core/atoms/me.atom';
 
 const images: string[] = [
     '/onboarding/onboarding0.png',
@@ -19,13 +23,17 @@ const images: string[] = [
 
 const totalImages: number = images.length + 1;
 
-function OnboardingScreen(): JSX.Element {
+function OnboardingScreen({ short = false }: { short?: boolean }): JSX.Element {
     const navigate = useNavigate();
-    const showRoleSelection = false // todo присваивать реальное значение
+    // const location = useLocation();
+    const showRoleSelection = !short; // todo присваивать реальное значение
 
     const [currentImageIndex, setCurrentImageIndex] = useState<number>(1);
     const [role, setRole] = useState('client');
     const [trainer, setTrainer] = useState('');
+
+    const setRolesAtom = useSetRecoilState(RolesAtom);
+    const meAtomSetter = useSetRecoilState(MeInformationAtom);
 
     const handlePrev = () => {
         setCurrentImageIndex((prevIndex) => {
@@ -46,12 +54,26 @@ function OnboardingScreen(): JSX.Element {
     };
 
     const handleStart = () => {
-        const modifiedTrainer = trainer.startsWith('@') ? trainer : '@' + trainer;
-        // todo добавить запрос на бэк
+        const modifiedTrainer = trainer.startsWith('@')
+            ? trainer
+            : '@' + trainer;
+
+        API.ME.PutMe({ isOnboardingComplete: true }).then((res) => {
+            if (res.isSuccess) {
+                meAtomSetter((prev) => ({ ...prev, isOnboardingComplete: true }))
+                API.ME.SetTrainer({ trainerUsername: modifiedTrainer });
+                API.ME.SetRoles(role === 'both').then((res) => {
+                    if (res.isSuccess) {
+                        setRolesAtom(() => ({ isTrainer: role === 'both' }));
+                        navigate(Routes.Base);
+                    }
+                });
+            }
+        });
     };
 
     const handleReturn = () => {
-        navigate(Routes.Settings)
+        navigate(Routes.Settings);
     };
 
     const isLastScreen = currentImageIndex === totalImages;
@@ -66,68 +88,83 @@ function OnboardingScreen(): JSX.Element {
                     className='slider-image'
                 />
             ) : (
-                <>{showRoleSelection ? (
-                    <div className='last-screen-content'>
-                        <div className='last-screen-text'>
-                            Перед началом работы необходимо выбрать роль
+                <>
+                    {showRoleSelection ? (
+                        <div className='last-screen-content'>
+                            <div className='last-screen-text'>
+                                Перед началом работы необходимо выбрать роль
+                            </div>
+                            <h2 className='section-title'>Роль</h2>
+                            <div className='radio-group'>
+                                <label className='radio-label'>
+                                    <input
+                                        type='radio'
+                                        name='role'
+                                        value='client'
+                                        checked={role === 'client'}
+                                        onChange={() => setRole('client')}
+                                    />{' '}
+                                    Только клиент
+                                </label>
+                                <label className='radio-label'>
+                                    <input
+                                        type='radio'
+                                        name='role'
+                                        value='both'
+                                        checked={role === 'both'}
+                                        onChange={() => setRole('both')}
+                                    />{' '}
+                                    И клиент, и тренер
+                                </label>
+                            </div>
+                            <h2 className='secondary-title'>Тренер</h2>
+                            <TextInput
+                                useValue={[trainer, setTrainer]}
+                                placeholder='@Тренер'
+                                className='controls-margin_bottom-4xl'
+                            />
+                            <button
+                                className='start-button'
+                                onClick={handleStart}
+                            >
+                                Начать работу
+                            </button>
                         </div>
-                        <h2 className='section-title'>Роль</h2>
-                        <div className='radio-group'>
-                            <label className='radio-label'>
-                                <input
-                                    type='radio'
-                                    name='role'
-                                    value='client'
-                                    checked={role === 'client'}
-                                    onChange={() => setRole('client')}
-                                />{' '}
-                                Только клиент
-                            </label>
-                            <label className='radio-label'>
-                                <input
-                                    type='radio'
-                                    name='role'
-                                    value='both'
-                                    checked={role === 'both'}
-                                    onChange={() => setRole('both')}
-                                />{' '}
-                                И клиент, и тренер
-                            </label>
+                    ) : (
+                        <div className='last-screen-content-return'>
+                            <button
+                                className='start-button'
+                                onClick={handleReturn}
+                            >
+                                Вернуться к настройкам
+                            </button>
                         </div>
-                        <h2 className='secondary-title'>Тренер</h2>
-                        <TextInput
-                            useValue={[trainer, setTrainer]}
-                            placeholder='@Тренер'
-                            className='controls-margin_bottom-4xl'
-                        />
-                        <button className='start-button'
-                            onClick={handleStart}
-                        >Начать работу</button>
-                    </div>
-                ) : (
-                    <div className='last-screen-content-return'>
-                        <button className='start-button'
-                            onClick={handleReturn}
-                        >Вернуться к настройкам
-                        </button>
-                    </div>
-                )
-                }</>
-            )
-            }
+                    )}
+                </>
+            )}
             <div className={`controls`}>
                 <button
-                    className={`prev-button ${buttonColorClass} ${currentImageIndex === 1 ? 'button-hidden' : ''}`}
+                    className={`prev-button ${buttonColorClass} ${
+                        currentImageIndex === 1 ? 'button-hidden' : ''
+                    }`}
                     onClick={handlePrev}
-                >&lt;
+                >
+                    &lt;
                 </button>
-                <div className={`counter ${isLastScreen ? 'counter-last-screen' : ''}`}>
+                <div
+                    className={`counter ${
+                        isLastScreen ? 'counter-last-screen' : ''
+                    }`}
+                >
                     {currentImageIndex} / {totalImages}
                 </div>
                 <button
-                    className={`next-button ${buttonColorClass} ${isLastScreen ? 'button-hidden' : ''}`}
+                    className={`next-button ${buttonColorClass} ${
+                        isLastScreen ? 'button-hidden' : ''
+                    }`}
                     onClick={handleNext}
-                >&gt;
+                >
+                    &gt;
                 </button>
             </div>
         </div>

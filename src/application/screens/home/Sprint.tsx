@@ -15,6 +15,9 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import './SprintStyle.css';
 import { cutDate } from '../../../core/api/utils/dateCutter';
 import { SprintDropdownSelectedAtom } from '../../../core/atoms/screensDropdown.atom';
+import { Navigate } from 'react-router-dom';
+import { Routes } from '../../../core/routing/routes';
+import OnboardingScreen from '../onboarding/Onboarding';
 
 export type ExpanderClickHandlerType = (
     id: string,
@@ -103,7 +106,11 @@ function Sprint() {
         tasksByProjectCallback: (projectId) => API.TASKS.Tasks(projectId),
     };
 
-    return <BaseRegistry {...registryProps} />;
+    return meInformation.isOnboardingComplete ? (
+        <BaseRegistry {...registryProps} />
+    ) : (
+        <OnboardingScreen />
+    );
 }
 
 export default Sprint;

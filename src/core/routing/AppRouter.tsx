@@ -10,9 +10,11 @@ import RolesAtom from '../atoms/roles.atom';
 import PrivateRoute from './PrivateRoute';
 import { useRecoilValue } from 'recoil';
 import ClientSprintScreen from '../../application/screens/clients/ClientSprint';
+import MeInformationAtom from '../atoms/me.atom';
 
 function AppRouter() {
     const { isTrainer } = useRecoilValue(RolesAtom);
+    const { isOnboardingComplete } = useRecoilValue(MeInformationAtom);
     return (
         <BrowserRouter>
             <Routes>
@@ -47,13 +49,18 @@ function AppRouter() {
                 />
                 <Route
                     path={RoutesEnum.Onboarding}
-                    element={<OnboardingScreen />}
+                    element={<OnboardingScreen short={isOnboardingComplete} />}
+                />
+                <Route
+                    path={RoutesEnum.OnboardingShort}
+                    element={<OnboardingScreen short />}
                 />
                 <Route
                     path={RoutesEnum.ClientSprint}
                     element={<ClientSprintScreen />}
                 />
                 <Route path={RoutesEnum.History} element={<HistoryScreen />} />
+                <Route path='*' element={<Sprint />} />
             </Routes>
         </BrowserRouter>
     );

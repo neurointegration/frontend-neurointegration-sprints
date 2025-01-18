@@ -64,7 +64,7 @@ export const GetProject = (projectId: string) => {
         projectId,
     });
     return http
-        .get<ProjectResponseType[]>(url)
+        .get<ProjectResponseType>(url)
         .then(handleHttpResponse)
         .catch(handleHttpError);
 };
