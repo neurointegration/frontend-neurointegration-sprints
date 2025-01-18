@@ -68,7 +68,7 @@ const SettingsScreen: React.FC = () => {
                 const trainerRes = res.body.includes('Trainer')
                     ? { isTrainer: true }
                     : { isTrainer: false };
-                setRole(() => (trainerRes ? 'both' : 'client'));
+                setRole(() => (trainerRes.isTrainer ? 'both' : 'client'));
                 setIsTrainer(() => trainerRes);
             } else {
                 setIsTrainer(() => ({ isTrainer: false }));
