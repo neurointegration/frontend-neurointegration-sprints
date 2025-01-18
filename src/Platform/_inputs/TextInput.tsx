@@ -56,7 +56,7 @@ function TextInput({
         if (multiline && textAreaRef) {
             _changeAreaHeight(textAreaRef, multiline);
         }
-    }, [windowDimentions, multiline]);
+    }, [windowDimentions, multiline, value]);
 
     const changeHandler = (
         event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
