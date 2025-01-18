@@ -9,7 +9,7 @@ const MeInformationAtom = atom<MeResponseType>({
         lastName: null,
         aboutMe: null,
         photoUrl: null,
-        isOnboardingComplete: false,
+        isOnboardingComplete: true,
         sprintWeeksCount: 4,
     },
 });

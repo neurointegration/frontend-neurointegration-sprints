@@ -11,7 +11,7 @@ import CurrentSprintAtom from '../../../core/atoms/sprint.atom';
 import MeInformationAtom from '../../../core/atoms/me.atom';
 import { API } from '../../../core/api/handles';
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import './SprintStyle.css';
 import { cutDate } from '../../../core/api/utils/dateCutter';
 import { SprintDropdownSelectedAtom } from '../../../core/atoms/screensDropdown.atom';
@@ -28,6 +28,7 @@ export type ExpanderClickHandlerType = (
 function Sprint() {
     const currentSprint = useRecoilValue(CurrentSprintAtom);
     const meInformation = useRecoilValue(MeInformationAtom);
+    const setMeInformation = useSetRecoilState(MeInformationAtom);
 
     const [selectedDropdownItem, setSelectedDropdownItem] = useRecoilState(
         SprintDropdownSelectedAtom
@@ -84,6 +85,14 @@ function Sprint() {
             setProjectsPromise(() => API.PROJECTS.Projects(currentSprint.id));
         }
     }, [currentSprint]);
+
+    useEffect(() => {
+        API.ME.Me().then((res) => {
+            if (res.isSuccess) {
+                setMeInformation(() => res.body);
+            }
+        });
+    }, []);
 
     // ====================================
 
