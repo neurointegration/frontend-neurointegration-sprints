@@ -4,7 +4,7 @@ import { Resetter } from 'recoil';
 import { ROOT_API_URL } from '../../../config';
 import decodeToken from './tokenDecoder';
 import { API } from '../handles';
-import { AuthWithoutStatusType } from '../actions/auth';
+import { AuthWithoutStatusType, Logout } from '../actions/auth';
 
 export type HTTPSuccessResponse<T = undefined> = {
     isSuccess: true;
@@ -51,7 +51,6 @@ export const applyInterceptors = (
     });
 
     
-    
     const decodedTokenPayload = decodeToken(authState.data.accessToken);
     let tokenExpirationTime: Date;
     
@@ -59,22 +58,28 @@ export const applyInterceptors = (
         if (decodedTokenPayload) {
             tokenExpirationTime = new Date(decodedTokenPayload.exp * 1000);
         }
-        
-        const shouldRefreshToken =
-        authState.data.accessToken === '' ||
+
+        const shouldRefreshToken = authState.data.accessToken === '' ||
         tokenExpirationTime < new Date();
-        
+
         return shouldRefreshToken ? refreshToken() : Promise.resolve(authState);
     };
+    
     
     const refreshToken = async (): Promise<AuthWithoutStatusType> => {
         if (isRefreshing) {
             return refreshRequest;
         }
         
-        isRefreshing = true;
-        
-        refreshRequest = API.AUTH.Refresh().finally(
+        isRefreshing = true;   
+        refreshRequest = API.AUTH.Refresh().then((data) => {
+            if (!data.isSucceed && data?.messages?.token[0] === 'Refresh token expired') { 
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+                location.reload();
+            }
+            return data
+        }).finally(
             () => (isRefreshing = false)
         );
         
@@ -93,7 +98,7 @@ export const applyInterceptors = (
         });
     });
 
-    http.interceptors.response.use(
+        http.interceptors.response.use(
         (response) => response,
         (err) => {
             const shouldLogout = err.response && err.response.status === 401;
@@ -105,6 +110,7 @@ export const applyInterceptors = (
             throw err;
         }
     );
+    
 };
 
 export const handleHttpResponse = <T>(

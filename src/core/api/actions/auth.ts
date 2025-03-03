@@ -9,6 +9,9 @@ export type AuthResponseType = {
         accessToken: string;
         refreshToken: string;
     };
+    messages?: {
+        token?: string[];
+    }
 };
 
 export type AuthWithoutStatusType = Omit<AuthResponseType, 'isSucceed'>;
