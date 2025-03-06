@@ -9,7 +9,7 @@ import AuthAtom from '../../../core/atoms/auth.atom';
 import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
 
 const BOT_USERNAME = 'neurosprints_test_bot';
-const TELEGRAM_BOT_URL = 'https://t.me/neurointegration_kontur_test_bot';
+const TELEGRAM_BOT_URL = 'https://t.me/neurointegration_help_bot';
 
 const AuthScreen = () => {
     // const { wait, loading } = useHttpLoader();
