@@ -77,7 +77,7 @@ const AuthScreen = () => {
                         onClick={handleLinkClick}
                     >Telegram-ботом
                     </span>
-                    , нужна
+                    , для корректной работы обязательно нужна
                     <br />
                     авторизация
                 </p>
