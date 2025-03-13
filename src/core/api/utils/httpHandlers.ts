@@ -101,7 +101,7 @@ export const applyInterceptors = (
         http.interceptors.response.use(
         (response) => response,
         (err) => {
-            const shouldLogout = err.response && err.response.status === 401;
+            const shouldLogout = err.response && (err.response.status === 401 || err.response.status === 500);
 
             if (shouldLogout) {
                 resetState();
