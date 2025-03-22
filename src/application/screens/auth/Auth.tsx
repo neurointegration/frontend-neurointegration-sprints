@@ -7,9 +7,10 @@ import { HTTPErrorResponse } from '../../../core/api/utils/httpHandlers';
 import { useSetRecoilState } from 'recoil';
 import AuthAtom from '../../../core/atoms/auth.atom';
 import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
+import { BOT_USERNAME, TELEGRAM_BOT_URL  } from '../../../config';
 
-const BOT_USERNAME = 'neurosprints_test_bot';
-const TELEGRAM_BOT_URL = 'https://t.me/neurointegration_help_bot';
+//const BOT_USERNAME = 'neurosprints_test_bot';
+//const TELEGRAM_BOT_URL = 'https://t.me/neurointegration_help_bot';
 
 const AuthScreen = () => {
     // const { wait, loading } = useHttpLoader();
