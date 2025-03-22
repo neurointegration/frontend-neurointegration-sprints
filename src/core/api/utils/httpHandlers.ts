@@ -105,6 +105,9 @@ export const applyInterceptors = (
 
             if (shouldLogout) {
                 resetState();
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+                location.reload();
             }
 
             throw err;
