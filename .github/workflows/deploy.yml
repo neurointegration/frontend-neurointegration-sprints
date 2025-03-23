@@ -30,13 +30,13 @@ jobs:
         run: |
           if [ "${{ github.event.inputs.environment }}" = "production" ]; then
             echo "VITE_API_URL=${{ secrets.VITE_API_URL_PROD }}" >> $GITHUB_ENV
-            echo "BOT_USERNAME=${{ secrets.BOT_USERNAME_PROD }}" >> $GITHUB_ENV
-            echo "TELEGRAM_BOT_URL=${{ secrets.TELEGRAM_BOT_URL_PROD }}" >> $GITHUB_ENV
+            echo "VITE_BOT_USERNAME=${{ secrets.VITE_BOT_USERNAME_PROD }}" >> $GITHUB_ENV
+            echo "VITE_TELEGRAM_BOT_URL=${{ secrets.VITE_TELEGRAM_BOT_URL_PROD }}" >> $GITHUB_ENV
             echo "::set-output name=bucket::frontend-neurointegration-sprints"
           else
             echo "VITE_API_URL=${{ secrets.VITE_API_URL_TEST }}" >> $GITHUB_ENV
-            echo "BOT_USERNAME=${{ secrets.BOT_USERNAME_TEST }}" >> $GITHUB_ENV
-            echo "TELEGRAM_BOT_URL=${{ secrets.TELEGRAM_BOT_URL_TEST }}" >> $GITHUB_ENV
+            echo "VITE_BOT_USERNAME=${{ secrets.VITE_BOT_USERNAME_TEST }}" >> $GITHUB_ENV
+            echo "VITE_TELEGRAM_BOT_URL=${{ secrets.VITE_TELEGRAM_BOT_URL_TEST }}" >> $GITHUB_ENV
             echo "::set-output name=bucket::frontend-neurointegration-sprints-test"
           fi
 
