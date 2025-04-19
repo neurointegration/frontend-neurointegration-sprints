@@ -1,4 +1,9 @@
 /* Обычные шрифты */
+.controls-fontsize-xxs {
+    font-size: var(--fontsize-xxs);
+    /* line-height: auto; */
+}
+
 .controls-fontsize-xs {
     font-size: var(--fontsize-xs);
     /* line-height: auto; */

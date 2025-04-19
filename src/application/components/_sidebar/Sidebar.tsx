@@ -18,7 +18,8 @@ type SelectorItemType = {
 
 const SELECTOR_ITEMS_BASE: SelectorItemType[] = [
     { icon: Icons.pencil, routePath: Routes.Sprint, title: 'Спринт' },
-    // { icon: Icons.clock, routePath: '', title: 'Рефлексия (WIP)' },
+    { icon: Icons.clock, routePath: Routes.Reflection, title: 'Рефлексия' },
+    { icon: Icons.clock, routePath: Routes.Standup, title: 'Стендап' },
     { icon: Icons.calendar, routePath: Routes.History, title: 'История' },
     { icon: Icons.settings, routePath: Routes.Settings, title: 'Настройки' },
 ];

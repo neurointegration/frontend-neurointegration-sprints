@@ -174,7 +174,7 @@ export const APIRoutes = {
         RefreshToken: '/User/RefreshToken',
         Logout: '/User/Logout',
         Login: '/User/Login',
-    },
+    },   
     Sprints: {
         Sprints: '/api/Sprints',
         Sprint: '/api/Sprints/:sprintId',
@@ -183,6 +183,14 @@ export const APIRoutes = {
         ProjectsSprint: '/api/Projects/sprint/:sprintId',
         Project: '/api/Projects/:projectId',
         Projects: '/api/Projects',
+    },
+    Standup: {
+        StandupSprint: '',
+        Standups: '',
+    },
+    Reflection: {
+        ReflectionSprint: '',
+        Reflections: '',
     },
     Tasks: {
         TasksProject: '/api/Tasks/project/:projectId',
@@ -211,5 +219,11 @@ export const APIRoutes = {
         Comments: {
             Comment: '/api/Trainer/:userId/comment',
         },
+        Reflection: {
+            Reflection: '/api/Trainer/:userId/reflection'
+        },
+        Standup: {
+            Standup: '/api/Trainer/:userId/standup'
+        }
     },
 };

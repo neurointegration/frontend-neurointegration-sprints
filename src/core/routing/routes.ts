@@ -3,7 +3,7 @@ import { generatePath } from 'react-router-dom';
 export enum Routes {
     Base = '/',
     Sprint = '/sprint',
-    Settings = '/settigs',
+    Settings = '/settings',
     Clients = '/clients',
     Editing = '/editing/:eventType/:id',
     Readonly = '/history/:eventType/:id',
@@ -11,7 +11,9 @@ export enum Routes {
     Onboarding = '/onboarding',
     OnboardingShort = '/short/onboarding',
     History = '/history',
-    ClientSprint = '/sprint/:clientId'
+    ClientSprint = '/sprint/:clientId',
+    Reflection = '/reflection',
+    Standup = '/standup'
 }
 
 /**

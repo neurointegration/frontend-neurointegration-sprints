@@ -1,0 +1,100 @@
+
+.standup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.standup-card {
+    /*background-color: blue;*/
+    display: grid;
+    width: 100%;
+    height: auto;
+    grid-template-columns: 0.5fr 160px 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    padding: 20px 0;
+    grid-template-areas: "A B C C C D D D";
+    border-bottom: 1px solid black;
+    gap: 10px;
+}
+
+.standup-card__date-container {
+    grid-area: A;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: var(--fontsize-l);
+    font-weight: var(--fontweight-normal);
+    text-align: center;
+}
+
+.standup-card__mental-states-container {
+
+    grid-area: B;
+    background-color: aqua;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.standup-card__mental-states-container__mental-state {
+    justify-self : stretch;
+    background-color: chartreuse;
+    width: 100%;
+
+    font-size: var(--fontsize-l);
+    font-weight: var(--fontweight-normal);
+    text-align: center;
+}
+
+.standup-card__win-container {
+
+    grid-area: C;
+    background-color: aqua;
+    white-space:normal
+
+}
+
+.standup-card__tabs-container {
+    grid-area: D;
+    background-color: aqua;
+    justify-self : stretch;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.standup-card__tabs-container__tab {
+    height: 50px;
+
+}
+
+.tab-type_life {
+    background-color: var(--colors-Life);
+}
+
+.tab-type_fun {
+    background-color: var(--colors-Fun);
+}
+
+.tab-type_drive {
+    background-color: var(--colors-Drive);
+}
+
+@media (max-width: 500px) {
+ 
+    .standup-card {
+        background-color: red;
+        display: grid;
+        width: 100%;
+        height: auto;
+        grid-template: "A""B""C""D"
+    }
+
+}

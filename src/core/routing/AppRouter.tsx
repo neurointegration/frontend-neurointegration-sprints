@@ -11,6 +11,8 @@ import PrivateRoute from './PrivateRoute';
 import { useRecoilValue } from 'recoil';
 import ClientSprintScreen from '../../application/screens/clients/ClientSprint';
 import MeInformationAtom from '../atoms/me.atom';
+import ReflectionScreen from '../../application/screens/reflection/Reflection';
+import StandupScreen from '../../application/screens/standup/Standup';
 
 function AppRouter() {
     const { isTrainer } = useRecoilValue(RolesAtom);
@@ -35,6 +37,16 @@ function AppRouter() {
                     path={RoutesEnum.Readonly}
                     element={<EventEditingScreen />}
                 />
+
+                <Route
+                    path={RoutesEnum.Reflection}
+                    element={< ReflectionScreen/>}
+                />
+                <Route
+                    path={RoutesEnum.Standup}
+                    element={< StandupScreen/>}
+                />
+
                 <Route
                     path={RoutesEnum.Settings}
                     element={<SettingsScreen />}

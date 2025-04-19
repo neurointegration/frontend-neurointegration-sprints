@@ -1,6 +1,7 @@
 :root {
     /* Размеры шрифтов */
-    --fontsize-xs: 8px;
+    --fontsize-xxs: 8px;
+    --fontsize-xs: 9px;
     --fontsize-s: 10px;
     --fontsize-m: 12px;
     --fontsize-l: 14px;
