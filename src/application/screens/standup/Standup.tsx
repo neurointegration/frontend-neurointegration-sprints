@@ -113,14 +113,14 @@ const StandupScreen = () => {
                     'controls-margin_bottom-4xl'
                 )}
             />
-            { items.length > 0 && transformStandups(items) ? transformStandups(items).map((item) => <StandupCard 
+            { transformStandups(items) ? items.length > 0 ? transformStandups(items).map((item) => <StandupCard 
                 date={item.date}
                 mentalStates={item.mentalStates}
                 wins={item.wins}
                 focusLife={item.focusLife}
                 focusFun={item.focusFun}
                 focusDrive={item.focusDrive} 
-                sprintNumber={item.sprintNumber}/>) : <h3>Кажется, в выбранный спринт нет ни одного стендапа...</h3>}
+                sprintNumber={item.sprintNumber}/>) : <h3>Кажется, в выбранный спринт нет ни одного стендапа...</h3> : <h3>Кажется, в выбранный спринт нет ни одного стендапа...</h3>}
         </div>
     );
 };
