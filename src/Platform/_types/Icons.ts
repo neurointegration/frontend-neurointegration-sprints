@@ -13,4 +13,5 @@ export enum Icons {
     settings = '/icons/settings.svg',
     exitArrow = '/icons/exit-arrow.svg',
     checkmark = '/icons/checkmark.svg',
+    standup = '/icons/standup.svg',
 }

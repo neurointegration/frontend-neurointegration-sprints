@@ -25,4 +25,13 @@
     --colors-status-gray: #DADADA;
 
     --colors-card-active-gray: #EBEBEB;
+
+    --colors-mental-states-red: #FF9D94;
+    --colors-mental-states-orange: #FFAD7B;
+    --colors-mental-states-yellow: #FFE38E;
+    --colors-mental-states-warm-green: #B3F458;
+    --colors-mental-states-cold-green: #7BF8E5;
+    --colors-mental-states-blue: #99B8FF;
+    --colors-mental-states-purple: #CAB7FF;
+
 }

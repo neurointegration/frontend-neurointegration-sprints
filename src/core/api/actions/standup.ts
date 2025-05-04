@@ -1,3 +1,4 @@
+import { StandupAnswerTypeEnum } from '../../../Platform/_types/AnswerTypes';
 import { path } from '../../routing/routes';
 import { APIRoutes } from '../handles';
 import http, {
@@ -8,8 +9,10 @@ import http, {
 
 
 export type StandupResponseType = {
-    id: string;
-    title: string;
+    answerType: StandupAnswerTypeEnum;
+    sprintNumber: number;
+    date: string;
+    answer: string;
 };
 
 

@@ -19,7 +19,7 @@ type SelectorItemType = {
 const SELECTOR_ITEMS_BASE: SelectorItemType[] = [
     { icon: Icons.pencil, routePath: Routes.Sprint, title: 'Спринт' },
     { icon: Icons.clock, routePath: Routes.Reflection, title: 'Рефлексия' },
-    { icon: Icons.clock, routePath: Routes.Standup, title: 'Стендап' },
+    { icon: Icons.standup, routePath: Routes.Standup, title: 'Стендап' },
     { icon: Icons.calendar, routePath: Routes.History, title: 'История' },
     { icon: Icons.settings, routePath: Routes.Settings, title: 'Настройки' },
 ];
@@ -92,7 +92,7 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
 
     const menuEl = (
         <div className={menuCN}>
-            <div className={avatarCN}>
+            <div className={avatarCN} aria-hidden="true">
                 <img
                     className={avatarImgCN}
                     src={meInformation.photoUrl ?? emptyAvatarURL}

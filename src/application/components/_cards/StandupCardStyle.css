@@ -1,70 +1,139 @@
+/*Общий стиль карточки*/
+
 .standup-card {
-    /*background-color: blue;*/
     display: grid;
     width: 100%;
     height: auto;
-    grid-template-columns: 0.5fr 160px 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 0.5fr 140px 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
-    padding: 20px 0;
-    grid-template-areas: "A B C C C D D D";
-    border-bottom: 1px solid black;
+    padding: 10px 0 10px 0;
+    grid-template-areas: "date mental win win focus focus focus focus";
+    border-bottom: 1px solid rgb(66, 55, 55);
     gap: 10px;
 }
 
+/*Кусочки с датой*/
+
 .standup-card__date-container {
-    grid-area: A;
-    background-color: aqua;
+    grid-area: date;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 10px;
 
     font-size: var(--fontsize-l);
     font-weight: var(--fontweight-normal);
     text-align: center;
 }
 
-.standup-card__mental-states-container {
+/*Кусочки с ментальным состоянием*/
 
-    grid-area: B;
-    background-color: aqua;
+.standup-card__mental-states-container {
+    grid-area: mental;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     gap: 4px;
 }
 
 .standup-card__mental-states-container__mental-state {
     justify-self : stretch;
-    background-color: chartreuse;
     width: 100%;
+    border-radius: 4px;
 
     font-size: var(--fontsize-l);
     font-weight: var(--fontweight-normal);
     text-align: center;
 }
 
-.standup-card__win-container {
-
-    grid-area: C;
-    background-color: aqua;
-    white-space:normal
-
+.state-color-red {
+    background-color: var(--colors-mental-states-red);
 }
 
-.standup-card__tabs-container {
-    grid-area: D;
-    background-color: aqua;
+.state-color-orange {
+    background-color: var(--colors-mental-states-orange);
+}
+
+.state-color-yellow {
+    background-color: var(--colors-mental-states-yellow);
+}
+
+.state-color-warm-green {
+    background-color: var(--colors-mental-states-warm-green);
+}
+
+.state-color-cold-green {
+    background-color: var(--colors-mental-states-cold-green);
+}
+
+.state-color-blue {
+    background-color: var(--colors-mental-states-blue);
+}
+
+.state-color-purple {
+    background-color: var(--colors-mental-states-purple);
+}
+
+/*Кусочки с победой*/
+
+.standup-card__win-container {
+
+    grid-area: win;
+    white-space:normal;
+}
+
+.standup-card__win-container__list {
+    font-size: var(--fontsize-l);
+    font-weight: var(--fontweight-normal);
+    padding-left: 40px;
+}
+
+/*Кусочки с лайф-кайф-драйв достижениями*/
+
+.standup-card__focus {
+    display: flex;
+    flex-direction: column;
+    grid-area: focus;
     justify-self : stretch;
     height: auto;
+    gap: 4px;
+}
+
+.standup-card__label {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.standup-card__focus__tabs-container__label{
+    font-size: var(--fontsize-l);
+    font-weight: var(--fontweight-medium);
+}
+
+.standup-card__focus__tabs-container {
+    height: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
 
-.standup-card__tabs-container__tab {
-    height: 50px;
-
+.focus__tab {
+    height: auto;
+    padding-left: 20px; 
+    padding-right: 20px; 
+    padding-top: 8px;
+    padding-bottom: 8px;
+    flex-direction: column; 
+    justify-content: flex-start; 
+    align-items: flex-start; 
+    gap: 10px; 
+    display: inline-flex;
+    font-size: var(--fontsize-l);
+    font-weight: var(--fontweight-normal);
 }
+
+
+
+
 
 .tab-type_life {
     background-color: var(--colors-Life);
@@ -78,14 +147,45 @@
     background-color: var(--colors-Drive);
 }
 
-@media (max-width: 500px) {
+/*Стили для ширины экрана для мобильных устройств*/
+
+@media (max-width: 1000px) {
  
     .standup-card {
-        background-color: red;
         display: grid;
         width: 100%;
         height: auto;
-        grid-template: "A""B""C""D"
+        grid-template: "date""mental""win""focus""focus""focus"
+    }
+
+    .standup-card__focus__tabs-container {
+        justify-self : stretch;
+        height: auto;
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: 1fr;
+    }
+
+    .standup-card__mental-states-container {
+        flex-direction: row;
+        gap: 4px;
+        padding: 0 20px;
+        justify-content: start;
+    }
+
+    .standup-card__mental-states-container__mental-state {
+        min-width: 30%;
+    }
+
+    .standup-card__label {
+        text-transform: uppercase;
+        text-align: left;
+        padding-left: 20px;
+    }
+
+    .standup-card__date-container {
+        justify-content: left;
+        padding-left: 20px;
     }
 
 }

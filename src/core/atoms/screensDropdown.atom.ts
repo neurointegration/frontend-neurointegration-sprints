@@ -16,3 +16,14 @@ export const ClientSprintDropdownSelectedAtom = atom<DropdownItem<SprintWeekDrop
     key: 'clientSprintDropdownSelected',
     default: null,
 });
+
+
+export const ReflectionDropdownSelectedAtom = atom<DropdownItem<string>>({
+    key: 'reflectionDropdownSelected',
+    default: null,
+});
+
+export const StandupDropdownSelectedAtom = atom<DropdownItem<string>>({
+    key: 'standupDropdownSelected',
+    default: null,
+});
