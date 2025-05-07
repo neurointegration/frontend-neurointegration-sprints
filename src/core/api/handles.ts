@@ -18,6 +18,7 @@ import {
     PostProject,
     PutProject,
 } from './actions/projects';
+import { GetSprintReflection } from './actions/reflection';
 import { GetAllSprints, GetSprint } from './actions/sprints';
 import { GetSprintStandup } from './actions/standup';
 import { GetAllProjectTasks, PostTask, PutTask } from './actions/tasks';
@@ -127,6 +128,15 @@ export const API = {
         SetTrainer: PostMyTrainer,
         SetRoles: SetMyRoles,
     },
+
+    STANDUP: {
+        GetStandup: GetSprintStandup,
+    },
+
+    REFLECTION: {
+        GetReflection: GetSprintReflection,
+    },
+
     TRAINER: {
         CLIENTS: {
             /**
@@ -162,9 +172,6 @@ export const API = {
             EditComment: EditTrainerCientComment,
         },
     },
-    STANDUP: {
-        GetStandup: GetSprintStandup,
-    },
 };
 
 /**
@@ -174,10 +181,10 @@ export const API = {
  */
 export const APIRoutes = {
     User: {
-        ExternalTelegramLogin: '/User/ExternalTelegramLogin',
-        RefreshToken: '/User/RefreshToken',
-        Logout: '/User/Logout',
-        Login: '/User/Login',
+        ExternalTelegramLogin: '/api/User/ExternalTelegramLogin',
+        RefreshToken: '/api/User/RefreshToken',
+        Logout: '/api/User/Logout',
+        Login: '/api/User/Login',
     },   
     Sprints: {
         Sprints: '/api/Sprints',
@@ -193,7 +200,7 @@ export const APIRoutes = {
         Standups: '',
     },
     Reflection: {
-        ReflectionSprint: '',
+        ReflectionSprint: 'api/reflection/sprint/:sprintId',
         Reflections: '',
     },
     Tasks: {
