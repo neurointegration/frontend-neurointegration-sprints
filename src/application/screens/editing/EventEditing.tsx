@@ -125,11 +125,11 @@ function EventEditingScreen() {
 
     const currentSprint = useRecoilValue(CurrentSprintAtom);
     const restoreClickHandler = () => {
-        if (currentSprint.id) {
+        if (currentSprint.number) {
             API.PROJECTS.Project(eventId).then((res) => {
                 if (res.isSuccess) {
                     const data = {
-                        sprintId: currentSprint.id,
+                        sprintNumber: currentSprint.number,
                         title: res.body.title,
                         sectionName: res.body.sectionName,
                         planningTimes: res.body.planningTimes,

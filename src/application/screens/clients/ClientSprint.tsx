@@ -32,7 +32,7 @@ function ClientSprintScreen() {
     const clientId = params.clientId;
     const { wait, loading } = useHttpLoader();
     const [currentSprint, setCurrentSprint] = useState<SprintResponseType>({
-        id: null,
+        number: null,
         weeksCount: 0,
         beginDate: null,
         endDate: null,
@@ -120,9 +120,9 @@ function ClientSprintScreen() {
     }, [meInformation, currentSprint]);
 
     useEffect(() => {
-        if (currentSprint?.id) {
+        if (currentSprint?.number) {
             setProjectsPromise(() =>
-                API.TRAINER.PROJECTS.Projects(clientId, currentSprint?.id)
+                API.TRAINER.PROJECTS.Projects(clientId, currentSprint?.number)
             );
         }
     }, [currentSprint]);
@@ -138,7 +138,7 @@ function ClientSprintScreen() {
             editInDialogMode: true,
         },
         registryType: BaseRegistryType.ClientSprint,
-        userSprintId: currentSprint.id,
+        userSprintId: currentSprint.number,
         useDropdownItems: [
             dropdownItems,
             selectedDropdownItem,

@@ -36,7 +36,7 @@ export type ProjectResponseType = {
 type ProjectRequestType = {
     title: string;
     sectionName: string;
-    sprintId: string;
+    sprintNumber: string;
     planningTimes?: TaskOrProjectTimeDescriptorType;
     factTimes?: TaskOrProjectTimeDescriptorType;
 };
