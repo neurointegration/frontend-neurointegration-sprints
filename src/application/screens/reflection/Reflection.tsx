@@ -24,7 +24,7 @@ const ReflectionScreen = () => {
         ReflectionDropdownSelectedAtom
     );
 
-    const [dropdownItems, setdropdownItems] = useState<DropdownItem<number>[]>(
+    const [dropdownItems, setdropdownItems] = useState<DropdownItem<string>[]>(
         []
     );
 
@@ -35,7 +35,7 @@ const ReflectionScreen = () => {
 
     //========= USE EFFECTS ===========
     useEffect(() => {
-        const newItems: DropdownItem<number>[] = [];
+        const newItems: DropdownItem<string>[] = [];
 
         Reflection.map((sprint) => {
             const begin = sprint.beginDate;
@@ -49,7 +49,7 @@ const ReflectionScreen = () => {
 
             newItems.push({
                 caption: caption,
-                value: sprint.sprintNumber,
+                value: sprint.number,
             });
         });
 
@@ -62,7 +62,7 @@ const ReflectionScreen = () => {
     }, [Reflection]);
 
     useEffect(() => {
-        if (selectedDropdownItem?.value || selectedDropdownItem?.value == 0) {
+        if (selectedDropdownItem?.value || selectedDropdownItem?.value == '0') {
             setReflectionsPromise(() =>
                 API.REFLECTION.GetReflection(selectedDropdownItem.value)
             );
@@ -114,10 +114,15 @@ const ReflectionScreen = () => {
                     'controls-margin_bottom-4xl'
                 )}
             />
-            { transformReflections(items) ? items.length > 0 ? transformReflections(items).map((item) => <ReflectionRegistry 
-            number={item.number}/>) : <h3>Кажется, в выбранный спринт не было ни одной рефлексии...</h3> : <h3>Кажется, в выбранный спринт не было ни одной рефлексии...</h3>}
+            <h3>Кажется, в выбранный спринт не было ни одной рефлексии...</h3>
         </div>
     );
 };
 
 export default ReflectionScreen;
+
+
+
+
+//            { transformReflections(items) ? items.length > 0 ? transformReflections(items).map((item) => <ReflectionRegistry 
+//number={item.number}/>) : <h3>Кажется, в выбранный спринт не было ни одной рефлексии...</h3> : <h3>Кажется, в выбранный спринт не было ни одной рефлексии...</h3>}

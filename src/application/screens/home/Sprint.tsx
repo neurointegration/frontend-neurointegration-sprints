@@ -81,8 +81,8 @@ function Sprint() {
     }, [meInformation, currentSprint]);
 
     useEffect(() => {
-        if (currentSprint.id) {
-            setProjectsPromise(() => API.PROJECTS.Projects(currentSprint.id));
+        if (currentSprint.number) {
+            setProjectsPromise(() => API.PROJECTS.Projects(currentSprint.number));
         }
     }, [currentSprint]);
 

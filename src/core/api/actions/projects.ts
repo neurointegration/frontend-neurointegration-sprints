@@ -49,9 +49,9 @@ type PutProjectRequest = {
     factTimes?: TaskOrProjectTimeDescriptorType;
 };
 
-export const GetAllSprintProjects = (sprintId: string) => {
+export const GetAllSprintProjects = (sprintNumber: string) => {
     const url = path(APIRoutes.Projects.ProjectsSprint, {
-        sprintId,
+        sprintNumber,
     });
     return http
         .get<ProjectResponseType[]>(url)

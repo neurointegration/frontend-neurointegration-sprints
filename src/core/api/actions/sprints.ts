@@ -15,7 +15,7 @@ export type PossibleDatesResponseKeysType = '1' | '2' | '3' | '4';
 type PartialKeys<K extends string, T> = Partial<Record<K, T>>;
 
 export type SprintResponseType = {
-    id: string;
+    number: string;
     weeksCount: number;
     beginDate: string;
     endDate: string;
@@ -29,8 +29,8 @@ export const GetAllSprints = () => {
         .catch(handleHttpError);
 };
 
-export const GetSprint = (id: string) => {
-    const url = path(APIRoutes.Sprints.Sprint, { sprintId: id });
+export const GetSprint = (number: string) => {
+    const url = path(APIRoutes.Sprints.Sprint, { number });
     return http
         .get<SprintResponseType>(url)
         .then(handleHttpResponse)

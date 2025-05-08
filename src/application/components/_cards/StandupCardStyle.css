@@ -132,9 +132,6 @@
 }
 
 
-
-
-
 .tab-type_life {
     background-color: var(--colors-Life);
 }
@@ -174,7 +171,7 @@
     }
 
     .standup-card__mental-states-container__mental-state {
-        min-width: 30%;
+        max-width: 30%;
     }
 
     .standup-card__label {

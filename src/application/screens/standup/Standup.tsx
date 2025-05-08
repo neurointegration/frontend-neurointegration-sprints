@@ -49,7 +49,7 @@ const StandupScreen = () => {
 
             newItems.push({
                 caption: caption,
-                value: sprint.id,
+                value: sprint.number,
             });
         });
 

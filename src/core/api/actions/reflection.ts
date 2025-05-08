@@ -18,7 +18,7 @@ export type ReflectionResponseType = {
 
 
 
-export const GetSprintReflection = (sprintNumber: number) => {
+export const GetSprintReflection = (sprintNumber: string) => {
     const url = path(APIRoutes.Reflection.ReflectionSprint, {
         sprintNumber,
     });

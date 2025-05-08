@@ -16,9 +16,9 @@ export type StandupResponseType = {
 };
 
 
-export const GetSprintStandup = (sprintId: string) => {
+export const GetSprintStandup = (sprintNumber: string) => {
     const url = path(APIRoutes.Standup.StandupSprint, {
-        sprintId,
+        sprintNumber,
     });
     return http
         .get<StandupResponseType[]>(url)

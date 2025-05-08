@@ -198,19 +198,19 @@ export const APIRoutes = {
     },   
     Sprints: {
         Sprints: '/api/Sprints',
-        Sprint: '/api/Sprints/:sprintId',
+        Sprint: '/api/Sprints/:sprintNumber',
     },
     Projects: {
-        ProjectsSprint: '/api/Projects/sprint/:sprintId',
+        ProjectsSprint: '/api/Projects/sprint/:sprintNumber',
         Project: '/api/Projects/:projectId',
         Projects: '/api/Projects',
     },
     Standup: {
-        StandupSprint: '/api/standup/sprint/:sprintId',
+        StandupSprint: '/api/standup/sprint/:sprintNumber',
         Standups: '',
     },
     Reflection: {
-        ReflectionSprint: '/api/reflection/sprint/:sprintId',
+        ReflectionSprint: '/api/reflection/sprint/:sprintNumber',
         Reflections: '',
     },
     Tasks: {
@@ -232,7 +232,7 @@ export const APIRoutes = {
         },
         Projects: {
             ProjectsSprint:
-                '/api/Trainer/clients/:userId/projects/sprint/:sprintId',
+                '/api/Trainer/clients/:userId/projects/sprint/:sprintNumber',
         },
         Tasks: {
             TasksProject: '/api/Trainer/clients/:userId/tasks/:projectId',

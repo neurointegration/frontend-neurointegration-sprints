@@ -4,7 +4,7 @@ import { SprintResponseType } from '../api/actions/sprints';
 const CurrentSprintAtom = atom<SprintResponseType>({
     key: 'currentSprint',
     default: {
-        id: null,
+        number: null,
         weeksCount: 0,
         beginDate: null,
         endDate: null,
