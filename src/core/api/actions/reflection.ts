@@ -1,3 +1,4 @@
+import { ReflectionAnswerTypeEnum } from '../../../Platform/_types/AnswerTypes';
 import { path } from '../../routing/routes';
 import { APIRoutes } from '../handles';
 import http, {
@@ -8,14 +9,18 @@ import http, {
 
 
 export type ReflectionResponseType = {
-    id: string;
-    title: string;
+    answerType: ReflectionAnswerTypeEnum;
+    answerNumber: 0 | 1 | 2 | 3
+    sprintNumber: number;
+    date: string;
+    answer: string;
 };
 
 
-export const GetSprintReflection = (sprintId: string) => {
+
+export const GetSprintReflection = (sprintNumber: number) => {
     const url = path(APIRoutes.Reflection.ReflectionSprint, {
-        sprintId,
+        sprintNumber,
     });
     return http
         .get<ReflectionResponseType[]>(url)

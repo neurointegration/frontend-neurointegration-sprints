@@ -49,7 +49,7 @@ function HistoryScreen() {
     }, [history]);
 
     useEffect(() => {
-        if (selectedDropdownItem?.value) {
+        if (selectedDropdownItem?.value || selectedDropdownItem?.value == '0') {
             setProjectsPromise(() =>
                 API.PROJECTS.Projects(selectedDropdownItem.value)
             );

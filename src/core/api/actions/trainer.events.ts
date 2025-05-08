@@ -44,3 +44,32 @@ export const GetTrainerClientProjectTasks = (
         .then(handleHttpResponse)
         .catch(handleHttpError);
 };
+
+
+export const GetTrainerClientSprintStandup = (
+    userId: string,
+    sprintId: string
+) => {
+    const url = path(APIRoutes.Trainer.Standup.Standup, {
+        userId,
+        sprintId,
+    });
+    return http
+        .get<ProjectResponseType[]>(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
+
+export const GetTrainerClientSprintReflection = (
+    userId: string,
+    sprintId: string
+) => {
+    const url = path(APIRoutes.Trainer.Reflection.Reflection, {
+        userId,
+        sprintId,
+    });
+    return http
+        .get<ProjectResponseType[]>(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};

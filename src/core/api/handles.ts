@@ -32,6 +32,8 @@ import {
     GetTrainerClientSprints,
     GetTrainerClientProjectTasks,
     GetTrainerClientSprintProjects,
+    GetTrainerClientSprintStandup,
+    GetTrainerClientSprintReflection,
 } from './actions/trainer.events';
 
 /**
@@ -77,7 +79,7 @@ export const API = {
     },
     PROJECTS: {
         /**
-         * Получение всех проектов спринта по его sprintId
+         * Получение всех проектов спринта по его sprintNumber
          */
         Projects: GetAllSprintProjects,
 
@@ -157,7 +159,7 @@ export const API = {
         },
         PROJECTS: {
             /**
-             * Получение информации о проектах клиента по userId и sprintId
+             * Получение информации о проектах клиента по userId и sprintNumber
              */
             Projects: GetTrainerClientSprintProjects,
         },
@@ -170,6 +172,14 @@ export const API = {
         COMMENTS: {
             GetComment: GetTrainerClientComment,
             EditComment: EditTrainerCientComment,
+        },
+
+        STANDUP: {
+            GetStandup: GetTrainerClientSprintStandup,
+        },
+    
+        REFLECTION: {
+            GetReflection: GetTrainerClientSprintReflection,
         },
     },
 };
@@ -196,11 +206,11 @@ export const APIRoutes = {
         Projects: '/api/Projects',
     },
     Standup: {
-        StandupSprint: 'api/standup/sprint/:sprintId',
+        StandupSprint: '/api/standup/sprint/:sprintId',
         Standups: '',
     },
     Reflection: {
-        ReflectionSprint: 'api/reflection/sprint/:sprintId',
+        ReflectionSprint: '/api/reflection/sprint/:sprintId',
         Reflections: '',
     },
     Tasks: {
