@@ -12,6 +12,8 @@ import {
 } from '../../screens/editing/EventEditingContext';
 import EditorFormController from '../_controllers/EditorFormController';
 import { PossibleTimeResponceKeysType } from '../../../core/api/actions/projects';
+import { useLocation, useParams } from 'react-router-dom';
+import { BaseRegistryType } from '../../screens/home/constants';
 
 type EventDitorDialogProps = {
     /**
@@ -28,12 +30,14 @@ type EventDitorDialogProps = {
      * Ключ к нужному эдитору времени
      */
     timeKey: PossibleTimeResponceKeysType;
+    registryType: BaseRegistryType;
 };
 
 function EventEditorDialog({
     onClose,
     itemDescriptor,
     timeKey,
+    registryType,
 }: EventDitorDialogProps) {
     const item = itemDescriptor.item as EventCardType;
     const baseCN = 'eventEditorDialog';
@@ -43,8 +47,12 @@ function EventEditorDialog({
     const dialogOverlayCN = clsx(`${baseCN}__overlay`);
     const actionButtonCN = clsx(`${baseCN}__actionButton`);
     const saveButtonCN = clsx(actionButtonCN, `${actionButtonCN}_outlined`);
+    const pathParams = useParams();
+    const clientId = pathParams.clientId;
 
     const CONTROLLER = EditorFormController(
+        clientId,
+        registryType,
         itemDescriptor,
         false,
         itemDescriptor.project ? EventType.Task : EventType.Project,

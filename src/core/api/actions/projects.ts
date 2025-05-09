@@ -33,7 +33,7 @@ export type ProjectResponseType = {
     factTimes: TaskOrProjectTimeDescriptorType;
 };
 
-type ProjectRequestType = {
+export type ProjectRequestType = {
     title: string;
     sectionName: string;
     sprintNumber: string;
@@ -41,7 +41,7 @@ type ProjectRequestType = {
     factTimes?: TaskOrProjectTimeDescriptorType;
 };
 
-type PutProjectRequest = {
+export type PutProjectRequest = {
     id: string;
     title?: string;
     sectionName?: MainSectionType;

@@ -34,6 +34,10 @@ import {
     GetTrainerClientSprintProjects,
     GetTrainerClientSprintStandup,
     GetTrainerClientSprintReflection,
+    PutTrainerClientSprintProject,
+    PostTrainerClientSprintProject,
+    PostTrainerClientSprintTask,
+    PutTrainerClientSprintTask,
 } from './actions/trainer.events';
 
 /**
@@ -162,12 +166,31 @@ export const API = {
              * Получение информации о проектах клиента по userId и sprintNumber
              */
             Projects: GetTrainerClientSprintProjects,
+                    /**
+         * Создает новый проект
+         */
+            CreateProject: PostTrainerClientSprintProject,
+
+        /**
+         * Обновить существующий проект
+         */
+            UpdateProject: PutTrainerClientSprintProject,
         },
         TASKS: {
             /**
              * Получение информации о задачах клиента по userId и projectId
              */
             Tasks: GetTrainerClientProjectTasks,
+
+                    /**
+         * Создание новой задачи
+         */
+            CreateTask: PostTrainerClientSprintTask,
+
+        /**
+         * Обновление существующей задачи
+         */
+            UpdateTask: PutTrainerClientSprintTask,
         },
         COMMENTS: {
             GetComment: GetTrainerClientComment,
@@ -231,11 +254,12 @@ export const APIRoutes = {
             Sprints: '/api/Trainer/clients/:userId/sprints/',
         },
         Projects: {
-            ProjectsSprint:
-                '/api/Trainer/clients/:userId/projects/sprint/:sprintNumber',
+            ProjectsSprint: '/api/Trainer/clients/:userId/projects/sprint/:sprintNumber',
+            Project: '/api/Trainer/clients/:userId/projects',
         },
         Tasks: {
             TasksProject: '/api/Trainer/clients/:userId/tasks/:projectId',
+            Task: '/api/Trainer/clients/:userId/tasks',
         },
         Comments: {
             Comment: '/api/Trainer/:userId/comment',

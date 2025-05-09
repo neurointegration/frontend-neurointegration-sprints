@@ -10,8 +10,9 @@ import { useRecoilValue } from 'recoil';
 import MeInformationAtom from '../../../core/atoms/me.atom';
 import uuid from 'react-uuid';
 import { MainSectionType } from '../../../Platform/_types/Statuses';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { path, Routes } from '../../../core/routing/routes';
+import { BaseRegistryType } from '../../screens/home/constants';
 
 const WEEK1 = 'Н1';
 const WEEK2 = 'Н2';
@@ -46,6 +47,7 @@ export type RegistryItemType = {
 };
 
 type EventRegistryProps = {
+    registryType: BaseRegistryType;
     items: RegistryItemType[];
     weekToShow: 1 | 2 | 3 | 4 | null;
     expanderClickHandler: ExpanderClickHandlerType;
@@ -58,6 +60,7 @@ type EventRegistryProps = {
 };
 
 function EventRegistry({
+    registryType,
     items,
     weekToShow,
     expanderClickHandler,
@@ -70,7 +73,8 @@ function EventRegistry({
 }: EventRegistryProps) {
     const meInformation = useRecoilValue(MeInformationAtom);
     const navigate = useNavigate();
-
+    const pathParams = useParams();
+    const clientId = pathParams.clientId;
     const baseCN = 'eventRegistry';
     const wrapperCN = clsx(`${baseCN}__wrapper`, className && className);
     const weeksHeaderCN = clsx(`${baseCN}__weeksHeader`);
@@ -82,7 +86,7 @@ function EventRegistry({
     );
     const newProjectClickHandler = () => {
         navigate(path(Routes.Creation, { eventType: EventType.Project }), {
-            state: { section: activeSection, userSprintId },
+            state: { section: activeSection, userSprintId, registryType, clientId},
         });
     };
 
@@ -118,6 +122,7 @@ function EventRegistry({
                                     key={event.id || uuid()}
                                     project={event.project}
                                     section={event.sectionName}
+                                    registryType={registryType}
                                 />
                             ) : (
                                 <div key={uuid()}></div>

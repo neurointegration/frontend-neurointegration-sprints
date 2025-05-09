@@ -15,7 +15,7 @@ export type TaskResponse = {
     factTimes: TaskOrProjectTimeDescriptorType;
 };
 
-type TaskRequest = {
+export type TaskRequest = {
     title: string;
     projectId: string;
     sectionName: MainSectionType;
@@ -23,7 +23,7 @@ type TaskRequest = {
     factTimes?: TaskOrProjectTimeDescriptorType;
 };
 
-type PutTaskRequest = {
+export type PutTaskRequest = {
     id: string;
     title?: string;
     sectionName?: MainSectionType;

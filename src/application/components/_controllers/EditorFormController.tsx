@@ -8,7 +8,9 @@ import { API } from '../../../core/api/handles';
 import { MainSectionType } from '../../../Platform/_types/Statuses';
 import { useRecoilValue } from 'recoil';
 import CurrentSprintAtom from '../../../core/atoms/sprint.atom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { BaseRegistryProps } from '../../screens/home/BaseRegistry';
+import { BaseRegistryType } from '../../screens/home/constants';
 
 export type FormControllerType = {
     usePlanningTimes: UseTimeEditorValue;
@@ -33,6 +35,8 @@ export type FormControllerType = {
 // };
 
 const EditorFormController = (
+    clientId: string | null,
+    registryType: BaseRegistryType,
     itemDescriptor: RegistryItemType | null,
     isCreation: boolean,
     eventType: EventType,
@@ -66,14 +70,32 @@ const EditorFormController = (
 
         let methodCall;
         let params;
-        if (isCreation && eventType === EventType.Project) {
+        if (isCreation && eventType === EventType.Project && registryType === BaseRegistryType.ClientSprint) {
             params = {
                 title: useEventTitle[0],
                 sectionName,
-                sprintId: clientSprintId || currentSprint.id,
+                sprintId: clientSprintId || currentSprint.number,
+                ...useChanges[0],
+            };
+            methodCall = API.TRAINER.PROJECTS.CreateProject(clientId, params);
+
+        } else if (isCreation && eventType === EventType.Project) {
+            params = {
+                title: useEventTitle[0],
+                sectionName,
+                sprintId: clientSprintId || currentSprint.number,
                 ...useChanges[0],
             };
             methodCall = API.PROJECTS.CreateProject(params);
+        } else if (!isCreation && eventType === EventType.Project && registryType === BaseRegistryType.ClientSprint) {
+            params = {
+                id: itemDescriptor.id,
+                title: useEventTitle[0],
+                sectionName,
+                sprintId: clientSprintId || currentSprint.number,
+                ...useChanges[0],
+            };
+            methodCall = API.TRAINER.PROJECTS.UpdateProject(clientId, params);
         } else if (!isCreation && eventType === EventType.Project) {
             params = {
                 id: itemDescriptor.id,
@@ -81,6 +103,14 @@ const EditorFormController = (
                 ...useChanges[0],
             };
             methodCall = API.PROJECTS.UpdateProject(params);
+        } else if (isCreation && eventType === EventType.Task && registryType === BaseRegistryType.ClientSprint) {
+            params = {
+                projectId,
+                sectionName,
+                title: useEventTitle[0],
+                ...useChanges[0],
+            };
+            methodCall = API.TRAINER.TASKS.CreateTask(clientId, params);
         } else if (isCreation && eventType === EventType.Task) {
             params = {
                 projectId,
@@ -89,6 +119,13 @@ const EditorFormController = (
                 ...useChanges[0],
             };
             methodCall = API.TASKS.CreateTask(params);
+        } else if (!isCreation && eventType === EventType.Task && registryType === BaseRegistryType.ClientSprint) {
+            params = {
+                id: itemDescriptor.id,
+                ...restructuredItem,
+                ...useChanges[0],
+            };
+            methodCall = API.TRAINER.TASKS.UpdateTask(clientId, params);
         } else {
             params = {
                 id: itemDescriptor.id,

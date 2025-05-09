@@ -120,7 +120,7 @@ function ClientSprintScreen() {
     }, [meInformation, currentSprint]);
 
     useEffect(() => {
-        if (currentSprint?.number) {
+        if (currentSprint?.number || currentSprint?.number == '0') {
             setProjectsPromise(() =>
                 API.TRAINER.PROJECTS.Projects(clientId, currentSprint?.number)
             );

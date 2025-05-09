@@ -19,7 +19,7 @@ import { MainSectionType } from '../../../Platform/_types/Statuses';
 import SectionSelector from '../../../Platform/_tabs/TabSelector';
 import { path, Routes } from '../../../core/routing/routes';
 import Sidebar from '../../components/_sidebar/Sidebar';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import './SprintStyle.css';
@@ -135,6 +135,8 @@ function BaseRegistry<T extends string | number>({
     tasksByProjectCallback,
 }: BaseRegistryProps<T>) {
     const navigate = useNavigate();
+    const pathParams = useParams();
+    const clientId = pathParams.clientId;
     const [dialogProps, setDialogProps] =
         useState<DialogProps>(EmptyDialogProps);
 
@@ -390,7 +392,7 @@ function BaseRegistry<T extends string | number>({
                     }
                 ),
                 {
-                    state: { eventDescriptor, registryType, userSprintId },
+                    state: { eventDescriptor, registryType, userSprintId, clientId },
                 }
             );
         }
@@ -400,6 +402,7 @@ function BaseRegistry<T extends string | number>({
         <>
             {dialogProps.opened && (
                 <EventEditorDialog
+                    registryType={registryType}
                     itemDescriptor={dialogProps.itemDescriptor}
                     timeKey={dialogProps.timeKey}
                     onClose={() => setDialogProps(() => EmptyDialogProps)}
@@ -424,6 +427,7 @@ function BaseRegistry<T extends string | number>({
             />
             <SectionSelector tabs={SECTIONS} registryType={registryType} />
             <EventRegistry
+                registryType={registryType}
                 items={items[selectedScreensSections[registryType].value]}
                 weekToShow={
                     TYPES_TO_SHOW_WEEKS.includes(registryType)

@@ -13,9 +13,13 @@ import ClientSprintScreen from '../../application/screens/clients/ClientSprint';
 import MeInformationAtom from '../atoms/me.atom';
 import ReflectionScreen from '../../application/screens/reflection/Reflection';
 import StandupScreen from '../../application/screens/standup/Standup';
+import { GetMyRoles } from '../api/actions/me';
+import { useEffect } from 'react';
+import { API } from '../api/handles';
 
 function AppRouter() {
-    const { isTrainer } = useRecoilValue(RolesAtom);
+    const isTrainer = useRecoilValue(RolesAtom);
+
     const { isOnboardingComplete } = useRecoilValue(MeInformationAtom);
     return (
         <BrowserRouter>
@@ -54,9 +58,7 @@ function AppRouter() {
                 <Route
                     path={RoutesEnum.Clients}
                     element={
-                        <PrivateRoute access={isTrainer}>
                             <ClientsScreen />
-                        </PrivateRoute>
                     }
                 />
                 <Route
@@ -69,7 +71,8 @@ function AppRouter() {
                 />
                 <Route
                     path={RoutesEnum.ClientSprint}
-                    element={<ClientSprintScreen />}
+                    element={
+                    <ClientSprintScreen />}
                 />
                 <Route path={RoutesEnum.History} element={<HistoryScreen />} />
                 <Route path='*' element={<Sprint />} />

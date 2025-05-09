@@ -54,6 +54,7 @@ function EventEditingScreen() {
     const timeType = useRecoilValue(MeInformationAtom);
 
     const registryType = location.state.registryType as BaseRegistryType;
+    const clientId = location.state.clientId as string;
     const userSprintId = location.state.userSprintId;
 
     const registryItemDescriptor = creationMode
@@ -67,6 +68,8 @@ function EventEditingScreen() {
     const sectionName = creationMode ? location.state.section : null;
 
     const CONTROLLER = EditorFormController(
+        clientId,
+        registryType,
         registryItemDescriptor,
         creationMode,
         eventType,
