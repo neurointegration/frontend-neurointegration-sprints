@@ -12,7 +12,15 @@ export type MeResponseType = {
     photoUrl: string;
     isOnboardingComplete: boolean;
     sprintWeeksCount: number;
+    onboarding : Onboarding | null;
 };
+
+export type Onboarding = {
+    dateOnboarding: boolean;
+    projectOnboarding: boolean;
+    editingOnboarding: boolean;
+    clientsOnboarding: boolean;
+}
 
 export type MePutRequestType = {
     firstName?: string;
@@ -20,6 +28,7 @@ export type MePutRequestType = {
     aboutMe?: string;
     isOnboardingComplete?: boolean;
     sprintWeeksCount?: number;
+    onboarding? : Onboarding;
 };
 
 export const GetMyRoles = () => {

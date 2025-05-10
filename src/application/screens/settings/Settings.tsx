@@ -144,22 +144,6 @@ const SettingsScreen: React.FC = () => {
                             И клиент, и тренер
                         </label>
                     </div>
-                    <h2 className='section-title'>Мой тренер</h2>
-                    <TextInput
-                        useValue={[trainer, setTrainer]}
-                        className='controls-margin_bottom-m'
-                    />
-                    <h2 className='section-title'>
-                        Количество недель в спринте
-                    </h2>
-                    <select
-                        value={sprintWeeks}
-                        onChange={(e) => setSprintWeeks(() => e.target.value)}
-                        className='text-input'
-                    >
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
-                    </select>
                     <button type='submit' className='primary-button'>
                         Сохранить
                     </button>

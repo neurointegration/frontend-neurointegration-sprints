@@ -78,7 +78,7 @@ export const PostTrainerClientSprintProject = (
     userId: string,  
     projectData: ProjectRequestType
 ) => {
-    const url = path(APIRoutes.Trainer.Projects.Project, { userId });
+    const url = path(APIRoutes.Trainer.Projects.Projects, { userId });
     return http
         .post(url, { ...projectData })
         .then(handleHttpResponse)
@@ -89,7 +89,7 @@ export const PutTrainerClientSprintProject = (
     userId: string,  
     projectData: PutProjectRequest
 ) => {
-    const url = path(APIRoutes.Trainer.Projects.Project, { userId });
+    const url = path(APIRoutes.Trainer.Projects.Projects, { userId });
     return http
         .put(url, { ...projectData })
         .then(handleHttpResponse)
@@ -100,7 +100,7 @@ export const PostTrainerClientSprintTask = (
     userId: string,  
     taskData: TaskRequest
 ) => {
-    const url = path(APIRoutes.Trainer.Tasks.Task, { userId });
+    const url = path(APIRoutes.Trainer.Tasks.Tasks, { userId });
     return http
         .post(url, { ...taskData })
         .then(handleHttpResponse)
@@ -111,13 +111,40 @@ export const PutTrainerClientSprintTask = (
     userId: string,  
     taskData: PutTaskRequest
 ) => {
-    const url = path(APIRoutes.Trainer.Tasks.Task, { userId });
+    const url = path(APIRoutes.Trainer.Tasks.Tasks, { userId });
     return http
         .put(url, { ...taskData })
         .then(handleHttpResponse)
         .catch(handleHttpError);
 }
 
+export const DeleteTrainerClientSprintProject = (
+    userId: string,
+    projectId: string,
+) => {
+    const url = path(APIRoutes.Trainer.Projects.Project, {
+        projectId,
+        userId,
+    });
+    return http
+        .delete(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
+
+export const DeleteTrainerClientTask = (
+    userId: string,
+    taskId: string
+) => {
+    const url = path(APIRoutes.Trainer.Tasks.Task, {
+        userId,
+        taskId,
+    });
+    return http
+        .delete(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
 
 
 /*

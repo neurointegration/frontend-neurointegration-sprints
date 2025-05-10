@@ -34,6 +34,9 @@ import {
     HTTPSuccessResponse,
 } from '../../../core/api/utils/httpHandlers';
 import { TaskResponse } from '../../../core/api/actions/tasks';
+import MeInformationAtom from '../../../core/atoms/me.atom';
+import { MePutRequestType } from '../../../core/api/actions/me';
+import { API } from '../../../core/api/handles';
 
 type DialogProps = {
     opened: boolean;
@@ -147,52 +150,9 @@ function BaseRegistry<T extends string | number>({
     });
 
     // const currentSprint = useRecoilValue(CurrentSprintAtom);
-    // const meInformation = useRecoilValue(MeInformationAtom);
+    const meInformation = useRecoilValue(MeInformationAtom);
 
     const selectedScreensSections = useRecoilValue(ScreensSectionsAtom);
-    // const test = useState<DropdownItem<
-    //     keyof typeof CurrentSprintDropdownValue
-    // > | null>(null);
-    // const [dropdownItems, setdropdownItems] = useState<
-    //     DropdownItem<keyof typeof CurrentSprintDropdownValue>[]
-    // >([]);
-    // const [items, setItems] = useState<MainItemsType>({
-    //     Life: [],
-    //     Drive: [],
-    //     Fun: [],
-    // });
-
-    // // ========= USE EFFECTS ===========
-    // useEffect(() => {
-    //     const weeks = currentSprint.weeks;
-    //     const newItems = [];
-
-    //     Object.keys(weeks).map((key: PossibleDatesResponseKeysType, index) => {
-    //         const begin = weeks[key].begin;
-    //         const end = weeks[key].end;
-    //         if (index < (meInformation.sprintWeeksCount || 4))
-    //             newItems.push({
-    //                 caption: `Неделя ${key}`,
-    //                 hint:
-    //                     cutDate(begin) +
-    //                     DROPDOWN_DATES_SEPARATOR +
-    //                     cutDate(end),
-    //                 value: CurrentSprintDropdownValue[`week${key}`],
-    //             });
-    //     });
-
-    //     newItems.push({
-    //         caption: 'Все недели',
-    //         hint:
-    //             cutDate(currentSprint.beginDate) +
-    //             DROPDOWN_DATES_SEPARATOR +
-    //             cutDate(currentSprint.endDate),
-    //         value: 'allWeeks',
-    //     });
-
-    //     setdropdownItems(() => [...newItems]);
-    //     setSelectedDropdownItem(() => newItems[newItems.length - 1]);
-    // }, [meInformation, currentSprint]);
 
     useEffect(() => {
         document.body.className = `body-color-${selectedScreensSections[registryType].value}`;
@@ -398,6 +358,24 @@ function BaseRegistry<T extends string | number>({
         }
     };
 
+
+
+        const onboardingCardClickHandler = () => {
+            const data: MePutRequestType = {
+                onboarding: meInformation.onboarding ? 
+                {...meInformation.onboarding, dateOnboarding: true} : 
+                {
+                    dateOnboarding: true,
+                    editingOnboarding: false,
+                    clientsOnboarding: false,
+                    projectOnboarding: false,
+
+                }
+            };
+    
+            API.ME.PutMe(data).then(() => location.reload());
+        };
+
     return (
         <>
             {dialogProps.opened && (
@@ -426,6 +404,11 @@ function BaseRegistry<T extends string | number>({
                 )}
             />
             <SectionSelector tabs={SECTIONS} registryType={registryType} />
+            {meInformation.onboarding ? <div>Онбординг?</div> : 
+            <div>
+                Не онбординг
+                <button onClick={onboardingCardClickHandler}>Кнопка онбординга</button>
+            </div>}
             <EventRegistry
                 registryType={registryType}
                 items={items[selectedScreensSections[registryType].value]}

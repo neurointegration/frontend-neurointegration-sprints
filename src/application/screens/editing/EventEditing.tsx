@@ -148,6 +148,11 @@ function EventEditingScreen() {
         }
     };
 
+    const deleteHandler = (event: SyntheticEvent) => {
+        event.preventDefault();
+        CONTROLLER.deleteHandler();
+    };
+
     const showRestoreButton = readonly && eventType === EventType.Project;
 
     return (
@@ -157,6 +162,13 @@ function EventEditingScreen() {
                     <div className={actionButtonsBlockCN}>
                         {!showRestoreButton && (
                             <>
+                                <Button
+                                    onClick={deleteHandler}
+                                    className={actionButtonCN}
+                                    caption='Удалить'
+                                    size='small'
+                                    type='button'
+                                />
                                 <Button
                                     onClick={() => navigate(-1)}
                                     className={actionButtonCN}

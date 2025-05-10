@@ -53,3 +53,13 @@ export const PutTask = (taskData: PutTaskRequest) => {
         .then(handleHttpResponse)
         .catch(handleHttpError);
 };
+
+export const DeleteTask = (taskId: string) => {
+    const url = path(APIRoutes.Tasks.Task, {
+        taskId,
+    });
+    return http
+        .delete(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};

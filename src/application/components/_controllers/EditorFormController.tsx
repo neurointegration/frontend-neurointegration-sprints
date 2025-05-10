@@ -21,6 +21,8 @@ export type FormControllerType = {
         React.Dispatch<React.SetStateAction<FlatEditingItemChangesType>>
     ];
     saveHandler: (sprintId?: string, navigateTo?: number) => void;
+    deleteHandler: (navigateTo?: number) => void;
+
 };
 
 // const API_METHODS = {
@@ -140,12 +142,38 @@ const EditorFormController = (
         });
     };
 
+    const deleteHandler = (navigateTo = -1) => {
+        // const apiMethod:
+        //     | typeof API.PROJECTS.CreateProject
+        //     | typeof API.PROJECTS.UpdateProject
+        //     | typeof API.TASKS.CreateTask
+        //     | typeof API.TASKS.UpdateTask =
+        //     API_METHODS[isCreation ? 'creation' : 'editing'][eventType];
+
+        let methodCall;
+        if (eventType === EventType.Project && registryType === BaseRegistryType.ClientSprint) {
+            methodCall = API.TRAINER.PROJECTS.DeleteteProject(clientId, itemDescriptor.id);
+        } else if (eventType === EventType.Project) {
+            methodCall = API.PROJECTS.DeleteteProject(itemDescriptor.id);
+        } else if (eventType === EventType.Task && registryType === BaseRegistryType.ClientSprint) {
+            methodCall = API.TRAINER.TASKS.DeleteteTask(clientId, itemDescriptor.id);
+        } else {
+            methodCall = API.TASKS.DeleteteTask(itemDescriptor.id);
+        }
+
+        methodCall.finally(() => {
+            navigate(navigateTo);
+        });
+    };
+
+
     return {
         usePlanningTimes,
         useFactTimes,
         useEventTitle,
         useChanges,
         saveHandler,
+        deleteHandler,
     };
 };
 

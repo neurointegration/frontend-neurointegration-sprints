@@ -82,3 +82,13 @@ export const PutProject = (projectData: PutProjectRequest) => {
         .then(handleHttpResponse)
         .catch(handleHttpError);
 };
+
+export const DeleteProject = (projectId: string) => {
+    const url = path(APIRoutes.Projects.Project, {
+        projectId,
+    });
+    return http
+        .delete(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};

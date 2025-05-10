@@ -8,6 +8,9 @@ import { API } from '../../../core/api/handles';
 import { ClientResponseType } from '../../../core/api/actions/trainer.clients';
 import { useNavigate } from 'react-router-dom';
 import { path, Routes } from '../../../core/routing/routes';
+import { useRecoilValue } from 'recoil';
+import { MePutRequestType } from '../../../core/api/actions/me';
+import MeInformationAtom from '../../../core/atoms/me.atom';
 
 type ClientCardProps = {
     comment: string;
@@ -94,6 +97,7 @@ const ClientsScreen: React.FC = () => {
     ]);
     // Объект комментариев. Ключ - clientId, значение - текст комментария
     const [comments, setComments] = useState<{ [key: string]: string }>({});
+    const meInformation = useRecoilValue(MeInformationAtom);
 
     useEffect(() => {
         wait(API.TRAINER.CLIENTS.Clients(), (resp) => {
@@ -147,6 +151,22 @@ const ClientsScreen: React.FC = () => {
         });
     };
 
+    const onboardingCardClickHandler = () => {
+        const data: MePutRequestType = {
+            onboarding: meInformation.onboarding ? 
+            {...meInformation.onboarding, clientsOnboarding: true} : 
+            {
+                dateOnboarding: false,
+                editingOnboarding: false,
+                clientsOnboarding: true,
+                projectOnboarding: false,
+
+            }
+        };
+
+        API.ME.PutMe(data).then(() => location.reload());
+    };
+
     return (
         <>
             <Sidebar
@@ -156,6 +176,16 @@ const ClientsScreen: React.FC = () => {
                 )}
             />
             <div className='clients-container'>
+            {meInformation.onboarding ? 
+            <div>
+                Онбординг?
+                <button onClick={onboardingCardClickHandler}>Кнопка онбординга</button>
+            </div> 
+            : 
+            <div>
+                Не онбординг
+                <button onClick={onboardingCardClickHandler}>Кнопка онбординга</button>
+            </div>}
                 <div className='client-list'>
                     {clients.map((client) => (
                         <ClientCard

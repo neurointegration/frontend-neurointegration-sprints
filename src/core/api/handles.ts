@@ -13,6 +13,7 @@ import {
     SetMyRoles,
 } from './actions/me';
 import {
+    DeleteProject,
     GetAllSprintProjects,
     GetProject,
     PostProject,
@@ -21,7 +22,7 @@ import {
 import { GetSprintReflection } from './actions/reflection';
 import { GetAllSprints, GetSprint } from './actions/sprints';
 import { GetSprintStandup } from './actions/standup';
-import { GetAllProjectTasks, PostTask, PutTask } from './actions/tasks';
+import { DeleteTask, GetAllProjectTasks, PostTask, PutTask } from './actions/tasks';
 import {
     EditTrainerCientComment,
     GetClient,
@@ -38,6 +39,8 @@ import {
     PostTrainerClientSprintProject,
     PostTrainerClientSprintTask,
     PutTrainerClientSprintTask,
+    DeleteTrainerClientSprintProject,
+    DeleteTrainerClientTask,
 } from './actions/trainer.events';
 
 /**
@@ -101,6 +104,9 @@ export const API = {
          * Обновить существующий проект
          */
         UpdateProject: PutProject,
+
+        DeleteteProject: DeleteProject,
+
     },
     TASKS: {
         /**
@@ -117,6 +123,9 @@ export const API = {
          * Обновление существующей задачи
          */
         UpdateTask: PutTask,
+
+        DeleteteTask: DeleteTask,
+
     },
     ME: {
         /**
@@ -175,6 +184,8 @@ export const API = {
          * Обновить существующий проект
          */
             UpdateProject: PutTrainerClientSprintProject,
+
+            DeleteteProject: DeleteTrainerClientSprintProject,
         },
         TASKS: {
             /**
@@ -191,6 +202,9 @@ export const API = {
          * Обновление существующей задачи
          */
             UpdateTask: PutTrainerClientSprintTask,
+
+            DeleteteTask: DeleteTrainerClientTask,
+
         },
         COMMENTS: {
             GetComment: GetTrainerClientComment,
@@ -239,6 +253,7 @@ export const APIRoutes = {
     Tasks: {
         TasksProject: '/api/Tasks/project/:projectId',
         Tasks: '/api/Tasks',
+        Task: '/api/Tasks/:taskId'
     },
     Me: {
         Roles: '/api/Me/roles',
@@ -255,11 +270,13 @@ export const APIRoutes = {
         },
         Projects: {
             ProjectsSprint: '/api/Trainer/clients/:userId/projects/sprint/:sprintNumber',
-            Project: '/api/Trainer/clients/:userId/projects',
+            Projects: '/api/Trainer/clients/:userId/projects',
+            Project: '/api/Trainer/clients/:userId/projects/:projectId'
         },
         Tasks: {
             TasksProject: '/api/Trainer/clients/:userId/tasks/:projectId',
-            Task: '/api/Trainer/clients/:userId/tasks',
+            Tasks: '/api/Trainer/clients/:userId/tasks',
+            Task: '/api/Trainer/clients/:userId/tasks/:taskId'
         },
         Comments: {
             Comment: '/api/Trainer/:userId/comment',
