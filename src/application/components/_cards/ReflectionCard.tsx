@@ -1,21 +1,24 @@
+import { reflectionClassNames } from '../../../Platform/_types/ReflectionsTypes';
 import './ReflectionCardStyle.css';
 
 export type textLabelPairType = {
+    index: number;
     label: string;
-    text: string;
+    text: string[];
 }
 
 
 export type ReflectionCardProps = {
+    reflectionCN: reflectionClassNames;
     header: string;
     textLabelPairsArray: textLabelPairType[];
 };
 
-function ReflectionCardTextBlock(label: string, text: string) {
+function ReflectionCardTextBlock(label: string, text: string[]) {
     return (
         <div className='reflection-card_text-block'>
-            <h2>{label}</h2>
-            <p>{text}</p>
+            <p className='reflection-card-label'>{label}</p>
+            {text.map((item) => <p>{item}</p>)}
         </div>
     );
 }
@@ -27,9 +30,9 @@ function ReflectionCard({
 }: ReflectionCardProps) {
     return (
         <div className='reflection-card'>
-            <h1>{header}</h1>
+            <p className='reflection-card-header'>{header}</p>
             <div className='reflection-card_text-blocks-container'>
-                {textLabelPairsArray.map((item) => ReflectionCardTextBlock(item.label, item.text))}
+                {textLabelPairsArray.sort((item) => item.index).map((item) => ReflectionCardTextBlock(item.label, item.text))}
             </div>
         </div>
     );

@@ -1,0 +1,144 @@
+.reflection-grid {
+    height: 100%;
+}
+
+.reflection-cards-grid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+}
+
+
+.grid-type-regular {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 30px auto auto auto auto;
+    /*padding: 10px 0 10px 0;*/
+    grid-template-areas:    "week1 week2 week3"
+                            "doing1 doing2 doing3" 
+                            "state1 state2 state3" 
+                            "orbits1 orbits2 orbits3" 
+                            "correction1 correction2 correction3";
+
+}
+
+.reflection-week {
+    justify-self: center;
+    align-self: center;
+}
+
+.reflection-grid-card-doing1 {
+    grid-area: doing1;
+}
+
+.reflection-grid-card-doing2 {
+    grid-area: doing2;
+}
+
+.reflection-grid-card-doing3 {
+    grid-area: doing3;
+}
+
+.reflection-grid-card-my-status1 {
+    grid-area: state1;
+}
+
+.reflection-grid-card-my-status2 {
+    grid-area: state2;
+}
+
+.reflection-grid-card-my-status3 {
+    grid-area: state3;
+}
+
+.reflection-grid-card-orbits1 {
+    grid-area: orbits1;
+}
+
+.reflection-grid-card-orbits2 {
+    grid-area: orbits2;
+}
+
+.reflection-grid-card-orbits3 {
+    grid-area: orbits3;
+}
+
+.reflection-grid-card-correction1 {
+    grid-area: correction1;
+}
+
+.reflection-grid-card-correction2 {
+    grid-area: correction2;
+}
+
+.reflection-grid-card-correction3 {
+    grid-area: correction3;
+}
+
+
+.grid-type-integration {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 30px auto auto;
+    /*padding: 10px 0 10px 0;*/
+    grid-template-areas:    "week4 week4 week4"
+                            "changes actions abilities" 
+                            "beliefs self opportunities";
+
+}
+
+.section-type-integration {
+    background-color: var(--colors-Life);
+    padding: 20px 0 60px 0;
+}
+
+.section-type-regular {
+    background-color: var(--colors-Fun);
+    height: 100%;
+    padding: 0 0 20px 0;
+}
+
+.reflection-grid-card-changes4 {
+    grid-area: changes;
+}
+
+.reflection-grid-card-actions4 {
+    grid-area: actions;
+}
+
+.reflection-grid-card-abilities4 {
+    grid-area: abilities;
+}
+
+.reflection-grid-card-beliefs4 {
+    grid-area: beliefs;
+}
+
+.reflection-grid-card-self-perception4 {
+    grid-area: self;
+}
+
+.reflection-grid-card-opportunities4 {
+    grid-area: opportunities;
+}
+
+.reflection-week-number4 {
+    grid-area: week4;
+}
+
+/*
+export enum reflectionClassNames {
+  Changes = "changes",
+  Actions = "actions",
+  Abilities = "abilities",
+  Beliefs = "beliefs",
+  SelfPerception = "self-perception",
+  Opportunities = "opportunities",	
+
+  Doing = "doing",
+  State = "my-status",
+  Orbits = "orbits",
+  Correction = "correction",
+
+  Default = ''
+}
+*/

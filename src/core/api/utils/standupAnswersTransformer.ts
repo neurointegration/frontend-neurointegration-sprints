@@ -47,13 +47,13 @@ export function transformStandups(
                 card.wins = (card.wins.concat(answer.split('\n').filter(answ => answ.length > 0)));
                 break;
             case StandupAnswerTypeEnum.EveningStandUpLive:
-                card.focusLife.push(answer);
+                card.focusLife = (card.focusLife.concat(answer.split('\n').filter(answ => answ.length > 0)));
                 break;
             case StandupAnswerTypeEnum.EveningStandUpPleasure:
-                card.focusFun.push(answer);
+                card.focusFun = (card.focusFun.concat(answer.split('\n').filter(answ => answ.length > 0)));
                 break;
             case StandupAnswerTypeEnum.EveningStandUpDrive:
-                card.focusDrive.push(answer);
+                card.focusDrive = (card.focusDrive.concat(answer.split('\n').filter(answ => answ.length > 0)));
                 break;
             default:
                 // Если вдруг появится новый тип, сюда попадет ошибка

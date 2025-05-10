@@ -10,7 +10,7 @@ import http, {
 
 export type ReflectionResponseType = {
     answerType: ReflectionAnswerTypeEnum;
-    answerNumber: 0 | 1 | 2 | 3
+    sprintReplyNumber: 0 | 1 | 2 | 3
     sprintNumber: number;
     date: string;
     answer: string;

@@ -93,7 +93,7 @@ function EventCard({
     };
 
     return (
-        <div className={wrapperCN}>
+        <button className={wrapperCN}>
             {event.item.type === EventType.Project && (
                 <div className={sideBarCN} />
             )}
@@ -124,7 +124,7 @@ function EventCard({
                     ))}
                 </div>
             </div>
-        </div>
+        </button>
     );
 }
 
@@ -149,8 +149,8 @@ function _getTimeInfoComponent(
     }
 
     const result: JSX.Element[] = [];
-    const possibleKeys = ['1', '2', '3']
-        .concat(sprintWeeksCount === TimeInfoType.FourWeeks ? ['4'] : [])
+    const possibleKeys = ['1', '2', '3', '4']
+        //.concat(sprintWeeksCount === TimeInfoType.FourWeeks ? ['4'] : [])
         .concat(['total']);
     const timeComparerItems: {
         planning: null | TimeType;

@@ -1,0 +1,20 @@
+.reflection-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+    width: 100%;
+    height: 100%;
+}
+
+.reflection-card-header {
+    font-size: var(--fontsize-xl);
+    font-weight: var(--fontweight-medium);
+    text-transform: uppercase; 
+    padding-bottom: 10px;
+}
+
+.reflection-card-label {
+    font-weight: var(--fontweight-medium);
+    padding-bottom: 4px;
+}

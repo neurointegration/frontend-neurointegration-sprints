@@ -3,6 +3,7 @@
     margin-top: 10px;
     position: relative;
     display: flex;
+    width: 100%;
     
     /* min-width: 280px; */
 }

@@ -1,0 +1,33 @@
+.reflection-desktop {
+    width: 100%;
+    height: auto;
+}
+
+.reflection-container {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    background-color: var(--colors-Fun);
+}
+
+.reflection-mobile {
+    display: none;
+}
+
+
+@media (max-width: 1000px) {
+
+    .reflection-desktop {
+        display: none;
+    }
+
+    .reflection-mobile {
+        display: flex;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        flex-direction: column;
+    }
+}

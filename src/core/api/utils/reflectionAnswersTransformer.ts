@@ -1,5 +1,6 @@
 import { ReflectionRegistryProps } from "../../../application/components/_registry/ReflectionRegistry";
-import { StandupAnswerTypeEnum } from "../../../Platform/_types/AnswerTypes";
+import { ReflectionAnswerTypeEnum } from "../../../Platform/_types/AnswerTypes";
+import { CommonReflectionType, reflectionClassNames } from "../../../Platform/_types/ReflectionsTypes";
 import { ReflectionResponseType } from "../actions/reflection";
 
 export enum ReflectionTypes {
@@ -11,38 +12,156 @@ export enum ReflectionTypes {
 export function transformReflections(
     responses: ReflectionResponseType[]
 ): ReflectionRegistryProps[] {
-    const groupedByNumber: Record<number, ReflectionRegistryProps> = {};
+
+    const etalonReflection : CommonReflectionType = {
+        Doing : {
+            reflectionCN : reflectionClassNames.Doing,
+            header: 'Шаг 1. Действия',
+            textLabelPairsArray: []
+        },
+        State : {
+            reflectionCN : reflectionClassNames.State,
+            header: 'Шаг 2.  Динамика состояния',
+            textLabelPairsArray: []
+        },
+        Orbits : {
+            reflectionCN : reflectionClassNames.Orbits,
+            header: 'Шаг 3. Анализ орбит',
+            textLabelPairsArray: []
+        },
+        Correction : {
+            reflectionCN : reflectionClassNames.Correction,
+            header: 'Шаг 4. Корректировка курса',
+            textLabelPairsArray: []
+        },
+        Changes : {
+            reflectionCN : reflectionClassNames.Changes,
+            header: 'Шаг 1. Изменения',
+            textLabelPairsArray: []
+        },
+        Actions : {
+            reflectionCN : reflectionClassNames.Actions,
+            header: 'Шаг 2. Действия',
+            textLabelPairsArray: []
+        },
+        Abilities : {
+            reflectionCN : reflectionClassNames.Abilities,
+            header: 'Шаг 3. Способности',
+            textLabelPairsArray: []
+        },
+        Beliefs : {
+            reflectionCN : reflectionClassNames.Beliefs,
+            header: 'Шаг 4. Убеждения',
+            textLabelPairsArray: []
+        },
+        SelfPerception : {
+            reflectionCN : reflectionClassNames.SelfPerception,
+            header: 'Шаг 5. Восприятие себя',
+            textLabelPairsArray: []
+        },
+        Opportunities : {
+            reflectionCN : reflectionClassNames.Opportunities,
+            header: 'Шаг 6. Возможности',
+            textLabelPairsArray: []
+        },
+    }
+
+    const groupedByNumber: ReflectionRegistryProps[] = [
+        {
+            number : 1,
+            reflectionType: ReflectionTypes.Regular,
+            cards: JSON.parse(JSON.stringify(etalonReflection)),
+        },
+        {
+            number : 2,
+            reflectionType: ReflectionTypes.Regular,
+            cards: JSON.parse(JSON.stringify(etalonReflection)),
+
+        },
+        {
+            number : 3,
+            reflectionType: ReflectionTypes.Regular,
+            cards: JSON.parse(JSON.stringify(etalonReflection)),
+
+        },
+        {
+            number : 4,
+            reflectionType: ReflectionTypes.Integration,
+            cards: JSON.parse(JSON.stringify(etalonReflection)),
+        }
+    ];
 
     if (responses) {
 
     responses.forEach((response) => {
-        const { answerNumber, answerType, answer } = response;
-
-        if (!groupedByNumber[answerNumber]) {
-            groupedByNumber[answerNumber] = {
-                number : answerNumber,
-                reflectionType : answerNumber != 3 ? ReflectionTypes.Regular : ReflectionTypes.Integration,
-                cards : []
-            };
-        }
-
-        const card = groupedByDate[date];
+        const { sprintReplyNumber, answerType, answer } = response;
 
         switch (answerType) {
-            case StandupAnswerTypeEnum.State:
-                card.mentalStates.push({text : answer, colorClass : mentalStatesColors.get(answer)});
+            case ReflectionAnswerTypeEnum.Changes:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .Changes.textLabelPairsArray
+                .push({index: 0, label: 'Какое главное изменение я замечаю?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
-            case StandupAnswerTypeEnum.EveningStandUpWinnings:
-                card.wins = (card.wins.concat(answer.split('\n').filter(answ => answ.length > 0)));
+            case ReflectionAnswerTypeEnum.Actions:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .Actions
+                .textLabelPairsArray.push({index: 0, label: 'Какие мои действия к этому привели?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
-            case StandupAnswerTypeEnum.EveningStandUpLive:
-                card.focusLife.push(answer);
+            case ReflectionAnswerTypeEnum.Abilities:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .Abilities
+                .textLabelPairsArray.push({index: 0, label: 'Какие мои способности мне помогли?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
-            case StandupAnswerTypeEnum.EveningStandUpPleasure:
-                card.focusFun.push(answer);
+            case ReflectionAnswerTypeEnum.Beliefs:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .Beliefs
+                .textLabelPairsArray.push({index: 0, label: 'Как изменились мои убеждения о том, что возможно?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
-            case StandupAnswerTypeEnum.EveningStandUpDrive:
-                card.focusDrive.push(answer);
+            case ReflectionAnswerTypeEnum.SelfPerception:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .SelfPerception
+                .textLabelPairsArray.push({index: 0, label: 'Как изменились мои убеждения о себе и отношения с собой?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
+                break;
+            case ReflectionAnswerTypeEnum.Opportunities:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .Opportunities
+                .textLabelPairsArray.push({index: 0, label: 'Какие возможности теперь для меня доступны?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
+                break;
+            case ReflectionAnswerTypeEnum.IDoing:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .Doing
+                .textLabelPairsArray.push({index: 0, label: 'Что я сделал(а) по своим проектам на этой неделе?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
+                break;
+            case ReflectionAnswerTypeEnum.INotDoing:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .Doing
+                .textLabelPairsArray.push({index: 1, label: 'Что я не сделал(а) по своим проектам на этой неделе?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
+                break;
+            case ReflectionAnswerTypeEnum.State:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .State
+                .textLabelPairsArray.push({index: 0, label: 'Что влияло на мое состояние на этой неделе?\n(как в позитивном, так и в негативном ключе)', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
+                break;
+            case ReflectionAnswerTypeEnum.Orbits:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .Orbits
+                .textLabelPairsArray.push({index: 0, label: 'Каким образом в моем поведении на этой неделе проявлялись орбиты? Как я выруливал(а)?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
+                break;
+            case ReflectionAnswerTypeEnum.Correction:
+                groupedByNumber[sprintReplyNumber]
+                .cards
+                .Correction
+                .textLabelPairsArray.push({index: 0, label: 'Что я изменю на следующей неделе?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
             default:
                 // Если вдруг появится новый тип, сюда попадет ошибка
@@ -51,7 +170,7 @@ export function transformReflections(
         }
     });
 
-    return Object.values(groupedByDate);
+    return groupedByNumber;
     }
     return undefined
 }

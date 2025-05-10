@@ -1,0 +1,29 @@
+.reflection-registry {
+    width: 100%;
+}
+
+.reflection-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reflection-registry_button {
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 20px;
+}
+
+.reflection-registry-type-regular {
+    background-color: var(--colors-Fun);
+}
+
+.reflection-registry-type-integration {
+    background-color: var(--colors-Life); 
+}
+
+.icon_rotated {
+    transform: rotate(180deg);
+}

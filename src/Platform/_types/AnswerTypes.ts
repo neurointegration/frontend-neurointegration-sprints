@@ -14,7 +14,6 @@ export enum ReflectionAnswerTypeEnum {
     Beliefs = "ReflectionIntegrationBeliefs",
     SelfPerception = "ReflectionIntegrationSelfPerception",
     Opportunities = "ReflectionIntegrationOpportunities",	
-
     IDoing = "ReflectionRegularWhatIDoing",
     INotDoing = "ReflectionRegularWhatINotDoing",
     State = "ReflectionRegularMyStatus",
