@@ -22,7 +22,7 @@ import {
 import { GetSprintReflection } from './actions/reflection';
 import { GetAllSprints, GetSprint } from './actions/sprints';
 import { GetSprintStandup } from './actions/standup';
-import { DeleteTask, GetAllProjectTasks, PostTask, PutTask } from './actions/tasks';
+import { DeleteTask, GetAllProjectTasks, GetProjectTask, PostTask, PutTask } from './actions/tasks';
 import {
     EditTrainerCientComment,
     GetClient,
@@ -41,6 +41,8 @@ import {
     PutTrainerClientSprintTask,
     DeleteTrainerClientSprintProject,
     DeleteTrainerClientTask,
+    GetTrainerClientProjectTask,
+    GetTrainerClientSprintProject,
 } from './actions/trainer.events';
 
 /**
@@ -114,6 +116,8 @@ export const API = {
          */
         Tasks: GetAllProjectTasks,
 
+        Task: GetProjectTask,
+
         /**
          * Создание новой задачи
          */
@@ -171,6 +175,8 @@ export const API = {
             Sprints: GetTrainerClientSprints,
         },
         PROJECTS: {
+
+        Project: GetTrainerClientSprintProject,
             /**
              * Получение информации о проектах клиента по userId и sprintNumber
              */
@@ -188,6 +194,9 @@ export const API = {
             DeleteteProject: DeleteTrainerClientSprintProject,
         },
         TASKS: {
+
+            Task: GetTrainerClientProjectTask,
+
             /**
              * Получение информации о задачах клиента по userId и projectId
              */
@@ -282,10 +291,10 @@ export const APIRoutes = {
             Comment: '/api/Trainer/:userId/comment',
         },
         Reflection: {
-            Reflection: '/api/Trainer/:userId/reflection'
+            Reflection: '/api/Trainer/clients/:userId/reflection/sprint/:sprintNumber'
         },
         Standup: {
-            Standup: '/api/Trainer/:userId/standup'
+            Standup: '/api/Trainer/clients/:userId/standup/sprint/:sprintNumber'
         }
     },
 };

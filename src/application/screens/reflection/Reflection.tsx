@@ -15,9 +15,13 @@ import { ReflectionResponseType } from '../../../core/api/actions/reflection';
 import { ReflectionTypes, transformReflections } from '../../../core/api/utils/reflectionAnswersTransformer.ts';
 import ReflectionRegistry from '../../components/_registry/ReflectionRegistry.tsx';
 import ReflectionGrid from '../../components/grids/ReflectionGrid.tsx';
+import { useParams } from 'react-router-dom';
 
 
 const ReflectionScreen = () => {
+
+    const params = useParams();
+    const isClientReflection = params.clientId ? true : false;
 
     const Reflection = useRecoilValue(ReflectionSprintsAtom);
 

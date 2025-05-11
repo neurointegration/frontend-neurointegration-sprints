@@ -40,6 +40,18 @@ export const GetAllProjectTasks = (projectId: string) => {
         .catch(handleHttpError);
 };
 
+
+export const GetProjectTask = (taskId: string) => {
+    const url = path(APIRoutes.Tasks.Task, {
+        taskId,
+    });
+    return http
+        .get<TaskResponse>(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
+
+
 export const PostTask = (taskData: TaskRequest) => {
     return http
         .post(APIRoutes.Tasks.Tasks, { ...taskData })

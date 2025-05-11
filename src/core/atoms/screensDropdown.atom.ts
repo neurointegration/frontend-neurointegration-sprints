@@ -17,6 +17,15 @@ export const ClientSprintDropdownSelectedAtom = atom<DropdownItem<SprintWeekDrop
     default: null,
 });
 
+export const ClientStandupDropdownSelectedAtom = atom<DropdownItem<string>>({
+    key: 'clientStandupDropdownSelected',
+    default: null,
+});
+
+export const ClientReflectionDropdownSelectedAtom = atom<DropdownItem<string>>({
+    key: 'clientReflectionDropdownSelected',
+    default: null,
+});
 
 export const ReflectionDropdownSelectedAtom = atom<DropdownItem<string>>({
     key: 'reflectionDropdownSelected',

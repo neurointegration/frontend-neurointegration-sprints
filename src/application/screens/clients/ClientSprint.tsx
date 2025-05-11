@@ -26,6 +26,9 @@ import LoadingScreen from '../loading/Loading';
 import { ClientResponseType } from '../../../core/api/actions/trainer.clients';
 
 import './ClientSprintStyle.css';
+import ClientsNavbar from '../../components/_sidebar/ClientsNavbar';
+import clsx from 'clsx';
+import Sidebar from '../../components/_sidebar/Sidebar';
 
 function ClientSprintScreen() {
     const params = useParams();
@@ -152,6 +155,12 @@ function ClientSprintScreen() {
         <LoadingScreen />
     ) : (
         <>
+            <Sidebar
+                menuButtonClassName={clsx(
+                    'controls-margin_top-s',
+                    'controls-margin_left-3xl'
+                )}
+            />
             <Spoiler
                 title={client?.firstName || 'Имя клиента'}
                 buttonClassName='clientButtonSpoiler'
@@ -160,6 +169,7 @@ function ClientSprintScreen() {
                     <div className='clientButton__comment'>{comment}</div>
                 )}
             </Spoiler>
+            <ClientsNavbar/>
             <BaseRegistry {...registryProps} />
         </>
     );

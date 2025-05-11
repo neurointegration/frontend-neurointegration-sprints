@@ -12,6 +12,8 @@ export enum Routes {
     OnboardingShort = '/short/onboarding',
     History = '/history',
     ClientSprint = '/sprint/:clientId',
+    ClientStandup = '/standup/:clientId',
+    ClientReflection = '/reflection/:clientId',
     Reflection = '/reflection',
     Standup = '/standup'
 }

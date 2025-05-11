@@ -6,37 +6,43 @@ import StandupCard from '../../components/_cards/StandupCard';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { API } from '../../../core/api/handles';
-import { DROPDOWN_DATES_SEPARATOR } from '../home/constants';
+import { BaseRegistryType, DROPDOWN_DATES_SEPARATOR } from '../home/constants';
 import StandupSprintsAtom from '../../../core/atoms/standup.atom';
 import { useState, useEffect } from 'react';
 import DropdownSelector, { DropdownItem } from '../../../Platform/_dropdownSelector/DropdownSelector';
 import { formatDate } from '../../../core/api/utils/dateCutter';
-import { StandupDropdownSelectedAtom } from '../../../core/atoms/screensDropdown.atom';
+import { ClientStandupDropdownSelectedAtom, StandupDropdownSelectedAtom } from '../../../core/atoms/screensDropdown.atom';
 import { StandupResponseType } from '../../../core/api/actions/standup';
 import { transformStandups } from '../../../core/api/utils/standupAnswersTransformer';
+import { useParams } from 'react-router-dom';
+import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
+import { SprintResponseType } from '../../../core/api/actions/sprints';
 
 
 const StandupScreen = () => {
 
+    const params = useParams();
+    const isClientStandup = params.clientId ? true : false;
+
     const standup = useRecoilValue(StandupSprintsAtom);
 
     const [selectedDropdownItem, setSelectedDropdownItem] = useRecoilState(
-        StandupDropdownSelectedAtom
-    );
+        StandupDropdownSelectedAtom)
+        
 
-    const [dropdownItems, setdropdownItems] = useState<DropdownItem<string>[]>(
-        []
-    );
+    const [dropdownItems, setdropdownItems] = useState<DropdownItem<string>[]>([]);
 
     const [standupsPromise, setStandupsPromise] = useState(null);
 
+
     const [items, setItems] = useState<StandupResponseType[]>();
+
 
 
     //========= USE EFFECTS ===========
     useEffect(() => {
         const newItems: DropdownItem<string>[] = [];
-
+        if (!isClientStandup) {
         standup.map((sprint) => {
             const begin = sprint.beginDate;
             const end = sprint.endDate;
@@ -59,7 +65,9 @@ const StandupScreen = () => {
 
             return values.length ? prev : newItems[newItems.length - 1];
         });
+        }
     }, [standup]);
+
 
     useEffect(() => {
         if (selectedDropdownItem?.value || selectedDropdownItem?.value == '0') {

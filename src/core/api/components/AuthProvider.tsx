@@ -13,7 +13,6 @@ import LoadingScreen from '../../../application/screens/loading/Loading';
 import AuthScreen from '../../../application/screens/auth/Auth';
 import StandupSprintsAtom from '../../atoms/standup.atom';
 import ReflectionSprintsAtom from '../../atoms/reflection.atom';
-import { StandupDropdownSelectedAtom } from '../../atoms/screensDropdown.atom';
 
 const AuthProvider = (props: PropsWithChildren) => {
     const { wait, loading } = useHttpLoader();

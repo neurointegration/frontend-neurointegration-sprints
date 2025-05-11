@@ -386,12 +386,12 @@ function BaseRegistry<T extends string | number>({
                     onClose={() => setDialogProps(() => EmptyDialogProps)}
                 />
             )}
-            <Sidebar
+            {registryType != BaseRegistryType.ClientSprint ? <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',
                     'controls-margin_left-3xl'
                 )}
-            />
+            /> : <></>}
             <DropdownSelector
                 items={dropdownItems}
                 useSelectedItem={[

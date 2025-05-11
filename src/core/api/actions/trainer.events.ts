@@ -30,6 +30,21 @@ export const GetTrainerClientSprintProjects = (
         .catch(handleHttpError);
 };
 
+
+export const GetTrainerClientSprintProject = (
+    userId: string,
+    projectId: string,
+) => {
+    const url = path(APIRoutes.Trainer.Projects.Project, {
+        projectId,
+        userId,
+    });
+    return http
+        .get<ProjectResponseType>(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
+
 export const GetTrainerClientProjectTasks = (
     userId: string,
     projectId: string
@@ -142,6 +157,20 @@ export const DeleteTrainerClientTask = (
     });
     return http
         .delete(url)
+        .then(handleHttpResponse)
+        .catch(handleHttpError);
+};
+
+export const GetTrainerClientProjectTask = (
+    userId: string,
+    taskId: string
+) => {
+    const url = path(APIRoutes.Trainer.Tasks.Task, {
+        userId,
+        taskId,
+    });
+    return http
+        .get<TaskResponse>(url)
         .then(handleHttpResponse)
         .catch(handleHttpError);
 };

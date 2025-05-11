@@ -139,6 +139,8 @@ export function transformReflections(
                 .Doing
                 .textLabelPairsArray.push({index: 0, label: 'Что я сделал(а) по своим проектам на этой неделе?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
+            case ReflectionAnswerTypeEnum.IDoingTest:
+                break;
             case ReflectionAnswerTypeEnum.INotDoing:
                 groupedByNumber[sprintReplyNumber]
                 .cards

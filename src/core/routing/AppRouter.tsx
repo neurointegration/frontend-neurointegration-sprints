@@ -16,6 +16,8 @@ import StandupScreen from '../../application/screens/standup/Standup';
 import { GetMyRoles } from '../api/actions/me';
 import { useEffect } from 'react';
 import { API } from '../api/handles';
+import ClientReflectionScreen from '../../application/screens/clients/ClientReflection';
+import ClientStandupScreen from '../../application/screens/clients/ClientStandup';
 
 function AppRouter() {
     const isTrainer = useRecoilValue(RolesAtom);
@@ -50,7 +52,6 @@ function AppRouter() {
                     path={RoutesEnum.Standup}
                     element={< StandupScreen/>}
                 />
-
                 <Route
                     path={RoutesEnum.Settings}
                     element={<SettingsScreen />}
@@ -73,6 +74,16 @@ function AppRouter() {
                     path={RoutesEnum.ClientSprint}
                     element={
                     <ClientSprintScreen />}
+                />
+                                <Route
+                    path={RoutesEnum.ClientStandup}
+                    element={
+                    <ClientStandupScreen />}
+                />
+                                <Route
+                    path={RoutesEnum.ClientReflection}
+                    element={
+                    <ClientReflectionScreen />}
                 />
                 <Route path={RoutesEnum.History} element={<HistoryScreen />} />
                 <Route path='*' element={<Sprint />} />

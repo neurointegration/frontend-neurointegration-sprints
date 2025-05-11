@@ -78,6 +78,8 @@ function EventEditingScreen() {
     );
 
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
+    const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
+
     const [spoilerUnits, setSpoilerUnits] = useState<EditingSpoilerUnitType[]>(
         EDITING_SPOILER_UNITS
     );
@@ -105,6 +107,44 @@ function EventEditingScreen() {
             navigate(Routes.Base);
         }
     }, []);
+
+
+    useEffect(() => {
+        if (eventId && eventType == EventType.Project && registryType==BaseRegistryType.MainSprint) {
+                API.PROJECTS.Project(eventId).then((res) => {
+                if (res.isSuccess) {
+                    setDeleteButtonDisabled(false);
+                } else {
+                    setDeleteButtonDisabled(true);
+                }
+            })
+        } else if (eventId && eventType == EventType.Task && registryType==BaseRegistryType.MainSprint) {
+                API.TASKS.Task(eventId).then((res) => {
+                    if (res.isSuccess) {
+                        setDeleteButtonDisabled(false);
+                    } else {
+                    setDeleteButtonDisabled(true);
+                }
+            })
+        } else if (eventId && eventType == EventType.Project && registryType==BaseRegistryType.ClientSprint) {
+            API.TRAINER.PROJECTS.Project(clientId, eventId).then((res) => {
+                if (res.isSuccess) {
+                    setDeleteButtonDisabled(false);
+                } else {
+                setDeleteButtonDisabled(true);
+            }
+        })
+        } else if (eventId && eventType == EventType.Task && registryType==BaseRegistryType.ClientSprint) {
+            API.TRAINER.TASKS.Task(clientId, eventId).then((res) => {
+                if (res.isSuccess) {
+                    setDeleteButtonDisabled(false);
+                } else {
+                setDeleteButtonDisabled(true);
+            }
+        })
+    } else {
+        setDeleteButtonDisabled(true);
+    }});
 
     // ============================================
 
@@ -149,8 +189,8 @@ function EventEditingScreen() {
     };
 
     const deleteHandler = (event: SyntheticEvent) => {
-        event.preventDefault();
-        CONTROLLER.deleteHandler();
+                event.preventDefault();
+                CONTROLLER.deleteHandler();
     };
 
     const showRestoreButton = readonly && eventType === EventType.Project;
@@ -165,6 +205,7 @@ function EventEditingScreen() {
                                 <Button
                                     onClick={deleteHandler}
                                     className={actionButtonCN}
+                                    disabled={deleteButtonDisabled}
                                     caption='Удалить'
                                     size='small'
                                     type='button'

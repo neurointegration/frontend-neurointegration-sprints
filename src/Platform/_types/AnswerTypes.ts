@@ -15,6 +15,7 @@ export enum ReflectionAnswerTypeEnum {
     SelfPerception = "ReflectionIntegrationSelfPerception",
     Opportunities = "ReflectionIntegrationOpportunities",	
     IDoing = "ReflectionRegularWhatIDoing",
+    IDoingTest = "ReflectionWhatIDoing",
     INotDoing = "ReflectionRegularWhatINotDoing",
     State = "ReflectionRegularMyStatus",
     Orbits = "ReflectionRegularOrbits",

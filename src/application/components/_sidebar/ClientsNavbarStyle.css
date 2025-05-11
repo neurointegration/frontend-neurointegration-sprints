@@ -1,0 +1,26 @@
+.client-info-screen_navbar {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "sprint standup reflection";
+    justify-items: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(66, 55, 55);
+}
+
+.client-info-screen_item {
+    padding: 8px 0;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    color: black;
+}
+
+.item-state-active {
+background-color: rgba(0, 0, 0, 0.25);
+}
