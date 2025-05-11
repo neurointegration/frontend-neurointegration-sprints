@@ -11,7 +11,12 @@ const MeInformationAtom = atom<MeResponseType>({
         photoUrl: null,
         isOnboardingComplete: true,
         sprintWeeksCount: 4,
-        onboarding: null,
+        onboarding: {
+            dateOnboarding: false,
+            projectOnboarding: false,
+            editingOnboarding: false,
+            clientsOnboarding: false,
+        },
     },
 });
 

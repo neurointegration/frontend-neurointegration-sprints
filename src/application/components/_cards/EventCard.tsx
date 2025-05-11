@@ -93,11 +93,11 @@ function EventCard({
     };
 
     return (
-        <button className={wrapperCN}>
+        <div className={wrapperCN}>
             {event.item.type === EventType.Project && (
                 <div className={sideBarCN} />
             )}
-            <div className={cardContentCN} onClick={cardContentClickHandler}>
+            <button className={cardContentCN} onClick={cardContentClickHandler}>
                 <div className={headerCN}>
                     <span className={titleCN}>
                         {(event.item as EventCardType).title}
@@ -123,8 +123,8 @@ function EventCard({
                         </Fragment>
                     ))}
                 </div>
-            </div>
-        </button>
+            </button>
+        </div>
     );
 }
 

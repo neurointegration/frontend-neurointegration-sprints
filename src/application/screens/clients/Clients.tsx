@@ -1,5 +1,6 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import './ClientsStyle.css';
+import '../../components/_cards/newOnboardingStyle.css';
 import TextInput from '../../../Platform/_inputs/TextInput';
 import Sidebar from '../../components/_sidebar/Sidebar';
 import clsx from 'clsx';
@@ -8,9 +9,11 @@ import { API } from '../../../core/api/handles';
 import { ClientResponseType } from '../../../core/api/actions/trainer.clients';
 import { useNavigate } from 'react-router-dom';
 import { path, Routes } from '../../../core/routing/routes';
-import { useRecoilValue } from 'recoil';
-import { MePutRequestType } from '../../../core/api/actions/me';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { MePutRequestType, OnboardingTypes } from '../../../core/api/actions/me';
 import MeInformationAtom from '../../../core/atoms/me.atom';
+import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/newOnboarding';
+import OnboardingAtom from '../../../core/atoms/onboarding.atom';
 
 type ClientCardProps = {
     comment: string;
@@ -49,13 +52,13 @@ const ClientCard: React.FC<ClientCardProps> = ({
 
     return (
         <div className='client-card'>
-            <div className='card-top' onClick={cardClickHandler}>
+            <button className='card-top' onClick={cardClickHandler}>
                 <div className='profile-pic'></div>
                 <div className='client-info'>
                     <p className='username'>@{username}</p>
                     <p className='name'>{firstName}</p>
                 </div>
-            </div>
+            </button>
             <div className='card-bottom'>
                 {aboutMe ? <p className='about'>{aboutMe}</p> : null}
                 <>
@@ -95,6 +98,10 @@ const ClientsScreen: React.FC = () => {
         //         'Есть проблемы с качественным отдыхом. Нужно больше сосредоточиться на отключении от рабочих вопросов.',
         // },
     ]);
+
+    const onboardingState = useRecoilValue(OnboardingAtom);
+    const setOnboarding = useSetRecoilState(OnboardingAtom);
+
     // Объект комментариев. Ключ - clientId, значение - текст комментария
     const [comments, setComments] = useState<{ [key: string]: string }>({});
     const meInformation = useRecoilValue(MeInformationAtom);
@@ -152,40 +159,33 @@ const ClientsScreen: React.FC = () => {
     };
 
     const onboardingCardClickHandler = () => {
+        const onboardingNew = 
+            {...onboardingState, clientsOnboarding: true};
         const data: MePutRequestType = {
-            onboarding: meInformation.onboarding ? 
-            {...meInformation.onboarding, clientsOnboarding: true} : 
-            {
-                dateOnboarding: false,
-                editingOnboarding: false,
-                clientsOnboarding: true,
-                projectOnboarding: false,
-
-            }
+            onboarding: onboardingNew,
         };
 
-        API.ME.PutMe(data).then(() => location.reload());
+        API.ME.PutMe(data).then(() => {
+            setOnboarding(onboardingNew)
+        });
     };
 
     return (
         <>
+            {!onboardingState.clientsOnboarding ? 
+            <div className='onboarding-dark-overlay'/> :
+        <></>}
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',
                     'controls-margin_left-xl'
                 )}
             />
+            {!onboardingState.clientsOnboarding ?  
+            <OnboardingCard form={OnboardingCardsForms.Simple} type={OnboardingTypes.ClientsOnboarding} onboardingCardClickHandler={onboardingCardClickHandler}/>
+            :
+            <></>}
             <div className='clients-container'>
-            {meInformation.onboarding ? 
-            <div>
-                Онбординг?
-                <button onClick={onboardingCardClickHandler}>Кнопка онбординга</button>
-            </div> 
-            : 
-            <div>
-                Не онбординг
-                <button onClick={onboardingCardClickHandler}>Кнопка онбординга</button>
-            </div>}
                 <div className='client-list'>
                     {clients.map((client) => (
                         <ClientCard

@@ -21,8 +21,10 @@ import { path, Routes } from '../../../core/routing/routes';
 import Sidebar from '../../components/_sidebar/Sidebar';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import './SprintStyle.css';
+import '../../components/_cards/newOnboardingStyle.css';
+
 import clsx from 'clsx';
 import {
     PossibleTimeResponceKeysType,
@@ -35,8 +37,10 @@ import {
 } from '../../../core/api/utils/httpHandlers';
 import { TaskResponse } from '../../../core/api/actions/tasks';
 import MeInformationAtom from '../../../core/atoms/me.atom';
-import { MePutRequestType } from '../../../core/api/actions/me';
+import { MePutRequestType, OnboardingTypes } from '../../../core/api/actions/me';
 import { API } from '../../../core/api/handles';
+import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/newOnboarding';
+import OnboardingAtom from '../../../core/atoms/onboarding.atom';
 
 type DialogProps = {
     opened: boolean;
@@ -149,8 +153,13 @@ function BaseRegistry<T extends string | number>({
         Fun: [],
     });
 
+    const [isDateOnboardingShown, setIsDateOnboardingShown] = useState(true);
+    const [isProjectOnboardingShown, setIsProjectOnboardingShown] = useState(true);
+
+
     // const currentSprint = useRecoilValue(CurrentSprintAtom);
-    const meInformation = useRecoilValue(MeInformationAtom);
+    const onboardingState = useRecoilValue(OnboardingAtom);
+    const setOnboarding = useSetRecoilState(OnboardingAtom);
 
     const selectedScreensSections = useRecoilValue(ScreensSectionsAtom);
 
@@ -358,26 +367,41 @@ function BaseRegistry<T extends string | number>({
         }
     };
 
-
-
-        const onboardingCardClickHandler = () => {
+        const onboardingDateCardClickHandler = () => {
+            const onboardingNew = {...onboardingState, dateOnboarding: true};
             const data: MePutRequestType = {
-                onboarding: meInformation.onboarding ? 
-                {...meInformation.onboarding, dateOnboarding: true} : 
-                {
-                    dateOnboarding: true,
-                    editingOnboarding: false,
-                    clientsOnboarding: false,
-                    projectOnboarding: false,
-
-                }
+                onboarding: onboardingNew,
             };
     
-            API.ME.PutMe(data).then(() => location.reload());
+            API.ME.PutMe(data).then(() => {
+                setOnboarding(onboardingNew)
+            });
+        };
+
+        const onboardingProjectCardClickHandler = () => {
+            const onboardingNew = 
+                {...onboardingState, projectOnboarding: true};
+            const data: MePutRequestType = {
+                onboarding: onboardingNew,
+            };
+    
+            API.ME.PutMe(data).then(() => {
+                setOnboarding(onboardingNew)
+            });
         };
 
     return (
         <>
+        {!onboardingState.dateOnboarding ? 
+        <div className='onboarding-dark-overlay'/> :
+        <></>}
+
+        {!onboardingState.projectOnboarding && onboardingState.dateOnboarding
+        && items[selectedScreensSections[registryType].value].length == 1 
+        ? 
+        <div className='onboarding-dark-overlay'/> :
+        <></>}
+
             {dialogProps.opened && (
                 <EventEditorDialog
                     registryType={registryType}
@@ -403,12 +427,11 @@ function BaseRegistry<T extends string | number>({
                     'controls-margin_bottom-4xl'
                 )}
             />
+            {(!onboardingState || (onboardingState && !onboardingState.dateOnboarding)) ? 
+            <OnboardingCard form={OnboardingCardsForms.Dialog} type={OnboardingTypes.DateOnboarding} onboardingCardClickHandler={onboardingDateCardClickHandler}/>
+            :
+            <></>}
             <SectionSelector tabs={SECTIONS} registryType={registryType} />
-            {meInformation.onboarding ? <div>Онбординг?</div> : 
-            <div>
-                Не онбординг
-                <button onClick={onboardingCardClickHandler}>Кнопка онбординга</button>
-            </div>}
             <EventRegistry
                 registryType={registryType}
                 items={items[selectedScreensSections[registryType].value]}
@@ -425,6 +448,11 @@ function BaseRegistry<T extends string | number>({
                 newTasksAvailable={editingSettings.editTasks}
                 userSprintId={userSprintId}
             />
+        {!onboardingState.projectOnboarding && onboardingState.dateOnboarding
+        && items[selectedScreensSections[registryType].value].length == 1 ? 
+        <OnboardingCard form={OnboardingCardsForms.Dialog} type={OnboardingTypes.ProjectOnboarding} onboardingCardClickHandler={onboardingProjectCardClickHandler}/> :
+        <></>}
+
         </>
     );
 }

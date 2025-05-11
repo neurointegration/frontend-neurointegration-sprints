@@ -9,7 +9,7 @@ import './EventEditingStyle.css';
 import Spoiler from '../../../Platform/_buttons/Spoiler';
 import EditorUnit from '../../components/_editors/EditorUnit';
 import { RegistryItemType } from '../../components/_registry/EventRegistry';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import MeInformationAtom from '../../../core/atoms/me.atom';
 import {
     EDITING_SPOILER_UNITS,
@@ -23,6 +23,9 @@ import { API } from '../../../core/api/handles';
 import CurrentSprintAtom from '../../../core/atoms/sprint.atom';
 import { BaseRegistryProps } from '../home/BaseRegistry';
 import { BaseRegistryType } from '../home/constants';
+import { MePutRequestType, OnboardingTypes } from '../../../core/api/actions/me';
+import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/newOnboarding';
+import OnboardingAtom from '../../../core/atoms/onboarding.atom';
 
 const baseScreenCN = 'screen-EventEditing';
 const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
@@ -43,29 +46,31 @@ const spoilerButtonCN = clsx(
  * Может открываться в режиме только для просмотра или в режиме создания события
  */
 function EventEditingScreen() {
-    const location = useLocation();
+    const locationEditing = useLocation();
     const params = useParams();
     const eventType = params.eventType as EventType;
     const eventId = params.id;
-    const creationMode = location.pathname.includes('creation');
-    const readonly = location.pathname.includes('history');
+    const creationMode = locationEditing.pathname.includes('creation');
+    const readonly = locationEditing.pathname.includes('history');
     const navigate = useNavigate();
 
     const timeType = useRecoilValue(MeInformationAtom);
+    const [isEditOnboardingShown, setIsEditOnboardingShown] = useState(true);
+    
 
-    const registryType = location.state.registryType as BaseRegistryType;
-    const clientId = location.state.clientId as string;
-    const userSprintId = location.state.userSprintId;
+    const registryType = locationEditing.state.registryType as BaseRegistryType;
+    const clientId = locationEditing.state.clientId as string;
+    const userSprintId = locationEditing.state.userSprintId;
 
     const registryItemDescriptor = creationMode
         ? null
-        : (location.state.eventDescriptor as RegistryItemType);
+        : (locationEditing.state.eventDescriptor as RegistryItemType);
 
     const parentProjectId =
         creationMode && eventType === EventType.Task
-            ? (location.state.parentProjectId as string)
+            ? (locationEditing.state.parentProjectId as string)
             : null;
-    const sectionName = creationMode ? location.state.section : null;
+    const sectionName = creationMode ? locationEditing.state.section : null;
 
     const CONTROLLER = EditorFormController(
         clientId,
@@ -84,6 +89,9 @@ function EventEditingScreen() {
         EDITING_SPOILER_UNITS
     );
 
+    const onboardingState = useRecoilValue(OnboardingAtom);
+    const setOnboarding = useSetRecoilState(OnboardingAtom);
+
     // ============== USE EFFECTS =================
     // В случае тренера добавим вкладку "Клиенты"
     useEffect(() => {
@@ -101,8 +109,8 @@ function EventEditingScreen() {
     // открыта не на создание, редиректим на главную
     useEffect(() => {
         if (
-            (!eventId || !location?.state?.eventDescriptor) &&
-            !location.pathname.includes('creation')
+            (!eventId || !locationEditing?.state?.eventDescriptor) &&
+            !locationEditing.pathname.includes('creation')
         ) {
             navigate(Routes.Base);
         }
@@ -153,6 +161,18 @@ function EventEditingScreen() {
         CONTROLLER.saveHandler(userSprintId);
     };
 
+    const onboardingCardClickHandler = () => {
+        const onboardingNew = 
+            {...onboardingState, editingOnboarding: true};
+        const data: MePutRequestType = {
+            onboarding: onboardingNew,
+        };
+
+        API.ME.PutMe(data).then(() => {
+            setOnboarding(onboardingNew)
+        });
+    };
+
     const propertyChanged: EditingFormContextPropertyChangedFuncType = (
         propertyKey,
         newValue
@@ -196,6 +216,14 @@ function EventEditingScreen() {
     const showRestoreButton = readonly && eventType === EventType.Project;
 
     return (
+        <div>
+            {!onboardingState.editingOnboarding ? 
+            <div className='onboarding-dark-overlay'/> :
+            <></>}
+            {!onboardingState.editingOnboarding ?
+            <OnboardingCard form={OnboardingCardsForms.Simple} type={OnboardingTypes.EditingOnboarding} onboardingCardClickHandler={onboardingCardClickHandler}/>
+            :
+            <></>}
         <EditingScreenFormContext.Provider value={{ propertyChanged }}>
             <form onSubmit={submitHandler}>
                 <div className={pageHeaderCN}>
@@ -265,6 +293,7 @@ function EventEditingScreen() {
                 </div>
             </form>
         </EditingScreenFormContext.Provider>
+        </div>
     );
 }
 

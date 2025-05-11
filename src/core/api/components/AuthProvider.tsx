@@ -13,6 +13,7 @@ import LoadingScreen from '../../../application/screens/loading/Loading';
 import AuthScreen from '../../../application/screens/auth/Auth';
 import StandupSprintsAtom from '../../atoms/standup.atom';
 import ReflectionSprintsAtom from '../../atoms/reflection.atom';
+import OnboardingAtom from '../../atoms/onboarding.atom';
 
 const AuthProvider = (props: PropsWithChildren) => {
     const { wait, loading } = useHttpLoader();
@@ -22,6 +23,8 @@ const AuthProvider = (props: PropsWithChildren) => {
 
     const setRolesState = useSetRecoilState(RolesAtom);
     const setMeInformationaState = useSetRecoilState(MeInformationAtom);
+    const setOnboardingState = useSetRecoilState(OnboardingAtom);
+
     const resetMeInformationState = useResetRecoilState(MeInformationAtom);
 
     const setCurrentSprintState = useSetRecoilState(CurrentSprintAtom);
@@ -59,7 +62,10 @@ const AuthProvider = (props: PropsWithChildren) => {
 
                 wait(API.ME.Me(), (resp) => {
                     if (resp.isSuccess) {
-                        setMeInformationaState(() => resp.body);
+                        setMeInformationaState(() => resp.body)
+                        if (resp.body.onboarding) {
+                        setOnboardingState(() => resp.body.onboarding);
+                        }
                     } else {
                         resetMeInformationState();
                     }

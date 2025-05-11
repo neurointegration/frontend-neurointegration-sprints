@@ -4,13 +4,15 @@ import TextInput from '../../../Platform/_inputs/TextInput';
 import Sidebar from '../../components/_sidebar/Sidebar';
 import clsx from 'clsx';
 import Button from '../../../Platform/_buttons/Button';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import MeInformationAtom from '../../../core/atoms/me.atom';
 import { API } from '../../../core/api/handles';
 import RolesAtom from '../../../core/atoms/roles.atom';
-import { MePutRequestType } from '../../../core/api/actions/me';
+import { MePutRequestType, Onboarding } from '../../../core/api/actions/me';
 import { useNavigate } from 'react-router-dom';
 import { Routes } from '../../../core/routing/routes';
+import { TELEGRAM_BOT_URL } from '../../../config';
+import OnboardingAtom from '../../../core/atoms/onboarding.atom';
 
 const SettingsScreen: React.FC = () => {
     const navigate = useNavigate();
@@ -30,21 +32,31 @@ const SettingsScreen: React.FC = () => {
             sprintWeeksCount: sprintWeeks,
         };
 
-        const trainerData = {
-            trainerUsername: trainer.startsWith('@') ? trainer : `@${trainer}`,
-        };
-
         const promises = [
             API.ME.PutMe(data),
-            API.ME.SetTrainer(trainerData),
-            API.ME.SetRoles(role === 'both'),
         ];
 
         Promise.all(promises).then(() => location.reload());
     };
 
     const setMeInfo = useSetRecoilState(MeInformationAtom);
-    const [_, setIsTrainer] = useRecoilState(RolesAtom);
+    const setOnboarding = useSetRecoilState(OnboardingAtom);
+
+    const onboardingDropHandler = () => {
+        const onboardingNew : Onboarding = {
+            clientsOnboarding: false, 
+            editingOnboarding: false,
+            projectOnboarding: false, 
+            dateOnboarding: false,
+        };
+        const data: MePutRequestType = {
+            onboarding: onboardingNew,
+        };
+
+        API.ME.PutMe(data).then(() => {
+            setOnboarding(onboardingNew)
+        });
+    };
 
     useEffect(() => {
         document.body.className = 'body-color-white';
@@ -58,24 +70,11 @@ const SettingsScreen: React.FC = () => {
                 setPhoto(() => res.body.photoUrl);
             }
         });
-        API.ME.Trainer().then((res) => {
-            if (res.isSuccess) {
-                setTrainer(() => `@${res.body.username}`);
-            }
-        });
-        API.ME.Roles().then((res) => {
-            if (res.isSuccess) {
-                const trainerRes = res.body.includes('Trainer')
-                    ? { isTrainer: true }
-                    : { isTrainer: false };
-                setRole(() => (trainerRes.isTrainer ? 'both' : 'client'));
-                setIsTrainer(() => trainerRes);
-            } else {
-                setIsTrainer(() => ({ isTrainer: false }));
-                setRole(() => 'client');
-            }
-        });
     }, []);
+
+    const handleLinkClick = () => {
+        window.open(TELEGRAM_BOT_URL, '_blank');
+    };
 
     return (
         <>
@@ -112,38 +111,37 @@ const SettingsScreen: React.FC = () => {
                         className='controls-margin_bottom-m'
                     />
                     <Button
-                        caption='Пересмотреть онбординг'
+                        caption='Показать обучение снова'
                         className={clsx(
                             'controls-fontsize-m',
                             'controls-fontweight-medium'
                         )}
                         showMode='filled'
                         type='button'
-                        onClick={() => navigate(Routes.Onboarding)}
+                        onClick={onboardingDropHandler}
                     />
-                    <h2 className='section-title'>Роль</h2>
-                    <div className='radio-group'>
-                        <label className='radio-label'>
-                            <input
-                                type='radio'
-                                name='role'
-                                value='client'
-                                checked={role === 'client'}
-                                onChange={() => setRole(() => 'client')}
-                            />{' '}
-                            Только клиент
-                        </label>
-                        <label className='radio-label'>
-                            <input
-                                type='radio'
-                                name='role'
-                                value='both'
-                                checked={role === 'both'}
-                                onChange={() => setRole(() => 'both')}
-                            />{' '}
-                            И клиент, и тренер
-                        </label>
-                    </div>
+                    <h2 className='section-title'>
+                        Количество недель в спринте
+                    </h2>
+                    <select
+                        value={sprintWeeks}
+                        onChange={(e) => setSprintWeeks(() => e.target.value)}
+                        className='text-input'
+                    >
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                    </select>
+                    <h2 className='section-title'>Telegram-бот для прохождения спринтов</h2>
+                    <Button
+                        caption='Перейти в бота'
+                        className={clsx(
+                            'controls-fontsize-m',
+                            'controls-fontweight-medium'
+                        )}
+                        showMode='filled'
+                        type='button'
+                        onClick={handleLinkClick}
+                    />
                     <button type='submit' className='primary-button'>
                         Сохранить
                     </button>

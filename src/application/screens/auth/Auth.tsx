@@ -6,7 +6,6 @@ import { TelegramRequestDataType } from '../../../core/api/actions/auth';
 import { HTTPErrorResponse } from '../../../core/api/utils/httpHandlers';
 import { useSetRecoilState } from 'recoil';
 import AuthAtom from '../../../core/atoms/auth.atom';
-import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
 import { BOT_USERNAME, TELEGRAM_BOT_URL  } from '../../../config';
 
 //const BOT_USERNAME = 'neurosprints_test_bot';
@@ -70,17 +69,15 @@ const AuthScreen = () => {
             <div className='auth-wrapper'>
                 <p className='primary-text'>Вход в Нейроспринт</p>
                 <p className='secondary-text'>
-                    Приложение работает вместе
+                    Приложение работает вместе с&nbsp;Telegram-ботом.
                     <br />
-                    с&nbsp;
+                    Пожалуйста, перед началом работы проверьте, что вы зарегистрированы.
+                    <br />
                     <span
                         style={{ color: 'blue', cursor: 'pointer' }}
                         onClick={handleLinkClick}
-                    >Telegram-ботом
+                    >Telegram-бот для прохождения спринтов нейроинтеграции
                     </span>
-                    , для корректной работы обязательно нужна
-                    <br />
-                    авторизация
                 </p>
                 <LoginButton
                     botUsername={BOT_USERNAME}

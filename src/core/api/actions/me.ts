@@ -22,6 +22,13 @@ export type Onboarding = {
     clientsOnboarding: boolean;
 }
 
+export enum OnboardingTypes {
+    DateOnboarding='date',
+    ProjectOnboarding='project',
+    EditingOnboarding='editing',
+    ClientsOnboarding= 'clients', 
+}
+
 export type MePutRequestType = {
     firstName?: string;
     lastName?: string;
