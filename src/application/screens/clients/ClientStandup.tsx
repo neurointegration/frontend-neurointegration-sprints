@@ -28,7 +28,7 @@ import { ClientResponseType } from '../../../core/api/actions/trainer.clients';
 
 import './ClientSprintStyle.css';
 import StandupScreen from '../standup/Standup';
-import ClientsNavbar from '../../components/_sidebar/clientsNavbar';
+import ClientsNavbar from '../../components/_sidebar/ClientsNavbar';
 import { transformStandups } from '../../../core/api/utils/standupAnswersTransformer';
 import StandupCard from '../../components/_cards/StandupCard';
 import { StandupResponseType } from '../../../core/api/actions/standup';

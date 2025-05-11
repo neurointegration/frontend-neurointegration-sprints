@@ -28,7 +28,7 @@ import { ClientResponseType } from '../../../core/api/actions/trainer.clients';
 
 import './ClientSprintStyle.css';
 import ReflectionScreen from '../reflection/Reflection';
-import ClientsNavbar from '../../components/_sidebar/clientsNavbar';
+import ClientsNavbar from '../../components/_sidebar/ClientsNavbar';
 import clsx from 'clsx';
 import ReflectionRegistry from '../../components/_registry/ReflectionRegistry';
 import Sidebar from '../../components/_sidebar/Sidebar';
