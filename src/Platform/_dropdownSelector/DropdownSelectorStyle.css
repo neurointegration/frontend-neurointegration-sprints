@@ -1,6 +1,8 @@
 .controls-dropdownSelector {
     position: relative;
     z-index: 1;
+    width: min(100%, 400px);
+    justify-self: center;
 }
 
 .controls-dropdownSelector__overlay {
@@ -37,6 +39,10 @@
     font-weight: var(--fontweight-medium);
 }
 
+.controls-dropdownSelector__caption:hover {
+    font-weight: var(--fontweight-light);
+}
+
 .controls-dropdownSelector__select_rotated {
     transform: rotate(180deg);
 }
@@ -55,6 +61,11 @@
     text-align: start;
     padding: 12px 20px;
 }
+
+.controls-dropdownSelector__option:hover {
+    background-color: var(--colors-light-gray);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;}
 
 .controls-dropdownSelector__select {
     position: absolute;

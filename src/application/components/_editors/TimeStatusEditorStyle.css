@@ -16,6 +16,19 @@
     height: 32px;
     background-color: aqua;
     border-radius: 4px;
+    position: relative;
+}
+
+.timeStatusEditor__pickerButton:hover::before {
+    content: "";
+    width: 64px;
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .timeStatusEditor__pickerButton:disabled ~ .timeStatusEditor__title {

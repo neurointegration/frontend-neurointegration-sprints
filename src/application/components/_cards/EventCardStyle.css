@@ -12,6 +12,10 @@
     background-color: var(--colors-card-active-gray);
 }
 
+.eventCard__cardContent:hover {
+    background-color: var(--colors-card-active-gray);
+}
+
 .eventCard:not(.eventCard_project) > .eventCard__cardContent {
     border-bottom-left-radius: var(--event-card-border-radius);
     border-top-left-radius: var(--event-card-border-radius);
@@ -92,4 +96,9 @@
     height: min-content;
     background: none;
     border: none;
+}
+
+.eventCard__expanderButton:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
 }

@@ -27,10 +27,23 @@
     width: 54px;
 }
 
+.controls-timeEditor__input:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+    outline: none;
+    padding: 8px 0 8px 12px;
+    font-size: inherit;
+    font-weight: inherit;
+    width: 54px;
+    display: block;
+}
+
+
 .controls-timeEditor__input:focus {
     font-weight: var(--fontweight-semiBold);
     font-size: var(--fontsize-header-m);
     width: 64px;
+    background-color: var(--colors-extra-light-gray);
+
 }
 
 .controls-timeEditor__input_hours {
@@ -46,14 +59,20 @@
 .controls-timeEditor__addButtonsBlock {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 4px;
 }
 
 .controls-timeEditor__addButton {
     white-space: nowrap;
     color: var(--colors-font-blue-button);
     font-size: var(--fontsize-l);
+    padding: 8px 8px;
 }
+
+.controls-timeEditor__addButton:hover {
+    outline: auto;   
+}
+
 
 .controls-timeEditor__addButton:disabled {
     color: var(--colors-border-gray);

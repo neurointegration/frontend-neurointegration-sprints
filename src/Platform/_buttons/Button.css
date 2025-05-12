@@ -9,6 +9,10 @@
     gap: 12px;
 }
 
+.controls-button:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
 .controls-button_normal-size {
     padding-top: 16px;
     padding-bottom: 16px;
@@ -37,6 +41,10 @@
 
 .controls-button_filled-showMode:active {
     opacity: .5;
+}
+
+.controls-button_filled-showMode:hover {
+    background-color: rgba(0, 0, 0, 0.25);
 }
 
 .controls-button_icon {

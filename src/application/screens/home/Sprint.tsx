@@ -17,6 +17,8 @@ import { cutDate } from '../../../core/api/utils/dateCutter';
 import { SprintDropdownSelectedAtom } from '../../../core/atoms/screensDropdown.atom';
 import { Navigate } from 'react-router-dom';
 import { Routes } from '../../../core/routing/routes';
+import LoadingScreen from '../loading/Loading';
+import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
 
 export type ExpanderClickHandlerType = (
     id: string,
@@ -25,6 +27,8 @@ export type ExpanderClickHandlerType = (
 ) => void;
 
 function Sprint() {
+    const { wait, loading } = useHttpLoader();
+
     const currentSprint = useRecoilValue(CurrentSprintAtom);
     const meInformation = useRecoilValue(MeInformationAtom);
     const setMeInformation = useSetRecoilState(MeInformationAtom);
@@ -115,7 +119,9 @@ function Sprint() {
         tasksByProjectCallback: (projectId) => API.TASKS.Tasks(projectId),
     };
 
-    return <BaseRegistry {...registryProps} />
+    return (loading ? 
+        (<LoadingScreen />)
+     : (<BaseRegistry {...registryProps} />))
 }
 
 export default Sprint;

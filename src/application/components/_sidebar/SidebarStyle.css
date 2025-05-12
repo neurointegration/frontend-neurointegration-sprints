@@ -17,6 +17,16 @@
     line-height: inherit;
 }
 
+.sidebar button:hover{
+    background-color: rgba(0, 0, 0, .15);
+    border-radius: 4px;
+}
+
+.sidebar button:focus{
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 4px;
+}
+
 .sidebarMenu__overlay {
     position: fixed;
     top: 0;
@@ -97,6 +107,10 @@
     align-items: center;
     width: 100%;
     padding-left: var(--sidebar-items-ident);
+}
+
+.sidebarMenu__item:hover {
+    background-color:rgba(0, 0, 0, .1);
 }
 
 .sidebarMenu__item_active {

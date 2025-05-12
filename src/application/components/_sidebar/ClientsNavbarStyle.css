@@ -7,7 +7,6 @@
     grid-template-areas: "sprint standup reflection";
     justify-items: center;
     align-items: center;
-    border-bottom: 1px solid rgb(66, 55, 55);
 }
 
 .client-info-screen_item {
@@ -22,5 +21,5 @@
 }
 
 .item-state-active {
-background-color: rgba(0, 0, 0, 0.25);
+border-top: solid 3px var(--colors-border-gray);
 }

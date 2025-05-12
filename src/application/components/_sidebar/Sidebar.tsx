@@ -1,10 +1,10 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, NavLinkProps, useLocation } from 'react-router-dom';
 import { Icons } from '../../../Platform/_types/Icons';
 import { Routes } from '../../../core/routing/routes';
 import AuthAtom from '../../../core/atoms/auth.atom';
 import { API } from '../../../core/api/handles';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './SidebarStyle.css';
 import clsx from 'clsx';
 import RolesAtom from '../../../core/atoms/roles.atom';
@@ -98,9 +98,11 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
                     src={meInformation.photoUrl ?? emptyAvatarURL}
                 />
             </div>
-            <div className={menuSelectorCN}>
+            <div role='tablist' aria-orientation='vertical' className={menuSelectorCN}>
                 {selectorItems.map((item) => (
                     <NavLink
+                        role='tab'
+                        aria-selected={ currentPath.pathname === item.routePath }
                         to={item.routePath}
                         onClick={itemClickHandler}
                         key={item.title}
@@ -112,7 +114,7 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
                     >
                         <img className={menuItemIconCN} src={item.icon} />
                         <span>{item.title}</span>
-                    </NavLink>
+                    </NavLink >
                 ))}
             </div>
             <button className={exitCN} onClick={exitClickHandler}>

@@ -15,6 +15,11 @@
     align-items: center;
 }
 
+.controls-spoiler__button:hover {
+    text-decoration: underline;
+}
+
+
 .controls-spoiler__icon_opened {
     transform: rotate(180deg);
 }

@@ -26,6 +26,8 @@ import { BaseRegistryType } from '../home/constants';
 import { MePutRequestType, OnboardingTypes } from '../../../core/api/actions/me';
 import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/newOnboarding';
 import OnboardingAtom from '../../../core/atoms/onboarding.atom';
+import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
+import LoadingScreen from '../loading/Loading';
 
 const baseScreenCN = 'screen-EventEditing';
 const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
@@ -47,6 +49,8 @@ const spoilerButtonCN = clsx(
  */
 function EventEditingScreen() {
     const locationEditing = useLocation();
+    const { wait, loading } = useHttpLoader();
+
     const params = useParams();
     const eventType = params.eventType as EventType;
     const eventId = params.id;
@@ -216,6 +220,9 @@ function EventEditingScreen() {
     const showRestoreButton = readonly && eventType === EventType.Project;
 
     return (
+        loading ? 
+        <LoadingScreen />
+     : 
         <div>
             {!onboardingState.editingOnboarding ? 
             <div className='onboarding-dark-overlay'/> :
