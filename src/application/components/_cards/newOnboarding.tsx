@@ -1,7 +1,7 @@
 import './newOnboardingStyle.css';
 import { Onboarding, OnboardingTypes } from '../../../core/api/actions/me';
 import { Icons } from '../../../Platform/_types/Icons';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 export enum OnboardingCardsForms {
@@ -52,12 +52,17 @@ function OnboardingCard({
 }
 
 function OnboardingDateCard({onboardingCardClickHandler, form} : OnboardingCardProps){
+    const inputRef = useRef<HTMLButtonElement | null>(null);
+
+    useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
  return(
   <div className={clsx("dialog-card card-type-cross " + form)}>
     <div>
     <p className='onboarding-text'>Можно выбрать период, за&nbsp;который отобразятся проекты&nbsp;—&nbsp;конкретную неделю или весь спринт</p>
     </div>
-    <button className='onboarging-complete-button' onClick={onboardingCardClickHandler} tabIndex={3}>
+    <button className='onboarging-complete-button' autoFocus={true} ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
         <img className='cross-icon' src={Icons.cross} />
     </button>
   </div>
@@ -65,13 +70,18 @@ function OnboardingDateCard({onboardingCardClickHandler, form} : OnboardingCardP
 }
 
 function OnboardingClientsCard({onboardingCardClickHandler, form} : OnboardingCardProps){
+    const inputRef = useRef<HTMLButtonElement | null>(null);
+
+    useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
  return(
   <div className={clsx("dialog-card card-type-cross " + form)}>
     <div>
     <p className='onboarding-text'>Тренер может оставить заметки на&nbsp;карточке клиента&nbsp;—&nbsp;клиент их не&nbsp;увидит.</p>
     <p className='onboarding-text'>А если нажать на&nbsp;карточку, то&nbsp;можно будет работать со&nbsp;спринтом, стендапом и рефлексией клиента.</p>
     </div>
-    <button className='onboarging-complete-button' onClick={onboardingCardClickHandler} tabIndex={3}>
+    <button className='onboarging-complete-button' ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
         <img className='cross-icon' src={Icons.cross} />
     </button>
   </div>
@@ -79,13 +89,20 @@ function OnboardingClientsCard({onboardingCardClickHandler, form} : OnboardingCa
 }
 
 function OnboardingEditingCard({onboardingCardClickHandler, form} : OnboardingCardProps){
+
+    const inputRef = useRef<HTMLButtonElement | null>(null);
+
+    useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
  return(
   <div className={clsx("dialog-card card-type-cross " + form)}>
     <div>
     <p className='onboarding-text'>На&nbsp;странице редактирования можно изменить количество времени для&nbsp;проекта или задачи.</p>
     <p className='onboarding-text'>А ещё обозначить цветом результаты.</p>
     </div>
-    <button className='onboarging-complete-button' onClick={onboardingCardClickHandler} tabIndex={3}>
+    <button className='onboarging-complete-button' ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
         <img className='cross-icon' src={Icons.cross} />
     </button>
   </div>
@@ -93,13 +110,19 @@ function OnboardingEditingCard({onboardingCardClickHandler, form} : OnboardingCa
 }
 
 function OnboardingProjectCard({form, onboardingCardClickHandler, additionalOnboardingCardClickHandler = ()=>{}, number=1} : OnboardingCardProps){
+    const inputRef = useRef<HTMLButtonElement | null>(null);
+
+    useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+    
     if (number == 1) {
     return (
     <div className={clsx("dialog-card card-type-down-button " + form)}>
         <div className='dialog-card_text-container direction-left'>
         <p className='onboarding-text'>В&nbsp;карточке проекта можно увидеть, сколько времени было запланировано на&nbsp;проект и потрачено на&nbsp;самом деле.</p>
         <p className='onboarding-text'>По&nbsp;неделям и общее, за&nbsp;весь спринт.</p>
-        <button className='onboarging-arrow-button' onClick={additionalOnboardingCardClickHandler} tabIndex={3}>
+        <button className='onboarging-arrow-button' ref={inputRef} onClick={additionalOnboardingCardClickHandler} tabIndex={3}>
             Дальше 
         <img className='left-arrow-icon' src={Icons.arrow} />
         </button>
