@@ -24,6 +24,6 @@
     margin-bottom: 48px;
 }
 
-LoginButton:focus {
+.tgme_widget_login_button:focus {
     outline: 2px solid black;
 }
