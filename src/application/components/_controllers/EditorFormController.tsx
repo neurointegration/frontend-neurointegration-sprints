@@ -76,7 +76,7 @@ const EditorFormController = (
             params = {
                 title: useEventTitle[0],
                 sectionName,
-                sprintId: clientSprintId || currentSprint.number,
+                sprintNumber: clientSprintId || currentSprint.number,
                 ...useChanges[0],
             };
             methodCall = API.TRAINER.PROJECTS.CreateProject(clientId, params);
@@ -85,7 +85,7 @@ const EditorFormController = (
             params = {
                 title: useEventTitle[0],
                 sectionName,
-                sprintId: clientSprintId || currentSprint.number,
+                sprintNumber: clientSprintId || currentSprint.number,
                 ...useChanges[0],
             };
             methodCall = API.PROJECTS.CreateProject(params);
@@ -94,7 +94,6 @@ const EditorFormController = (
                 id: itemDescriptor.id,
                 title: useEventTitle[0],
                 sectionName,
-                sprintId: clientSprintId || currentSprint.number,
                 ...useChanges[0],
             };
             methodCall = API.TRAINER.PROJECTS.UpdateProject(clientId, params);

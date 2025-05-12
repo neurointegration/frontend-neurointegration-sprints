@@ -104,6 +104,7 @@ function Sprint() {
             editInDialogMode: true,
         },
         registryType: BaseRegistryType.MainSprint,
+        userSprintId: currentSprint.number,
 
         useDropdownItems: [
             dropdownItems,
