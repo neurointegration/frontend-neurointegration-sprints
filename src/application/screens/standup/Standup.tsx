@@ -121,7 +121,7 @@ const StandupScreen = () => {
                     'controls-margin_bottom-4xl'
                 )}
             />
-            { transformStandups(items) ? items.length > 0 ? transformStandups(items).map((item) => <StandupCard 
+            { transformStandups(items) ? items.length > 0 ? transformStandups(items).sort((a, b) => Date.parse(a.date) - Date.parse(b.date)).map((item) => <StandupCard 
                 date={item.date}
                 mentalStates={item.mentalStates}
                 wins={item.wins}
