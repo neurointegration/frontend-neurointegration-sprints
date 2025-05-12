@@ -64,6 +64,7 @@ const AuthScreen = () => {
         window.open(TELEGRAM_BOT_URL, '_blank');
     };
 
+
     return (
         <div className='auth-container'>
             <div className='auth-wrapper'>
@@ -73,7 +74,7 @@ const AuthScreen = () => {
                     <br />
                     Пожалуйста, перед началом работы проверьте, что вы зарегистрированы.
                     <br />
-                    <a href={TELEGRAM_BOT_URL}
+                    <a href={TELEGRAM_BOT_URL} target="_blank"
                         //style={{ color: 'blue', cursor: 'pointer' }}
                         //onClick={handleLinkClick}
                     >Telegram-бот для прохождения спринтов нейроинтеграции
