@@ -81,7 +81,7 @@ function OnboardingClientsCard({onboardingCardClickHandler, form} : OnboardingCa
     <p className='onboarding-text'>Тренер может оставить заметки на&nbsp;карточке клиента&nbsp;—&nbsp;клиент их не&nbsp;увидит.</p>
     <p className='onboarding-text'>А если нажать на&nbsp;карточку, то&nbsp;можно будет работать со&nbsp;спринтом, стендапом и рефлексией клиента.</p>
     </div>
-    <button className='onboarging-complete-button' ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
+    <button className='onboarging-complete-button' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
         <img className='cross-icon' src={Icons.cross} />
     </button>
   </div>
@@ -102,7 +102,7 @@ function OnboardingEditingCard({onboardingCardClickHandler, form} : OnboardingCa
     <p className='onboarding-text'>На&nbsp;странице редактирования можно изменить количество времени для&nbsp;проекта или задачи.</p>
     <p className='onboarding-text'>А ещё обозначить цветом результаты.</p>
     </div>
-    <button className='onboarging-complete-button' ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
+    <button className='onboarging-complete-button' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
         <img className='cross-icon' src={Icons.cross} />
     </button>
   </div>
@@ -122,7 +122,7 @@ function OnboardingProjectCard({form, onboardingCardClickHandler, additionalOnbo
         <div className='dialog-card_text-container direction-left'>
         <p className='onboarding-text'>В&nbsp;карточке проекта можно увидеть, сколько времени было запланировано на&nbsp;проект и потрачено на&nbsp;самом деле.</p>
         <p className='onboarding-text'>По&nbsp;неделям и общее, за&nbsp;весь спринт.</p>
-        <button className='onboarging-arrow-button' ref={inputRef} onClick={additionalOnboardingCardClickHandler} tabIndex={3}>
+        <button className='onboarging-arrow-button' ref={inputRef} autoFocus={true} onClick={additionalOnboardingCardClickHandler} tabIndex={3}>
             Дальше 
         <img className='left-arrow-icon' src={Icons.arrow} />
         </button>
