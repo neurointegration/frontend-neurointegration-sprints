@@ -43,10 +43,6 @@ button {
     background: none;
 }
 
-button:focus {
-    outline: 2px solid black;
-}
-
 .weekselector {
     height: 120px;
     border: solid 15px gray;
