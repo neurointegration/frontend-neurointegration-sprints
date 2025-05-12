@@ -23,7 +23,3 @@
     font-size: var(--fontsize-xl);
     margin-bottom: 48px;
 }
-
-.tgme_widget_login_button:focus {
-    outline: 2px solid black;
-}
