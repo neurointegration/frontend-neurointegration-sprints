@@ -1,5 +1,6 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import './ClientsStyle.css';
+import '../../../Platform/_common-custom/EmptyListLabelStyle.css'
 import '../../components/_cards/newOnboardingStyle.css';
 import TextInput from '../../../Platform/_inputs/TextInput';
 import Sidebar from '../../components/_sidebar/Sidebar';
@@ -185,6 +186,8 @@ const ClientsScreen: React.FC = () => {
             <OnboardingCard form={OnboardingCardsForms.Simple} type={OnboardingTypes.ClientsOnboarding} onboardingCardClickHandler={onboardingCardClickHandler}/>
             :
             <></>}
+
+            {clients ? clients.length > 0 ? 
             <div className='clients-container'>
                 <div className='client-list'>
                     {clients.map((client) => (
@@ -198,6 +201,8 @@ const ClientsScreen: React.FC = () => {
                     ))}
                 </div>
             </div>
+            : <h3 className='empty-list-label'>Кажется, клиенты ещё не указали в Telegram-боте вас своим тренером...</h3> : <h3 className='empty-list-label'>Кажется, клиенты ещё не указали в Telegram-боте вас своим тренером в боте...</h3>
+            }
         </>
     );
 };

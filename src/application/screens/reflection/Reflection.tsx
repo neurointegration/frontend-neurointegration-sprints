@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Sidebar from '../../components/_sidebar/Sidebar';
 import './ReflectionStyle.css';
-
+import '../../../Platform/_common-custom/EmptyListLabelStyle.css'
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { API } from '../../../core/api/handles';
@@ -134,7 +134,7 @@ const ReflectionScreen = () => {
                 </div>
             </Fragment>
             :
-            <h3>Кажется, в выбранный спринт не было ни одной рефлексии...</h3>
+            <h3 className='empty-list-label'>Кажется, в выбранный спринт не было ни одной рефлексии...</h3>
             }
             
         </div>

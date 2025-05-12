@@ -1,0 +1,12 @@
+.empty-list-label {
+    color:rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+    position: absolute;
+    margin-top: auto;
+    margin-bottom: auto;
+    top: 0;
+    bottom: 0;
+}

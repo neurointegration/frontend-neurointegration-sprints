@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Sidebar from '../../components/_sidebar/Sidebar';
 import './StandupStyle.css';
 import StandupCard from '../../components/_cards/StandupCard';
-
+import '../../../Platform/_common-custom/EmptyListLabelStyle.css'
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { API } from '../../../core/api/handles';
@@ -128,7 +128,7 @@ const StandupScreen = () => {
                 focusLife={item.focusLife}
                 focusFun={item.focusFun}
                 focusDrive={item.focusDrive} 
-                sprintNumber={item.sprintNumber}/>) : <h3>Кажется, в выбранный спринт нет ни одного стендапа...</h3> : <h3>Кажется, в выбранный спринт нет ни одного стендапа...</h3>
+                sprintNumber={item.sprintNumber}/>) : <h3 className='empty-list-label'>Кажется, в выбранный спринт нет ни одного стендапа...</h3> : <h3 className='empty-list-label'>Кажется, в выбранный спринт нет ни одного стендапа...</h3>
             }
         </div>
     );
