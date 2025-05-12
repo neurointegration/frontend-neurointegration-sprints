@@ -73,11 +73,11 @@ const AuthScreen = () => {
                     <br />
                     Пожалуйста, перед началом работы проверьте, что вы зарегистрированы.
                     <br />
-                    <span
-                        style={{ color: 'blue', cursor: 'pointer' }}
-                        onClick={handleLinkClick}
+                    <a href={TELEGRAM_BOT_URL}
+                        //style={{ color: 'blue', cursor: 'pointer' }}
+                        //onClick={handleLinkClick}
                     >Telegram-бот для прохождения спринтов нейроинтеграции
-                    </span>
+                    </a>
                 </p>
                 <LoginButton
                     botUsername={BOT_USERNAME}
