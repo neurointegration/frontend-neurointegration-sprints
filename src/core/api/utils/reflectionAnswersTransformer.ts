@@ -98,37 +98,37 @@ export function transformReflections(
 
         switch (answerType) {
             case ReflectionAnswerTypeEnum.Changes:
-                groupedByNumber[sprintReplyNumber]
+                groupedByNumber[3]
                 .cards
                 .Changes.textLabelPairsArray
                 .push({index: 0, label: 'Какое главное изменение я замечаю?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
             case ReflectionAnswerTypeEnum.Actions:
-                groupedByNumber[sprintReplyNumber]
+                groupedByNumber[3]
                 .cards
                 .Actions
                 .textLabelPairsArray.push({index: 0, label: 'Какие мои действия к этому привели?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
             case ReflectionAnswerTypeEnum.Abilities:
-                groupedByNumber[sprintReplyNumber]
+                groupedByNumber[3]
                 .cards
                 .Abilities
                 .textLabelPairsArray.push({index: 0, label: 'Какие мои способности мне помогли?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
             case ReflectionAnswerTypeEnum.Beliefs:
-                groupedByNumber[sprintReplyNumber]
+                groupedByNumber[3]
                 .cards
                 .Beliefs
                 .textLabelPairsArray.push({index: 0, label: 'Как изменились мои убеждения о том, что возможно?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
             case ReflectionAnswerTypeEnum.SelfPerception:
-                groupedByNumber[sprintReplyNumber]
+                groupedByNumber[3]
                 .cards
                 .SelfPerception
                 .textLabelPairsArray.push({index: 0, label: 'Как изменились мои убеждения о себе и отношения с собой?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});
                 break;
             case ReflectionAnswerTypeEnum.Opportunities:
-                groupedByNumber[sprintReplyNumber]
+                groupedByNumber[3]
                 .cards
                 .Opportunities
                 .textLabelPairsArray.push({index: 0, label: 'Какие возможности теперь для меня доступны?', text: [].concat(answer.split('\n').filter(answ => answ.length > 0))});

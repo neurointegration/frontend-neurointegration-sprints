@@ -19,6 +19,7 @@ function ReflectionCardTextBlock(label: string, text: string[]) {
         <div className='reflection-card_text-block'>
             <p className='reflection-card-label'>{label}</p>
             {text.map((item) => <p>{item}</p>)}
+            <br/>
         </div>
     );
 }
