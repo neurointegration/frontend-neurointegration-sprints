@@ -171,7 +171,7 @@
     }
 
     .standup-card__mental-states-container__mental-state {
-        max-width: 30%;
+        width: max-content;
     }
 
     .standup-card__label {
