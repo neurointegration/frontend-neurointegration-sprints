@@ -166,12 +166,13 @@
     .standup-card__mental-states-container {
         flex-direction: row;
         gap: 4px;
-        padding: 0 20px;
-        justify-content: start;
+        padding: 0;
+        justify-content: center;
     }
 
     .standup-card__mental-states-container__mental-state {
-        width: max-content;
+        max-width: 33%;
+        font-size: var(--fontsize-m);
     }
 
     .standup-card__label {
