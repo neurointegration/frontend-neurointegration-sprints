@@ -43,7 +43,7 @@ const StandupScreen = () => {
     useEffect(() => {
         const newItems: DropdownItem<string>[] = [];
         if (!isClientStandup) {
-        standup.map((sprint) => {
+        [...standup].sort((a, b) => Date.parse(b.beginDate) - Date.parse(a.beginDate)).map((sprint) => {
             const begin = sprint.beginDate;
             const end = sprint.endDate;
             const caption =
@@ -62,8 +62,7 @@ const StandupScreen = () => {
         setdropdownItems(() => [...newItems]);
         setSelectedDropdownItem((prev) => {
             const values = newItems.filter((item) => item.value === prev?.value);
-
-            return values.length ? prev : newItems[newItems.length - 1];
+            return selectedDropdownItem ? (values.length ? prev : selectedDropdownItem) : (values.length ? prev : newItems[0]);
         });
         }
     }, [standup]);

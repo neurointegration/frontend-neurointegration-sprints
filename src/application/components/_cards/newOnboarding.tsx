@@ -6,6 +6,7 @@ import clsx from 'clsx';
 
 export enum OnboardingCardsForms {
     Dialog='dialog-card-form',
+    DialogDownArrow = 'dialog-down-arrow-card-form',
     Simple='simple-card-form',
 }
 

@@ -54,7 +54,8 @@ const SettingsScreen: React.FC = () => {
         };
 
         API.ME.PutMe(data).then(() => {
-            setOnboarding(onboardingNew)
+            setOnboarding(onboardingNew);
+            navigate(Routes.Sprint);
         });
     };
 

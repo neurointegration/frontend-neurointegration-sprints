@@ -24,7 +24,7 @@ function HistoryScreen() {
     useEffect(() => {
         const newItems: DropdownItem<string>[] = [];
 
-        history.map((sprint) => {
+        [...history].sort((a, b) => Date.parse(b.beginDate) - Date.parse(a.beginDate)).map((sprint) => {
             const begin = sprint.beginDate;
             const end = sprint.endDate;
             const caption =
@@ -43,8 +43,8 @@ function HistoryScreen() {
         setdropdownItems(() => [...newItems]);
         setSelectedDropdownItem((prev) => {
             const values = newItems.filter((item) => item.value === prev?.value);
+            return selectedDropdownItem ? (values.length ? prev : selectedDropdownItem) : (values.length ? prev : newItems[0]);
 
-            return values.length ? prev : newItems[newItems.length - 1];
         });
     }, [history]);
 

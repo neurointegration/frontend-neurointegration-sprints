@@ -5,6 +5,7 @@ import { ROOT_API_URL } from '../../../config';
 import decodeToken from './tokenDecoder';
 import { API } from '../handles';
 import { AuthWithoutStatusType, Logout } from '../actions/auth';
+import { localStorageClean } from './localStorageCleaner';
 
 export type HTTPSuccessResponse<T = undefined> = {
     isSuccess: true;
@@ -19,7 +20,7 @@ export type HTTPErrorResponse = {
 
 const http = axios.create({
     baseURL: ROOT_API_URL,
-    // withCredentials: true,
+    //withCredentials: true,
     headers: {
         // 'Access-Control-Allow-Origin': '*',
         // 'Access-Control-Allow-Headers': 'Authorization, Content-Type',
@@ -74,8 +75,7 @@ export const applyInterceptors = (
         isRefreshing = true;   
         refreshRequest = API.AUTH.Refresh().then((data) => {
             if (!data.isSucceed && data?.messages?.token[0] === 'Refresh token expired') { 
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
+                localStorageClean();
                 location.reload();
             }
             return data
@@ -105,8 +105,7 @@ export const applyInterceptors = (
 
             if (shouldLogout) {
                 resetState();
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
+                localStorageClean();
                 location.reload();
             }
 

@@ -50,6 +50,26 @@
     box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
     z-index: 21;
     }
+
+
+.dialog-down-arrow-card-form::before {
+    content: "";
+    position: absolute;
+    bottom: -16px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    background: white;
+    clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+    border-radius: 0 0 0 0.5em;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
+    z-index: 21;
+    transform: rotate(-45deg);
+
+}   
 }
 
 .simple-card-form {

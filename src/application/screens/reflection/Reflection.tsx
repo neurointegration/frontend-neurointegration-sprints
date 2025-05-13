@@ -42,7 +42,7 @@ const ReflectionScreen = () => {
     useEffect(() => {
         const newItems: DropdownItem<string>[] = [];
 
-        Reflection.map((sprint) => {
+        [...Reflection].sort((a, b) => Date.parse(b.beginDate) - Date.parse(a.beginDate)).map((sprint) => {
             const begin = sprint.beginDate;
             const end = sprint.endDate;
             const caption =
@@ -61,8 +61,7 @@ const ReflectionScreen = () => {
         setdropdownItems(() => [...newItems]);
         setSelectedDropdownItem((prev) => {
             const values = newItems.filter((item) => item.value === prev?.value);
-
-            return values.length ? prev : newItems[newItems.length - 1];
+            return selectedDropdownItem ? (values.length ? prev : selectedDropdownItem) : (values.length ? prev : newItems[0]);
         });
     }, [Reflection]);
 

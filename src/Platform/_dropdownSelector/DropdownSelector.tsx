@@ -2,6 +2,8 @@ import { Icons } from '../_types/Icons';
 import './DropdownSelectorStyle.css';
 import { useState } from 'react';
 import clsx from 'clsx';
+import { useRecoilState } from 'recoil';
+import { ReflectionDropdownSelectedAtom } from '../../core/atoms/screensDropdown.atom';
 
 type DropdownSelectorProps<T extends string | number> = {
     /**
@@ -62,7 +64,9 @@ function DropdownSelector<T extends string | number>({
     selectedValueClassName,
 }: DropdownSelectorProps<T>) {
     const [isSelectorOpen, setIsSelectorOpen] = useState<boolean>(false);
-
+    const [selectedDropdownItem, setSelectedDropdownItem] = useRecoilState(
+        ReflectionDropdownSelectedAtom
+    );
     const dropdownClickHandler = () => {
         setIsSelectorOpen(() => true);
     };

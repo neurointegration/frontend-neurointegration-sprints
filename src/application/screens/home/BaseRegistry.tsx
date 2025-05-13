@@ -19,7 +19,7 @@ import { MainSectionType } from '../../../Platform/_types/Statuses';
 import SectionSelector from '../../../Platform/_tabs/TabSelector';
 import { path, Routes } from '../../../core/routing/routes';
 import Sidebar from '../../components/_sidebar/Sidebar';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import './SprintStyle.css';
@@ -397,7 +397,7 @@ function BaseRegistry<T extends string | number>({
         <></>}
 
         {!onboardingState.projectOnboarding && onboardingState.dateOnboarding
-        && items[selectedScreensSections[registryType].value].length == 1 
+        && items[selectedScreensSections[registryType].value].length >= 1 
         ? 
         <div className='onboarding-dark-overlay'/> :
         <></>}
@@ -432,6 +432,11 @@ function BaseRegistry<T extends string | number>({
             :
             <></>}
             <SectionSelector tabs={SECTIONS} registryType={registryType} />
+        {!onboardingState.projectOnboarding && onboardingState.dateOnboarding
+        && items[selectedScreensSections[registryType].value].length > 1 ? 
+        <OnboardingCard form={OnboardingCardsForms.DialogDownArrow} type={OnboardingTypes.ProjectOnboarding} onboardingCardClickHandler={onboardingProjectCardClickHandler}/> :
+        <></>}
+
             <EventRegistry
                 registryType={registryType}
                 items={items[selectedScreensSections[registryType].value]}

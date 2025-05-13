@@ -9,6 +9,7 @@ import './SidebarStyle.css';
 import clsx from 'clsx';
 import RolesAtom from '../../../core/atoms/roles.atom';
 import MeInformationAtom from '../../../core/atoms/me.atom';
+import { localStorageClean } from '../../../core/api/utils/localStorageCleaner';
 
 type SelectorItemType = {
     icon: Icons;
@@ -83,8 +84,7 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
         API.AUTH.Logout().then((resp) => {
             if (resp.isSuccess) {
                 resetAuthState();
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
+                localStorageClean();
                 location.reload();
             }
         });
