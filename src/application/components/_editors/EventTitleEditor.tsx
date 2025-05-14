@@ -28,8 +28,8 @@ function EventTitleEditor({
         <div className={baseCN}>
             <span>
                 {eventType === EventType.Project
-                    ? 'Название проекта'
-                    : 'Название задачи'}
+                    ? 'Проект'
+                    : 'Задача'}
             </span>
             <TextInput
                 useValue={useTitle}

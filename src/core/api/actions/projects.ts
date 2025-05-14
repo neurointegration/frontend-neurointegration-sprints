@@ -31,6 +31,7 @@ export type ProjectResponseType = {
     sectionName: MainSectionType;
     planningTimes: TaskOrProjectTimeDescriptorType;
     factTimes: TaskOrProjectTimeDescriptorType;
+    createdAt: string;
 };
 
 export type ProjectRequestType = {

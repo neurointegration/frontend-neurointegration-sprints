@@ -8,6 +8,7 @@
 .screen-EventEditing__actionButtonsBlock {
     display: flex;
     gap: 10px;
+    position: fixed;
 }
 
 .screen-EventEditing__actionButton_hidden {
@@ -15,5 +16,5 @@
 }
 
 .screen-EventEditing__pageContent {
-    padding: 12px 20px;
+    padding: 32px 20px;
 }
