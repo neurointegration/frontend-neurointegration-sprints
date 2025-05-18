@@ -29,6 +29,7 @@ function EditorUnit({
     disabled,
 }: EditorUnitProps) {
     const baseCN = 'editorUnit';
+    const timeBlocksCN = clsx(`${baseCN}__timeBlocks`);
     const timeBlockCN = clsx(`${baseCN}__timeBlock`);
     const plannedTimeBlockCN = clsx(timeBlockCN, `${baseCN}__plannedTimeBlock`);
     const factTimeBlockCN = clsx(timeBlockCN, `${baseCN}__factTimeBlock`);
@@ -70,7 +71,7 @@ function EditorUnit({
                 newStatus &&
                 (isNaN(timeValue?.hours) || isNaN(timeValue?.minutes))
             ) {
-                newState[timeKey] = { hours: 0, minutes: 0, status: newStatus };
+                newState[timeKey] = { hours: null, minutes: null, status: newStatus };
             }
 
             editingFormContext.propertyChanged('factTimes', newState);
@@ -81,24 +82,26 @@ function EditorUnit({
 
     return (
         <div className={baseCN}>
-            <div className={plannedTimeBlockCN}>
-                <span className={timeBlockTitleCN}>Запланированное время</span>
-                <TimeEditor
-                    timeKey={timeKey}
-                    value={planning?.[timeKey]}
-                    changeTimeCallback={changeTimeValues}
-                    planningTime
-                    disabled={disabled}
-                />
-            </div>
-            <div className={factTimeBlockCN}>
-                <span className={timeBlockTitleCN}>Фактическое время</span>
-                <TimeEditor
-                    timeKey={timeKey}
-                    value={fact?.[timeKey]}
-                    changeTimeCallback={changeTimeValues}
-                    disabled={disabled}
-                />
+                <div className={timeBlocksCN}>
+                <div className={plannedTimeBlockCN}>
+                    <span className={timeBlockTitleCN}>Запланированное время</span>
+                    <TimeEditor
+                        timeKey={timeKey}
+                        value={planning?.[timeKey]}
+                        changeTimeCallback={changeTimeValues}
+                        planningTime
+                        disabled={disabled}
+                    />
+                </div>
+                <div className={factTimeBlockCN}>
+                    <span className={timeBlockTitleCN}>Фактическое время</span>
+                    <TimeEditor
+                        timeKey={timeKey}
+                        value={fact?.[timeKey]}
+                        changeTimeCallback={changeTimeValues}
+                        disabled={disabled}
+                    />
+                </div>
             </div>
             <TimeStatusEditor
                 value={fact?.[timeKey]?.status}

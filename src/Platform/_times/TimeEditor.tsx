@@ -64,7 +64,7 @@ function TimeEditor({
     const minutesClickHandler = () => {
         const newVal = { ...value };
 
-        if (isNaN(value?.hours)) {
+        if (isNaN(value?.hours) || !value?.hours) {
             newVal.hours = 0;
         }
 
@@ -96,7 +96,7 @@ function TimeEditor({
             newVal.hours = 0;
         }
 
-        if (isNaN(value?.minutes)) {
+        if (isNaN(value?.minutes) || !value?.minutes) {
             newVal.minutes = 0;
         }
 

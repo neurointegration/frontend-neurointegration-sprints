@@ -71,9 +71,9 @@ function TimeComparer({
     const planningValue = planning
         ? `${_formatValue(planning.hours)}:${_formatValue(planning.minutes)}`
         : EMPTY_TIME;
-    const factValue = fact
+    const factValue = fact ? (fact.hours || fact.minutes)
         ? `${_formatValue(fact.hours)}:${_formatValue(fact.minutes)}`
-        : EMPTY_TIME;
+        : EMPTY_TIME : EMPTY_TIME;
 
     return (
         <div className={wrapperCN}>

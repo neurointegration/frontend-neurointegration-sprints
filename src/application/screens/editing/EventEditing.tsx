@@ -28,6 +28,7 @@ import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/ne
 import OnboardingAtom from '../../../core/atoms/onboarding.atom';
 import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
 import LoadingScreen from '../loading/Loading';
+import EventSectionEditor from '../../components/_editors/EventSectionEditor';
 
 const baseScreenCN = 'screen-EventEditing';
 const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
@@ -281,6 +282,11 @@ function EventEditingScreen() {
                         eventType={eventType}
                         disabled={readonly}
                     />
+                    {eventType === EventType.Project ? 
+                    <EventSectionEditor
+                        useSection={CONTROLLER.useEventSection}
+                    />
+                    : <></>}
                     {spoilerUnits.map((spoilerItem, index) => (
                         <Spoiler
                             key={`spoilerItem_${index}`}

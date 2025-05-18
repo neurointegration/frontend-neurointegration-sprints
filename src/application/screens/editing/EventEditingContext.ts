@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { PossibleTimeResponceKeysType, TaskOrProjectTimeDescriptorType } from '../../../core/api/actions/projects';
+import { MainSectionType } from '../../../Platform/_types/Statuses';
 
 type ValueType<K extends keyof FlatEditingItemChangesType> =
     FlatEditingItemChangesType[K];
@@ -13,6 +14,7 @@ export type EditingFormContextPropertyChangedFuncType = <
 
 export type FlatEditingItemChangesType = {
     title?: string;
+    section: MainSectionType
     planningTimes: TaskOrProjectTimeDescriptorType;
     factTimes: TaskOrProjectTimeDescriptorType;
 };

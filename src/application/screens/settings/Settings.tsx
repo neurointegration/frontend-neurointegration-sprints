@@ -22,6 +22,7 @@ const SettingsScreen: React.FC = () => {
     const [role, setRole] = useState('client');
     const [trainer, setTrainer] = useState('');
     const [photo, setPhoto] = useState(null);
+    const [isAddingTrainerError, setisAddingTrainerError] = useState(false);
     const [sprintWeeks, setSprintWeeks] = useState(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -32,11 +33,20 @@ const SettingsScreen: React.FC = () => {
             sprintWeeksCount: sprintWeeks,
         };
 
-        const promises = [
-            API.ME.PutMe(data),
-        ];
+        const trainerData = {
+            trainerUsername: trainer.startsWith('@') ? trainer : `@${trainer}`,
+        };
 
-        Promise.all(promises).then(() => location.reload());
+        API.ME.PutMe(data).then(() => location.reload());
+
+
+        API.ME.SetTrainer(trainerData).then((res) => {
+            if (res.isSuccess) {
+                setisAddingTrainerError(false);
+            }
+            else {
+                setisAddingTrainerError(true);
+            }});
     };
 
     const setMeInfo = useSetRecoilState(MeInformationAtom);
@@ -71,6 +81,11 @@ const SettingsScreen: React.FC = () => {
                 setPhoto(() => res.body.photoUrl);
             }
         });
+        API.ME.Trainer().then((res) => {
+            if (res.isSuccess) {
+                setTrainer(() => `@${res.body.username}`);
+            }
+        });
     }, []);
 
     const handleLinkClick = () => {
@@ -95,11 +110,6 @@ const SettingsScreen: React.FC = () => {
                         />
                     </div>
                     <h2 className='section-title'>Личная информация</h2>
-                    {/* <TextInput
-                        useValue={[username, setUsername]}
-                        disabled
-                        className='controls-margin_bottom-m'
-                    /> */}
                     <TextInput
                         useValue={[fullName, setFullName]}
                         placeholder='ФИО'
@@ -132,6 +142,14 @@ const SettingsScreen: React.FC = () => {
                         <option value={3}>3</option>
                         <option value={4}>4</option>
                     </select>
+                    <h2 className='section-title'>Мой тренер</h2>
+                    <div>
+                    <TextInput
+                        useValue={[trainer, setTrainer]}
+                        className='controls-margin_bottom-m'
+                    />
+                    {isAddingTrainerError ? <p className='section-error-message'>Кажется, такого тренера не существует</p> : <></>}
+                    </div>
                     <h2 className='section-title'>Telegram-бот для прохождения спринтов</h2>
                     <Button
                         caption='Перейти в бота'

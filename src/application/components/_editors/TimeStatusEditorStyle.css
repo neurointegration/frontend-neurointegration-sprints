@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 10px;
     font-size: var(--fontsize-m);
+    justify-content: flex-end;
 }
 
 .timeStatusEditor__statusItem {

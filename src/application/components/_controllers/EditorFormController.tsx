@@ -15,6 +15,7 @@ import { BaseRegistryType } from '../../screens/home/constants';
 export type FormControllerType = {
     usePlanningTimes: UseTimeEditorValue;
     useFactTimes: UseTimeEditorValue;
+    useEventSection: [MainSectionType, React.Dispatch<React.SetStateAction<MainSectionType>>]
     useEventTitle: [string, React.Dispatch<React.SetStateAction<string>>];
     useChanges: [
         FlatEditingItemChangesType,
@@ -62,6 +63,9 @@ const EditorFormController = (
 
     const useEventTitle = useState<string>(restructuredItem?.title || '');
 
+    const useEventSection = useState<MainSectionType>(restructuredItem?.section);
+
+
     const saveHandler = (clientSprintId: string = null, navigateTo = -1) => {
         // const apiMethod:
         //     | typeof API.PROJECTS.CreateProject
@@ -75,7 +79,7 @@ const EditorFormController = (
         if (isCreation && eventType === EventType.Project && registryType === BaseRegistryType.ClientSprint) {
             params = {
                 title: useEventTitle[0],
-                sectionName,
+                sectionName: useEventSection[0],
                 sprintNumber: clientSprintId || currentSprint.number,
                 ...useChanges[0],
             };
@@ -84,7 +88,7 @@ const EditorFormController = (
         } else if (isCreation && eventType === EventType.Project) {
             params = {
                 title: useEventTitle[0],
-                sectionName,
+                sectionName: useEventSection[0],
                 sprintNumber: clientSprintId || currentSprint.number,
                 ...useChanges[0],
             };
@@ -93,13 +97,16 @@ const EditorFormController = (
             params = {
                 id: itemDescriptor.id,
                 title: useEventTitle[0],
-                sectionName,
+                sectionName: useEventSection[0],
+                ...restructuredItem,
                 ...useChanges[0],
             };
             methodCall = API.TRAINER.PROJECTS.UpdateProject(clientId, params);
         } else if (!isCreation && eventType === EventType.Project) {
             params = {
                 id: itemDescriptor.id,
+                sectionName: useEventSection[0],
+                title: useEventTitle[0],
                 ...restructuredItem,
                 ...useChanges[0],
             };
@@ -115,7 +122,6 @@ const EditorFormController = (
         } else if (isCreation && eventType === EventType.Task) {
             params = {
                 projectId,
-                sectionName,
                 title: useEventTitle[0],
                 ...useChanges[0],
             };
@@ -165,9 +171,9 @@ const EditorFormController = (
         });
     };
 
-
     return {
         usePlanningTimes,
+        useEventSection,
         useFactTimes,
         useEventTitle,
         useChanges,
@@ -187,6 +193,7 @@ const _restructurizeEditingItem = (
     const item = registryItemDescriptor?.item as EventCardType;
     const result: FlatEditingItemChangesType = {
         title: item.title,
+        section: registryItemDescriptor.sectionName,
         planningTimes: item.timeValues.planningTimes,
         factTimes: item.timeValues.factTimes,
     };

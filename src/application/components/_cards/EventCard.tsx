@@ -12,6 +12,7 @@ import {
 import { useRecoilValue } from 'recoil';
 import MeInformationAtom from '../../../core/atoms/me.atom';
 import { RegistryItemType } from '../_registry/EventRegistry';
+import { sumDates } from '../../../core/api/utils/DateSummarizator';
 
 export type EventCardClickHandlerType = (event: RegistryItemType) => void;
 
@@ -157,19 +158,40 @@ function _getTimeInfoComponent(
         fact: null | TimeType;
     }[] = [];
 
+    const planningTimesArr : TimeType[] = [];
+    const factTimesArr : TimeType[] = [];
+
+
     possibleKeys.map((key) => {
         let timeItem = { planning: null, fact: null };
 
         if (planningTimes && key in planningTimes) {
             timeItem = { ...timeItem, planning: planningTimes[key] };
+            if (planningTimes[key]) {
+                planningTimesArr.push(planningTimes[key]);
+            }
         }
 
         if (factTimes && key in factTimes) {
             timeItem = { ...timeItem, fact: factTimes[key] };
+            if (factTimes[key]) {
+            factTimesArr.push(factTimes[key]);
+            }
         }
 
         timeComparerItems.push(timeItem);
     });
+
+    if (timeComparerItems[timeComparerItems.length-1].planning === null) {
+        timeComparerItems[timeComparerItems.length-1].planning = sumDates(planningTimesArr);
+    }
+
+    if (timeComparerItems[timeComparerItems.length-1].fact == null) {
+        timeComparerItems[timeComparerItems.length-1].fact = {...sumDates(factTimesArr), status: null};
+    } else if (timeComparerItems[timeComparerItems.length-1].fact.hours == null && 
+            timeComparerItems[timeComparerItems.length-1].fact.minutes == null) {
+        timeComparerItems[timeComparerItems.length-1].fact = {...sumDates(factTimesArr), status: timeComparerItems[timeComparerItems.length-1].fact.status};
+    }
 
     // Если выбрано отображение всех недель - их и отобразим
     if (weekToShow === null) {

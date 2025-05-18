@@ -1,7 +1,7 @@
 .eventTitleEditor {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     font-size: var(--fontsize-xl);
     font-weight: var(--fontweight-medium);
 }

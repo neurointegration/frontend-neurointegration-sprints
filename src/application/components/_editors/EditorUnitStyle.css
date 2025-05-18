@@ -1,7 +1,8 @@
 .editorUnit {
     display: flex;
-    flex-direction: column;
-    gap: 26px;
+    flex-direction: row;
+    gap: 48px;
+    flex-wrap: wrap;
 }
 
 .editorUnit__timeBlock {
@@ -13,4 +14,10 @@
 .editorUnit__timeBlockTitle {
     font-size: var(--fontsize-xl);
     font-weight: var(--fontweight-medium);
+}
+
+.editorUnit__timeBlocks {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
