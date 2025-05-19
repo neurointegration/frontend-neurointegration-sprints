@@ -37,12 +37,10 @@ const SettingsScreen: React.FC = () => {
             trainerUsername: trainer.startsWith('@') ? trainer : `@${trainer}`,
         };
 
-        API.ME.PutMe(data).then(() => location.reload());
-
-
         API.ME.SetTrainer(trainerData).then((res) => {
             if (res.isSuccess) {
                 setisAddingTrainerError(false);
+                API.ME.PutMe(data).then(() => location.reload());
             }
             else {
                 setisAddingTrainerError(true);
