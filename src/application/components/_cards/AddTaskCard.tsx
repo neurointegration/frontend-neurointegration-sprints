@@ -48,6 +48,7 @@ function AddTaskCard({ project, section, registryType }: AddTaskCardProps) {
                 caption='Добавить задачу'
                 icon={Icons.plus}
                 onClick={clickHandler}
+                aria-label='Добавить задачу'
             />
         </div>
     );

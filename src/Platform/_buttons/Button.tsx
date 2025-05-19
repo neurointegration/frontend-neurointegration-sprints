@@ -42,7 +42,7 @@ function Button({
         fontSize && `controls-fontsize-${fontSize}`
     );
 
-    const iconIMG = <img src={icon} />;
+    const iconIMG = <img aria-hidden src={icon} />;
     return (
         <button
             type={type}

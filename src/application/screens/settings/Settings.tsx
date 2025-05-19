@@ -104,6 +104,7 @@ const SettingsScreen: React.FC = () => {
                 <form onSubmit={handleSubmit}>
                     <div className='profile-picture-container'>
                         <img
+                            aria-hidden
                             src={photo || '/logo.svg'}
                             alt='Profile'
                             className='profile-picture'
@@ -150,7 +151,7 @@ const SettingsScreen: React.FC = () => {
                     />
                     {isAddingTrainerError ? <p className='section-error-message'>Кажется, такого тренера не существует</p> : <></>}
                     </div>
-                    <h2 className='section-title'>Telegram-бот для прохождения спринтов</h2>
+                    <h2 className='section-title'>Телеграм-бот для прохождения спринтов</h2>
                     <Button
                         caption='Перейти в бота'
                         className={clsx(

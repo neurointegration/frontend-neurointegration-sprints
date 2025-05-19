@@ -55,7 +55,7 @@ function Spoiler({
         <>
             <button type='button' className={buttonCN} onClick={clickHandler}>
                 <span>{title}</span>
-                <img src={Icons.dropdownArrow} className={iconCN} />
+                <img aria-hidden src={Icons.dropdownArrow} className={iconCN} />
             </button>
             {open && children}
         </>

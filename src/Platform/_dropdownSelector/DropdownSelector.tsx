@@ -130,6 +130,7 @@ function DropdownSelector<T extends string | number>({
                             {selectedItem?.caption}
                         </span>
                         <img
+                            aria-hidden
                             className={selectorArrowIconCN}
                             src={Icons.dropdownArrow}
                         />

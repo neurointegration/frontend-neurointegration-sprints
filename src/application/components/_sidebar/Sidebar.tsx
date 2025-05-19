@@ -19,8 +19,8 @@ type SelectorItemType = {
 
 const SELECTOR_ITEMS_BASE: SelectorItemType[] = [
     { icon: Icons.pencil, routePath: Routes.Sprint, title: 'Спринт' },
-    { icon: Icons.clock, routePath: Routes.Reflection, title: 'Рефлексия' },
     { icon: Icons.standup, routePath: Routes.Standup, title: 'Стендап' },
+    { icon: Icons.clock, routePath: Routes.Reflection, title: 'Рефлексия' },
     { icon: Icons.calendar, routePath: Routes.History, title: 'История' },
     { icon: Icons.settings, routePath: Routes.Settings, title: 'Настройки' },
 ];
@@ -57,7 +57,7 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
         if (rolesValue.isTrainer) {
             setSelectorItems(() => {
                 const newItems = [...SELECTOR_ITEMS_BASE];
-                newItems.splice(2, 0, {
+                newItems.push({
                     icon: Icons.person,
                     routePath: Routes.Clients,
                     title: 'Клиенты',
@@ -90,10 +90,24 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
         });
     };
 
+function handleEsc(event) {
+    if (event.keyCode === 27) {
+        setExpanded((prev) => !prev);
+    }
+  }
+
+    useEffect(() => {
+    window.addEventListener("keydown", handleEsc);
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, []);
+
     const menuEl = (
         <div className={menuCN}>
             <div className={avatarCN} aria-hidden="true">
                 <img
+                    aria-hidden
                     className={avatarImgCN}
                     src={meInformation.photoUrl ?? emptyAvatarURL}
                 />
@@ -112,13 +126,13 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
                                 `${menuItemCN}_active`
                         )}
                     >
-                        <img className={menuItemIconCN} src={item.icon} />
+                        <img className={menuItemIconCN} aria-hidden src={item.icon} />
                         <span>{item.title}</span>
                     </NavLink >
                 ))}
             </div>
             <button className={exitCN} onClick={exitClickHandler}>
-                <img className={menuItemIconCN} src={Icons.exitArrow} />
+                <img aria-hidden className={menuItemIconCN} src={Icons.exitArrow} />
                 <span>Выход</span>
             </button>
         </div>
@@ -127,8 +141,8 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
     return (
         <div className={baseCN}>
             {!expanded && (
-                <button onClick={menuIconClickHandler} className={menuIconCN}>
-                    <img src={Icons.menu} />
+                <button onClick={menuIconClickHandler} className={menuIconCN} aria-label='Меню'>
+                    <img aria-hidden src={Icons.menu} />
                 </button>
             )}
             {expanded && (

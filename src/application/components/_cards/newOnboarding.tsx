@@ -59,14 +59,17 @@ function OnboardingDateCard({onboardingCardClickHandler, form} : OnboardingCardP
     inputRef.current?.focus();
   }, []);
  return(
-  <div className={clsx("dialog-card card-type-cross " + form)}>
+  <dialog className={clsx("dialog-card card-type-cross " + form)}
+    aria-modal="true"
+    open
+  >
     <div>
     <p className='onboarding-text'>Можно выбрать период, за&nbsp;который отобразятся проекты&nbsp;—&nbsp;конкретную неделю или весь спринт</p>
     </div>
     <button className='onboarging-complete-button' autoFocus={true} ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
-        <img className='cross-icon' src={Icons.cross} />
+        <img aria-hidden className='cross-icon' src={Icons.cross} />
     </button>
-  </div>
+  </dialog>
  )
 }
 
@@ -77,15 +80,18 @@ function OnboardingClientsCard({onboardingCardClickHandler, form} : OnboardingCa
     inputRef.current?.focus();
   }, []);
  return(
-  <div className={clsx("dialog-card card-type-cross " + form)}>
+  <dialog className={clsx("dialog-card card-type-cross " + form)}
+    aria-modal="true"
+    open
+  >
     <div>
     <p className='onboarding-text'>Тренер может оставить заметки на&nbsp;карточке клиента&nbsp;—&nbsp;клиент их не&nbsp;увидит.</p>
     <p className='onboarding-text'>А если нажать на&nbsp;карточку, то&nbsp;можно будет работать со&nbsp;спринтом, стендапом и рефлексией клиента.</p>
     </div>
     <button className='onboarging-complete-button' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
-        <img className='cross-icon' src={Icons.cross} />
+        <img className='cross-icon' aria-hidden src={Icons.cross} />
     </button>
-  </div>
+  </dialog>
  )
 }
 
@@ -98,15 +104,18 @@ function OnboardingEditingCard({onboardingCardClickHandler, form} : OnboardingCa
   }, []);
 
  return(
-  <div className={clsx("dialog-card card-type-cross " + form)}>
+  <dialog className={clsx("dialog-card card-type-cross " + form)}
+    aria-modal="true"
+    open
+  >
     <div>
     <p className='onboarding-text'>На&nbsp;странице редактирования можно изменить количество времени для&nbsp;проекта или задачи.</p>
     <p className='onboarding-text'>А ещё обозначить цветом результаты.</p>
     </div>
     <button className='onboarging-complete-button' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
-        <img className='cross-icon' src={Icons.cross} />
+        <img className='cross-icon' aria-hidden src={Icons.cross} />
     </button>
-  </div>
+  </dialog>
  )
 }
 
@@ -119,31 +128,40 @@ function OnboardingProjectCard({form, onboardingCardClickHandler, additionalOnbo
     
     if (number == 1) {
     return (
-    <div className={clsx("dialog-card card-type-down-button " + form)}>
+    <dialog className={clsx("dialog-card card-type-down-button " + form)}
+    aria-modal="true"
+    open
+    aria-live='polite'
+    >
         <div className='dialog-card_text-container direction-left'>
         <p className='onboarding-text'>В&nbsp;карточке проекта можно увидеть, сколько времени было запланировано на&nbsp;проект и потрачено на&nbsp;самом деле.</p>
         <p className='onboarding-text'>По&nbsp;неделям и общее, за&nbsp;весь спринт.</p>
-        <button className='onboarging-arrow-button' ref={inputRef} autoFocus={true} onClick={additionalOnboardingCardClickHandler} tabIndex={3}>
+        <button className='onboarging-arrow-button' ref={inputRef} autoFocus={true} onClick={additionalOnboardingCardClickHandler} tabIndex={3} aria-label='Дальше'>
             Дальше 
-        <img className='left-arrow-icon' src={Icons.arrow} />
+        <img className='left-arrow-icon' aria-hidden src={Icons.arrow} />
         </button>
         </div>
-    </div>
+    </dialog>
  )} else {
     return (
-    <div className={clsx("dialog-card card-type-down-button " + form)}>
+    <dialog className={clsx("dialog-card card-type-down-button " + form)}
+        aria-modal="true"
+        open
+        aria-live='polite'
+
+    >
         <div className='dialog-card_text-container direction-right'>
         <p className='onboarding-text'>Нажмите на&nbsp;стрелочку в&nbsp;углу проекта, чтобы работать с&nbsp;задачами.</p>
         <p className='onboarding-text'>А&nbsp;чтобы отредактировать проект&nbsp;—&nbsp;нажмите на&nbsp;него в&nbsp;любом другом месте.</p>
         <button className='onboarging-arrow-button' onClick={additionalOnboardingCardClickHandler} tabIndex={3}>
-            <img className='right-arrow-icon' src={Icons.arrow} />
+            <img className='right-arrow-icon' aria-hidden src={Icons.arrow} />
             Назад 
         </button>
         </div>
             <button className='onboarging-complete-button' onClick={onboardingCardClickHandler} tabIndex={3}>
-            <img className='cross-icon' src={Icons.cross} />
+            <img className='cross-icon' aria-hidden src={Icons.cross} />
         </button>
-    </div>
+    </dialog>
  )
  }
 }

@@ -109,6 +109,7 @@ function EventCard({
                             onClick={expanderButtonClickHandler}
                         >
                             <img
+                                aria-hidden
                                 className={expanderIconCN}
                                 src={Icons.dropdownArrow}
                             />
@@ -150,8 +151,8 @@ function _getTimeInfoComponent(
     }
 
     const result: JSX.Element[] = [];
-    const possibleKeys = ['1', '2', '3', '4']
-        //.concat(sprintWeeksCount === TimeInfoType.FourWeeks ? ['4'] : [])
+    const possibleKeys = ['1', '2', '3']
+        .concat(sprintWeeksCount === TimeInfoType.FourWeeks ? ['4'] : [])
         .concat(['total']);
     const timeComparerItems: {
         planning: null | TimeType;

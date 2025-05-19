@@ -90,7 +90,7 @@ function EventEditorDialog({
                     <div className={dialogOverlayCN} />
                     <div className={baseCN}>
                         <button type='button' onClick={closeClickHandler}>
-                            <img className={crossCN} src={Icons.cross} />
+                            <img className={crossCN} src={Icons.cross} aria-hidden />
                         </button>
                         <EventTitleEditor
                             useTitle={CONTROLLER.useEventTitle}

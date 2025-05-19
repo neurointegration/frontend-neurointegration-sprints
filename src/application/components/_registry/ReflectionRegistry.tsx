@@ -43,6 +43,7 @@ number, reflectionType, cards
             >
                 <h3>Неделя {number}</h3>
                 <img
+                    aria-hidden
                     className={expanderIconCN}
                     src={Icons.dropdownArrow}
                 />

@@ -12,7 +12,7 @@ const LoadingScreen = ({ text }: { text?: string }) => {
         <div className='loading-container'>
             <div className='loading-wrapper'>
                 <div className='rounded-image-container'>
-                    <img src='/empty-avatar.gif' alt='Rounded Image' />
+                    <img aria-hidden src='/empty-avatar.gif' alt='Rounded Image' />
                 </div>
                 <p className='loading-text'>{text || LOADING_TEXT}</p>
             </div>

@@ -70,7 +70,7 @@ function TimeStatusEditor({
                                 statusClickHandler(item.value);
                             }}
                         >
-                            {checked && <img src={Icons.checkmark} />}
+                            {checked && <img aria-hidden src={Icons.checkmark} />}
                         </button>
                         <span className={statusTitleCN}>{title}</span>
                     </div>
