@@ -68,7 +68,7 @@ function DropdownSelector<T extends string | number>({
         ReflectionDropdownSelectedAtom
     );
     const dropdownClickHandler = () => {
-        setIsSelectorOpen(() => true);
+        setIsSelectorOpen(() => !isSelectorOpen);
     };
 
     const overlayClickHandler = () => {
@@ -123,6 +123,7 @@ function DropdownSelector<T extends string | number>({
                 className={selectorButtonCN}
                 onClick={dropdownClickHandler}
                 value={selectedItem?.value}
+                aria-expanded={isSelectorOpen}
             >
                 <div>
                     <div className={selectorHeaderCN}>
@@ -140,13 +141,15 @@ function DropdownSelector<T extends string | number>({
             </button>
 
             {isSelectorOpen && (
-                <div className={selectorSelectCN}>
+                <div className={selectorSelectCN} role='tablist'>
                     {items.map((item, index) => (
                         <button
                             className={selectorOptionCN}
                             value={item.value}
                             key={`dropdownTab${index}`}
                             onClick={dropdownItemClickHandler}
+                            role='tab'
+                            aria-label={item.hint ? 'Период: ' + item.caption + ' ' + item.hint : 'Период: ' + item.caption}
                         >
                             <span
                                 className={clsx(

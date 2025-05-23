@@ -151,7 +151,7 @@ function ClientStandupScreen() {
     return loading ? (
         <LoadingScreen />
     ) : (
-        <>
+        <div aria-live='polite'>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',
@@ -187,7 +187,7 @@ function ClientStandupScreen() {
                 focusDrive={item.focusDrive} 
                 sprintNumber={item.sprintNumber}/>) : <h3>Кажется, в выбранный спринт нет ни одного стендапа...</h3> : <h3>Кажется, в выбранный спринт нет ни одного стендапа...</h3>
             }
-        </>
+        </div>
     );
 }
 

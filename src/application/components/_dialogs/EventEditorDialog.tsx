@@ -2,7 +2,7 @@ import { EventCardType, EventType } from '../_cards/_types/EventCardType';
 import EventTitleEditor from '../_editors/EventTitleEditor';
 import { Icons } from '../../../Platform/_types/Icons';
 import EditorUnit from '../_editors/EditorUnit';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import './EventEditorDialogStyle.css';
 import clsx from 'clsx';
 import { RegistryItemType } from '../_registry/EventRegistry';
@@ -83,15 +83,25 @@ function EventEditorDialog({
         });
     };
 
+    const inputRef = useRef<HTMLDialogElement | null>(null);
+    
+    useEffect(() => {
+        inputRef.current?.focus();
+      }, []);
+
     return (
         <EditingScreenFormContext.Provider value={{ propertyChanged }}>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler}
+            >
                 <div className={wrapperCN}>
                     <div className={dialogOverlayCN} />
-                    <div className={baseCN}>
-                        <button type='button' onClick={closeClickHandler}>
-                            <img className={crossCN} src={Icons.cross} aria-hidden />
-                        </button>
+                    <dialog className={baseCN}
+                        aria-modal="true"
+                        open
+                        autoFocus
+                        tabIndex={3}
+                        ref={inputRef}
+                    >
                         <EventTitleEditor
                             useTitle={CONTROLLER.useEventTitle}
                             eventType={item.type}
@@ -118,7 +128,7 @@ function EventEditorDialog({
                                 Отменить
                             </button>
                         </div>
-                    </div>
+                    </dialog>
                 </div>
             </form>
         </EditingScreenFormContext.Provider>

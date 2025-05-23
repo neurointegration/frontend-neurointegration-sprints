@@ -24,9 +24,11 @@ function ClientsNavbar() {
     };
 
     return (
-        <div className='client-info-screen_navbar'>
+        <div className='client-info-screen_navbar' role='tablist'>
             {selectorItems.map((item) => (
                 <NavLink
+                    role='tab'
+                    aria-selected={currentPath.pathname === item.routePath}
                     to={item.routePath}
                     onClick={itemClickHandler}
                     key={item.title}

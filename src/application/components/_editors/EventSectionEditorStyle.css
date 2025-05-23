@@ -10,3 +10,7 @@
 .radio-label {
     font-weight: var(--fontweight-normal);
 }
+
+.section-change {
+    border: none;
+}

@@ -15,9 +15,11 @@ type ButtonProps = {
     disabled?: boolean;
     type?: 'submit' | 'reset' | 'button';
     onClick?: (event: SyntheticEvent) => void;
+    id?: string;
 };
 
 function Button({
+    id='',
     showMode = 'common',
     size = 'normal',
     icon,
@@ -49,6 +51,7 @@ function Button({
             onClick={onClick}
             disabled={disabled}
             className={buttonCN}
+            id={id}
         >
             {icon && iconPosition === 'left' && iconIMG}
 

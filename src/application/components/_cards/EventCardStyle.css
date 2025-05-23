@@ -46,6 +46,7 @@
 .eventCard__title {
     font-weight: var(--fontweight-medium);
     font-size: var(--fontsize-m);
+    padding: 4px 8px;
 }
 
 .eventCard__sidebar {

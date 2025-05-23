@@ -154,7 +154,7 @@ function ClientReflectionScreen() {
     return loading ? (
         <LoadingScreen />
     ) : (
-        <>
+        <div aria-live='polite'>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',
@@ -195,8 +195,7 @@ function ClientReflectionScreen() {
             :
             <h3>Кажется, в выбранный спринт не было ни одной рефлексии...</h3>
             }
-
-        </>
+        </div>
     );
 }
 

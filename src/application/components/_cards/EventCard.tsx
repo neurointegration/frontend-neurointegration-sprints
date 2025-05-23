@@ -96,17 +96,21 @@ function EventCard({
     return (
         <div className={wrapperCN}>
             {event.item.type === EventType.Project && (
-                <div className={sideBarCN} />
+                <div className={sideBarCN} aria-hidden/>
             )}
-            <button className={cardContentCN} onClick={cardContentClickHandler}>
+            <div className={cardContentCN} onClick={cardContentClickHandler}>
                 <div className={headerCN}>
-                    <span className={titleCN}>
+                <button>
+                    <span className={titleCN} aria-label={EventType.Project ? 'Карточка проекта' +  (event.item as EventCardType).title: 'Карточка задачи' + (event.item as EventCardType).title}>
                         {(event.item as EventCardType).title}
                     </span>
-                    {PROJECT_INCLUDES_TASKS && (
+                </button>
+                {PROJECT_INCLUDES_TASKS && (
                         <button
                             className={expanderBtnCN}
+                            aria-label='Кнопка развернуть список задач проекта'
                             onClick={expanderButtonClickHandler}
+                            aria-expanded={event.projectExpanded}
                         >
                             <img
                                 aria-hidden
@@ -125,7 +129,7 @@ function EventCard({
                         </Fragment>
                     ))}
                 </div>
-            </button>
+            </div>
         </div>
     );
 }
@@ -155,6 +159,7 @@ function _getTimeInfoComponent(
         .concat(sprintWeeksCount === TimeInfoType.FourWeeks ? ['4'] : [])
         .concat(['total']);
     const timeComparerItems: {
+        week: string;
         planning: null | TimeType;
         fact: null | TimeType;
     }[] = [];
@@ -164,7 +169,7 @@ function _getTimeInfoComponent(
 
 
     possibleKeys.map((key) => {
-        let timeItem = { planning: null, fact: null };
+        let timeItem = { planning: null, fact: null, week:'Всего'};
 
         if (planningTimes && key in planningTimes) {
             timeItem = { ...timeItem, planning: planningTimes[key] };
@@ -179,6 +184,9 @@ function _getTimeInfoComponent(
             factTimesArr.push(factTimes[key]);
             }
         }
+
+        timeItem = {...timeItem, week: key != '4' ? 'Неделя ' + key : 'Всего' }
+
 
         timeComparerItems.push(timeItem);
     });
@@ -199,7 +207,8 @@ function _getTimeInfoComponent(
         timeComparerItems.map((item) => {
             result.push(
                 <TimeComparer
-                    times={{ planning: item.planning, fact: item.fact }}
+                    times={{planning: item.planning, fact: item.fact }}
+                    week={item.week}
                 />
             );
         });
@@ -228,6 +237,7 @@ function _getTimeInfoComponent(
                 planning: neededItem?.planning,
                 fact: neededItem?.fact,
             }}
+            week={neededItem?.week}
         />,
     ];
 }

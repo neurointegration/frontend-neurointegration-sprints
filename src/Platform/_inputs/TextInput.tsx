@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useWindowDimensions from './_hooks/useWindowDimentions';
 
 type TextInputProps = {
+    id?: string;
     useValue: [
         string | null,
         React.Dispatch<React.SetStateAction<string | null>>
@@ -32,6 +33,7 @@ type TextInputProps = {
  * @returns
  */
 function TextInput({
+    id = '',
     useValue: [value, setValue],
     onChange,
     className,
@@ -95,6 +97,7 @@ function TextInput({
 
     const renderEl = multiline ? (
         <textarea
+            id={id}
             disabled={disabled}
             placeholder={placeholder || ''}
             ref={textAreaRef}
@@ -107,6 +110,7 @@ function TextInput({
         />
     ) : (
         <input
+            id={id}
             disabled={disabled}
             placeholder={placeholder || ''}
             type='text'

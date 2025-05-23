@@ -26,13 +26,13 @@ function SectionSelector({ tabs, registryType }: TabSelectorProps) {
     const tabSelectorCN = clsx('controls-tabSelector');
 
     return (
-        <div className={tabSelectorCN}>
+        <div role='tablist' aria-orientation='horizontal' className={tabSelectorCN}>
             {tabs.map((section) => (
                 <TabButton
                     key={section.value}
                     tab={section}
                     selected={
-                        selectedScreensSections[registryType].value ===
+                        selectedScreensSections[registryType].value ==
                         section.value
                     }
                     onClick={tabClickHandler}

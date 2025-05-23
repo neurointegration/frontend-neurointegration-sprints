@@ -102,7 +102,7 @@ const StandupScreen = () => {
     }, []);
 
     return (
-        <div className='standup-container'>
+        <div className='standup-container' aria-live='polite'>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',

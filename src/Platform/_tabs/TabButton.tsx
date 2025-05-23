@@ -14,7 +14,7 @@ function TabButton({ tab, selected, onClick }: TabButtonProps) {
     );
 
     return (
-        <button className={buttonCN} onClick={() => onClick(tab)}>
+        <button className={buttonCN} onClick={() => onClick(tab)} role='tab' aria-selected={selected}>
             {tab.caption}
         </button>
     );

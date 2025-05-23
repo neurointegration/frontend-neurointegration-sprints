@@ -103,7 +103,7 @@ function EventRegistry({
                     />
                 )}
                 {weekToShow === null && (
-                    <div className={weeksHeaderCN}>
+                    <div className={weeksHeaderCN} aria-hidden>
                         <div className={weeksHeaderWeekCN}>{WEEK1}</div>
                         <div className={weeksHeaderWeekCN}>{WEEK2}</div>
                         <div className={weeksHeaderWeekCN}>{WEEK3}</div>

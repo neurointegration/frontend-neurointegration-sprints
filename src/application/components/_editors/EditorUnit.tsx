@@ -84,13 +84,14 @@ function EditorUnit({
         <div className={baseCN}>
                 <div className={timeBlocksCN}>
                 <div className={plannedTimeBlockCN}>
-                    <span className={timeBlockTitleCN}>Запланированное время</span>
+                    <h2 id='planning-time' className={timeBlockTitleCN}>Запланированное время</h2>
                     <TimeEditor
                         timeKey={timeKey}
                         value={planning?.[timeKey]}
                         changeTimeCallback={changeTimeValues}
                         planningTime
                         disabled={disabled}
+                        type='plan'
                     />
                 </div>
                 <div className={factTimeBlockCN}>
@@ -100,6 +101,7 @@ function EditorUnit({
                         value={fact?.[timeKey]}
                         changeTimeCallback={changeTimeValues}
                         disabled={disabled}
+                        type='fact'
                     />
                 </div>
             </div>

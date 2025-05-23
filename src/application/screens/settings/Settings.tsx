@@ -130,20 +130,22 @@ const SettingsScreen: React.FC = () => {
                         type='button'
                         onClick={onboardingDropHandler}
                     />
-                    <h2 className='section-title'>
+                    <label className='section-title' htmlFor='weeks-count'>
                         Количество недель в спринте
-                    </h2>
+                    </label>
                     <select
                         value={sprintWeeks}
                         onChange={(e) => setSprintWeeks(() => e.target.value)}
                         className='text-input'
+                        id='weeks-count'
                     >
                         <option value={3}>3</option>
                         <option value={4}>4</option>
                     </select>
-                    <h2 className='section-title'>Мой тренер</h2>
+                    <label htmlFor='trainer' className='section-title'>Мой тренер</label>
                     <div>
                     <TextInput
+                        id='trainer'
                         useValue={[trainer, setTrainer]}
                         className='controls-margin_bottom-m'
                     />

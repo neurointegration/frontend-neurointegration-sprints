@@ -24,6 +24,7 @@ type TimeEditorProps = {
     planningTime?: boolean;
     className?: string;
     disabled?: boolean;
+    type?: string;
 };
 
 const MAX_MINUTES = 59;
@@ -39,6 +40,7 @@ function TimeEditor({
     planningTime = false,
     className,
     disabled,
+    type='',
 }: TimeEditorProps) {
     const baseCN = 'controls-timeEditor';
     const rootCN = clsx(baseCN, className && className);
@@ -158,7 +160,10 @@ function TimeEditor({
     return (
         <div className={rootCN}>
             <div className={timeBlockCN}>
+                {type == 'plan' ? <label className='sr-only' id='hours-label-plan'>Запланированное время часы</label> :
+                <label className='sr-only' id='hours-label-fact'>Фактическое время часы</label>}
                 <input
+                    aria-labelledby={type == 'plan' ? 'hours-label-plan' : 'hours-label-fact'}
                     className={hoursInputCN}
                     type='number'
                     inputMode='numeric'
@@ -169,8 +174,11 @@ function TimeEditor({
                     onClick={inputClickSelectValueHandler}
                     disabled={disabled}
                 />
-                <span className={inputSeparatorCN}>:</span>
+                <span aria-hidden className={inputSeparatorCN}>:</span>
+                {type == 'plan' ? <label className='sr-only' id='minutes-label-plan'>Запланированное время минуты</label> :
+                <label className='sr-only' id='minutes-label-fact'>Фактическое время минуты</label>}
                 <input
+                    aria-labelledby={type == 'plan' ? 'minutes-label-plan' : 'minutes-label-fact'}
                     className={minutesInputCN}
                     type='number'
                     inputMode='numeric'
@@ -204,6 +212,7 @@ function TimeEditor({
                     type='button'
                     onClick={resetClickHandler}
                     className={addButtonCN}
+                    aria-label={type == 'plan' ? 'Сбросить запланированное время' : 'Сбросить фактическое время'}
                 >
                     {RESET_TIME_CROSS}
                 </button>

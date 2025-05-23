@@ -26,12 +26,13 @@ function EventTitleEditor({
 
     return (
         <div className={baseCN}>
-            <span>
+            <label htmlFor='event-name'>
                 {eventType === EventType.Project
-                    ? 'Проект'
-                    : 'Задача'}
-            </span>
+                    ? 'Название проекта'
+                    : 'Название задачи'}
+            </label>
             <TextInput
+                id = 'event-name'
                 useValue={useTitle}
                 notifier={{
                     propertyChanged: formContext.propertyChanged,

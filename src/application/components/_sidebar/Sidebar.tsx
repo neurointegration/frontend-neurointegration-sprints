@@ -139,9 +139,9 @@ function handleEsc(event) {
     );
 
     return (
-        <div className={baseCN}>
+        <div className={baseCN} aria-live='polite'>
             {!expanded && (
-                <button onClick={menuIconClickHandler} className={menuIconCN} aria-label='Меню'>
+                <button onClick={menuIconClickHandler} className={menuIconCN} aria-label='Меню' aria-expanded={expanded}>
                     <img aria-hidden src={Icons.menu} />
                 </button>
             )}

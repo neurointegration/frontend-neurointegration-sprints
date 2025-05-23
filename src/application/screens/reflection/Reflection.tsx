@@ -103,7 +103,7 @@ const ReflectionScreen = () => {
     const cards = transformReflections(items) && items.length > 0 ? transformReflections(items) : undefined;
 
     return (
-        <div className='reflection-container'>
+        <div className='reflection-container' aria-live='polite'>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',

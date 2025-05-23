@@ -22,14 +22,13 @@ function EventSectionEditor({
 
     return (
         <div className={baseCN}>
-            <span>
+            <fieldset className='section-change'>
+            <legend>
                 Секция
-            </span>
-            <div className='section-change'>
+            </legend>
                 <label className='radio-label'>
                     <input
                         disabled={disabled}
-                        required
                         type='radio'
                         name='role'
                         value='client'
@@ -44,7 +43,6 @@ function EventSectionEditor({
                 <label className='radio-label'>
                     <input
                         disabled={disabled}
-                        required
                         type='radio'
                         name='role'
                         value='both'
@@ -59,7 +57,6 @@ function EventSectionEditor({
                 <label className='radio-label'>
                     <input
                         disabled={disabled}
-                        required
                         type='radio'
                         name='role'
                         value='both'
@@ -71,7 +68,7 @@ function EventSectionEditor({
                         />{' '}
                     Драйв
                 </label>
-            </div>
+            </fieldset>
         </div>
     );
 }

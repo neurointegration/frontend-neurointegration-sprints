@@ -44,9 +44,12 @@ type TimeComparerProps = {
      * Классы, навешиваемые на основной блок обертку компонента
      */
     className?: string;
+
+    week: string;
 };
 
 function TimeComparer({
+    week,
     times: { planning, fact },
     horizontal = false,
     className,
@@ -77,8 +80,8 @@ function TimeComparer({
 
     return (
         <div className={wrapperCN}>
-            <span className={planningTimeCN}>{planningValue}</span>
-            <span className={factTimeCN}>{factValue}</span>
+            <span className={planningTimeCN} aria-role='time' aria-description={week + '. ' + (planningValue ? 'Запланированное время' : 'Запланированное время не задано')}>{planningValue}</span>
+            <span className={factTimeCN} aria-role='time' aria-description={week + '. ' + (factValue ? 'Фактическое время' : 'Фактическое время не задано')}>{factValue}</span>
         </div>
     );
 }

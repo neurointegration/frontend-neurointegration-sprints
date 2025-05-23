@@ -59,6 +59,7 @@ function TimeStatusEditor({
                 return (
                     <div key={item.value} className={statusItemCN}>
                         <button
+                            id={'color-button ' + item.value}
                             disabled={disabled}
                             type='button'
                             className={clsx(
@@ -72,7 +73,7 @@ function TimeStatusEditor({
                         >
                             {checked && <img aria-hidden src={Icons.checkmark} />}
                         </button>
-                        <span className={statusTitleCN}>{title}</span>
+                        <label htmlFor={'color-button ' + item.value} className={statusTitleCN}>{title}</label>
                     </div>
                 );
             })}
