@@ -68,16 +68,16 @@ const AuthScreen = () => {
     return (
         <div className='auth-container'>
             <div className='auth-wrapper'>
-                <p className='primary-text'>Вход в Нейроспринт</p>
+                <h1 className='primary-text'>Вход в Нейроспринт</h1>
                 <p className='secondary-text'>
-                    Приложение работает вместе с&nbsp;Telegram-ботом.
+                    Важно! Приложение работает вместе с&nbsp;Телеграм-ботом.
                     <br />
                     Пожалуйста, перед началом работы проверьте, что вы зарегистрированы.
                     <br />
                     <a href={TELEGRAM_BOT_URL} target="_blank"
                         //style={{ color: 'blue', cursor: 'pointer' }}
                         //onClick={handleLinkClick}
-                    >Telegram-бот для прохождения спринтов нейроинтеграции
+                    >Телеграм-бот для прохождения спринтов нейроинтеграции
                     </a>
                 </p>
                 <LoginButton

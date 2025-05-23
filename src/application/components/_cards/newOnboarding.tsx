@@ -66,8 +66,8 @@ function OnboardingDateCard({onboardingCardClickHandler, form} : OnboardingCardP
     <div>
     <p className='onboarding-text'>Можно выбрать период, за&nbsp;который отобразятся проекты&nbsp;—&nbsp;конкретную неделю или весь спринт</p>
     </div>
-    <button className='onboarging-complete-button' autoFocus={true} ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
-        <img aria-hidden className='cross-icon' src={Icons.cross} />
+    <button className='onboarging-complete-button' aria-label='Обучение пройдено, закрыть окно' autoFocus={true} ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
+        <img className='cross-icon' src={Icons.cross} />
     </button>
   </dialog>
  )
@@ -88,8 +88,8 @@ function OnboardingClientsCard({onboardingCardClickHandler, form} : OnboardingCa
     <p className='onboarding-text'>Тренер может оставить заметки на&nbsp;карточке клиента&nbsp;—&nbsp;клиент их не&nbsp;увидит.</p>
     <p className='onboarding-text'>А если нажать на&nbsp;карточку, то&nbsp;можно будет работать со&nbsp;спринтом, стендапом и рефлексией клиента.</p>
     </div>
-    <button className='onboarging-complete-button' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
-        <img className='cross-icon' aria-hidden src={Icons.cross} />
+    <button className='onboarging-complete-button' aria-label='Обучение пройдено, закрыть окно' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
+        <img className='cross-icon' src={Icons.cross} />
     </button>
   </dialog>
  )
@@ -112,8 +112,8 @@ function OnboardingEditingCard({onboardingCardClickHandler, form} : OnboardingCa
     <p className='onboarding-text'>На&nbsp;странице редактирования можно изменить количество времени для&nbsp;проекта или задачи.</p>
     <p className='onboarding-text'>А ещё обозначить цветом результаты.</p>
     </div>
-    <button className='onboarging-complete-button' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
-        <img className='cross-icon' aria-hidden src={Icons.cross} />
+    <button className='onboarging-complete-button' aria-label='Обучение пройдено, закрыть окно' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
+        <img className='cross-icon' src={Icons.cross} />
     </button>
   </dialog>
  )
@@ -134,8 +134,7 @@ function OnboardingProjectCard({form, onboardingCardClickHandler, additionalOnbo
     aria-live='polite'
     >
         <div className='dialog-card_text-container direction-left'>
-        <p className='onboarding-text'>В&nbsp;карточке проекта можно увидеть, сколько времени было запланировано на&nbsp;проект и потрачено на&nbsp;самом деле.</p>
-        <p className='onboarding-text'>По&nbsp;неделям и общее, за&nbsp;весь спринт.</p>
+        <p className='onboarding-text'>В&nbsp;карточке проекта можно увидеть, сколько времени было запланировано на&nbsp;проект и потрачено на&nbsp;самом деле. По&nbsp;неделям и общее, за&nbsp;весь спринт.</p>
         <button className='onboarging-arrow-button' ref={inputRef} autoFocus={true} onClick={additionalOnboardingCardClickHandler} tabIndex={3} aria-label='Дальше'>
             Дальше 
         <img className='left-arrow-icon' aria-hidden src={Icons.arrow} />
@@ -151,15 +150,14 @@ function OnboardingProjectCard({form, onboardingCardClickHandler, additionalOnbo
 
     >
         <div className='dialog-card_text-container direction-right'>
-        <p className='onboarding-text'>Нажмите на&nbsp;стрелочку в&nbsp;углу проекта, чтобы работать с&nbsp;задачами.</p>
-        <p className='onboarding-text'>А&nbsp;чтобы отредактировать проект&nbsp;—&nbsp;нажмите на&nbsp;него в&nbsp;любом другом месте.</p>
+        <p className='onboarding-text'>Нажмите на&nbsp;стрелочку в&nbsp;углу проекта, чтобы работать с&nbsp;задачами. А&nbsp;чтобы отредактировать проект&nbsp;—&nbsp;нажмите на&nbsp;него в&nbsp;любом другом месте.</p>
         <button className='onboarging-arrow-button' onClick={additionalOnboardingCardClickHandler} tabIndex={3}>
             <img className='right-arrow-icon' aria-hidden src={Icons.arrow} />
             Назад 
         </button>
         </div>
-            <button className='onboarging-complete-button' onClick={onboardingCardClickHandler} tabIndex={3}>
-            <img className='cross-icon' aria-hidden src={Icons.cross} />
+        <button className='onboarging-complete-button' aria-label='Обучение пройдено, закрыть окно' onClick={onboardingCardClickHandler} tabIndex={3}>
+            <img className='cross-icon' src={Icons.cross} />
         </button>
     </dialog>
  )
