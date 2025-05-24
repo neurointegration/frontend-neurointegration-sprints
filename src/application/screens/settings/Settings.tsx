@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './SettingsStyle.css';
+import '../../../Platform/Styles/accessibility.css'
 import TextInput from '../../../Platform/_inputs/TextInput';
 import Sidebar from '../../components/_sidebar/Sidebar';
 import clsx from 'clsx';
@@ -92,6 +93,7 @@ const SettingsScreen: React.FC = () => {
 
     return (
         <>
+            <h1 className='sr-only'>Экран настроек пользователя</h1>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',
@@ -108,7 +110,7 @@ const SettingsScreen: React.FC = () => {
                             className='profile-picture'
                         />
                     </div>
-                    <h2 className='section-title'>Личная информация</h2>
+                    <h2 className='section-title' aria-hidden>Личная информация</h2>
                     <TextInput
                         useValue={[fullName, setFullName]}
                         placeholder='ФИО'
@@ -151,7 +153,7 @@ const SettingsScreen: React.FC = () => {
                     />
                     {isAddingTrainerError ? <p className='section-error-message'>Кажется, такого тренера не существует</p> : <></>}
                     </div>
-                    <h2 className='section-title'>Телеграм-бот для прохождения спринтов</h2>
+                    <h2 className='section-title' aria-hidden>Телеграм-бот для прохождения спринтов</h2>
                     <Button
                         caption='Перейти в бота'
                         className={clsx(

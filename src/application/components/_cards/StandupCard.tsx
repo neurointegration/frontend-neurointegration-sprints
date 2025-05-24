@@ -33,7 +33,7 @@ function StandupCard({
     const focusDriveItems = focusDrive.map((item) => <p>{item}</p>)
 
     return (
-        <div className='standup-card'>
+        <section className='standup-card' aria-label='Карточка стендапа'>
         <div className='standup-card__date-container'>
             {date.split('-').reverse().join('.')}
         </div>
@@ -63,7 +63,7 @@ function StandupCard({
                 </div>
             </div>
         </div>
-    </div>
+    </section>
     );
 }
 

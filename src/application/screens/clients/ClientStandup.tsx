@@ -25,6 +25,7 @@ import { useParams } from 'react-router-dom';
 import Spoiler from '../../../Platform/_buttons/Spoiler';
 import LoadingScreen from '../loading/Loading';
 import { ClientResponseType } from '../../../core/api/actions/trainer.clients';
+import '../../../Platform/Styles/accessibility.css'
 
 import './ClientSprintStyle.css';
 import StandupScreen from '../standup/Standup';
@@ -152,6 +153,7 @@ function ClientStandupScreen() {
         <LoadingScreen />
     ) : (
         <div aria-live='polite'>
+            <h1 className='sr-only'>Стендап клиента</h1>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',

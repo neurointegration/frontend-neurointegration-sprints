@@ -92,7 +92,7 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
 
 function handleEsc(event) {
     if (event.keyCode === 27) {
-        setExpanded((prev) => !prev);
+        setExpanded((prev) => prev ? !prev : prev);
     }
   }
 
@@ -105,17 +105,18 @@ function handleEsc(event) {
 
     const menuEl = (
         <div className={menuCN}>
-            <div className={avatarCN} aria-hidden="true">
+            <div className={avatarCN} aria-hidden>
                 <img
                     aria-hidden
                     className={avatarImgCN}
                     src={meInformation.photoUrl ?? emptyAvatarURL}
                 />
             </div>
-            <div role='tablist' aria-orientation='vertical' className={menuSelectorCN}>
+            <nav aria-orientation='vertical' className={menuSelectorCN} >
+                <ul className='without-style'>
                 {selectorItems.map((item) => (
+                    <li className='without-style'>
                     <NavLink
-                        role='tab'
                         aria-selected={ currentPath.pathname === item.routePath }
                         to={item.routePath}
                         onClick={itemClickHandler}
@@ -129,8 +130,10 @@ function handleEsc(event) {
                         <img className={menuItemIconCN} aria-hidden src={item.icon} />
                         <span>{item.title}</span>
                     </NavLink >
+                    </li>
                 ))}
-            </div>
+                </ul>
+            </nav>
             <button className={exitCN} onClick={exitClickHandler}>
                 <img aria-hidden className={menuItemIconCN} src={Icons.exitArrow} />
                 <span>Выход</span>
@@ -140,11 +143,9 @@ function handleEsc(event) {
 
     return (
         <div className={baseCN} aria-live='polite'>
-            {!expanded && (
-                <button onClick={menuIconClickHandler} className={menuIconCN} aria-label='Меню' aria-expanded={expanded}>
-                    <img aria-hidden src={Icons.menu} />
-                </button>
-            )}
+            <button onClick={menuIconClickHandler} className={menuIconCN} aria-label='Меню' aria-expanded={expanded}>
+                <img aria-hidden src={Icons.menu} />
+            </button>
             {expanded && (
                 <>
                     <div

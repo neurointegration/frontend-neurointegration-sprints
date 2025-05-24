@@ -6,6 +6,7 @@ import {
 import DropdownSelector, {
     DropdownItem,
 } from '../../../Platform/_dropdownSelector/DropdownSelector';
+import '../../../Platform/Styles/accessibility.css'
 import {
     EventCardType,
     EventType,
@@ -41,6 +42,7 @@ import { MePutRequestType, OnboardingTypes } from '../../../core/api/actions/me'
 import { API } from '../../../core/api/handles';
 import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/newOnboarding';
 import OnboardingAtom from '../../../core/atoms/onboarding.atom';
+import Delayed from '../../../core/api/utils/renderingDelayer';
 
 type DialogProps = {
     opened: boolean;
@@ -162,6 +164,8 @@ function BaseRegistry<T extends string | number>({
     const setOnboarding = useSetRecoilState(OnboardingAtom);
 
     const selectedScreensSections = useRecoilValue(ScreensSectionsAtom);
+
+    const pageTitle = registryType == BaseRegistryType.MainSprint ? 'Текущий спринт' : (registryType == BaseRegistryType.History ? 'История' : 'Текущий спринт клиента')
 
     useEffect(() => {
         document.body.className = `body-color-${selectedScreensSections[registryType].value}`;
@@ -401,7 +405,7 @@ function BaseRegistry<T extends string | number>({
         ? 
         <div className='onboarding-dark-overlay'/> :
         <></>}
-
+        { registryType != BaseRegistryType.ClientSprint ? <h1 className='sr-only'>{pageTitle}</h1> : <></>}
             {dialogProps.opened && (
                 <EventEditorDialog
                     registryType={registryType}
@@ -427,15 +431,19 @@ function BaseRegistry<T extends string | number>({
                     'controls-margin_bottom-4xl'
                 )}
             />
+            <Delayed>
             {(!onboardingState || (onboardingState && !onboardingState.dateOnboarding)) ? 
             <OnboardingCard form={OnboardingCardsForms.Dialog} type={OnboardingTypes.DateOnboarding} onboardingCardClickHandler={onboardingDateCardClickHandler}/>
             :
             <></>}
+            </Delayed>
             <SectionSelector tabs={SECTIONS} registryType={registryType} />
+            <Delayed>
         {!onboardingState.projectOnboarding && onboardingState.dateOnboarding
         && items[selectedScreensSections[registryType].value].length > 1 ? 
         <OnboardingCard form={OnboardingCardsForms.DialogDownArrow} type={OnboardingTypes.ProjectOnboarding} onboardingCardClickHandler={onboardingProjectCardClickHandler}/> :
         <></>}
+            </Delayed>
 
             <EventRegistry
                 registryType={registryType}

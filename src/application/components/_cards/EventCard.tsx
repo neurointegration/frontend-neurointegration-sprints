@@ -94,21 +94,21 @@ function EventCard({
     };
 
     return (
-        <div className={wrapperCN}>
+        <section className={wrapperCN} aria-label={EventType.Project ? 'Карточка проекта' : 'Карточка задачи'}>
             {event.item.type === EventType.Project && (
                 <div className={sideBarCN} aria-hidden/>
             )}
             <div className={cardContentCN} onClick={cardContentClickHandler}>
                 <div className={headerCN}>
                 <button>
-                    <span className={titleCN} aria-label={EventType.Project ? 'Карточка проекта' +  (event.item as EventCardType).title: 'Карточка задачи' + (event.item as EventCardType).title}>
+                    <span className={titleCN}>
                         {(event.item as EventCardType).title}
                     </span>
                 </button>
                 {PROJECT_INCLUDES_TASKS && (
                         <button
                             className={expanderBtnCN}
-                            aria-label='Кнопка развернуть список задач проекта'
+                            aria-label='Список задач проекта'
                             onClick={expanderButtonClickHandler}
                             aria-expanded={event.projectExpanded}
                         >
@@ -130,7 +130,7 @@ function EventCard({
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
@@ -185,7 +185,7 @@ function _getTimeInfoComponent(
             }
         }
 
-        timeItem = {...timeItem, week: key != '4' ? 'Неделя ' + key : 'Всего' }
+        timeItem = {...timeItem, week: key != 'total' ? 'Неделя ' + key : 'Всего' }
 
 
         timeComparerItems.push(timeItem);

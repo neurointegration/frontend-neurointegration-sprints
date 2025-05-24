@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import Sidebar from '../../components/_sidebar/Sidebar';
 import './StandupStyle.css';
+import '../../../Platform/Styles/accessibility.css'
 import StandupCard from '../../components/_cards/StandupCard';
 import '../../../Platform/_common-custom/EmptyListLabelStyle.css'
 
@@ -103,6 +104,7 @@ const StandupScreen = () => {
 
     return (
         <div className='standup-container' aria-live='polite'>
+            <h1 className='sr-only'>Стендап</h1>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',

@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import Sidebar from '../../components/_sidebar/Sidebar';
 import './ReflectionStyle.css';
+import '../../../Platform/Styles/accessibility.css'
 import '../../../Platform/_common-custom/EmptyListLabelStyle.css'
 
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -104,6 +105,7 @@ const ReflectionScreen = () => {
 
     return (
         <div className='reflection-container' aria-live='polite'>
+            <h1 className='sr-only'>Рефлексия</h1>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',

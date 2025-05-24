@@ -24,6 +24,7 @@ import { useParams } from 'react-router-dom';
 import Spoiler from '../../../Platform/_buttons/Spoiler';
 import LoadingScreen from '../loading/Loading';
 import { ClientResponseType } from '../../../core/api/actions/trainer.clients';
+import '../../../Platform/Styles/accessibility.css'
 
 import './ClientSprintStyle.css';
 import ClientsNavbar from '../../components/_sidebar/ClientsNavbar';
@@ -155,6 +156,7 @@ function ClientSprintScreen() {
         <LoadingScreen />
     ) : (
         <div aria-live='polite'>
+        <h1 className='sr-only'>Текущий спринт клиента</h1>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',

@@ -29,6 +29,7 @@ import OnboardingAtom from '../../../core/atoms/onboarding.atom';
 import useHttpLoader from '../../../core/api/hooks/useHttpLoader';
 import LoadingScreen from '../loading/Loading';
 import EventSectionEditor from '../../components/_editors/EventSectionEditor';
+import Delayed from '../../../core/api/utils/renderingDelayer';
 
 const baseScreenCN = 'screen-EventEditing';
 const actionButtonsBlockCN = clsx(`${baseScreenCN}__actionButtonsBlock`);
@@ -225,13 +226,16 @@ function EventEditingScreen() {
         <LoadingScreen />
      : 
         <div>
+        <Delayed>
             {!onboardingState.editingOnboarding ? 
             <div className='onboarding-dark-overlay'/> :
             <></>}
             {!onboardingState.editingOnboarding ?
             <OnboardingCard form={OnboardingCardsForms.Simple} type={OnboardingTypes.EditingOnboarding} onboardingCardClickHandler={onboardingCardClickHandler}/>
             :
-            <></>}
+            <></>}    
+        </Delayed>
+        <h1 className='sr-only'>{showRestoreButton ? 'Информация о проекте' : eventType === EventType.Project ? 'Редактирование проекта' : 'Редактирование задачи'}</h1>
         <EditingScreenFormContext.Provider value={{ propertyChanged }}>
             <form onSubmit={submitHandler}>
                 <div className={pageHeaderCN}>
@@ -274,7 +278,6 @@ function EventEditingScreen() {
                             />
                         )}
                     </div>
-                    <Sidebar />
                 </div>
                 <div className={pageContentCN}>
                     <EventTitleEditor
@@ -288,6 +291,7 @@ function EventEditingScreen() {
                     />
                     : <></>}
                     {spoilerUnits.map((spoilerItem, index) => (
+                        <section aria-label='Блок редактирования'>
                         <Spoiler
                             key={`spoilerItem_${index}`}
                             title={spoilerItem.title}
@@ -302,6 +306,7 @@ function EventEditingScreen() {
                                 disabled={readonly}
                             />
                         </Spoiler>
+                        </section>
                     ))}
                 </div>
             </form>

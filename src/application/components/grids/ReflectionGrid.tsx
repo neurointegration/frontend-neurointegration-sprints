@@ -17,16 +17,16 @@ type ReflectionGridProps = {
 
 export function ReflectionGrid(props: ReflectionGridProps) {
 
-    const regularCardList : reflectionGridCardProps[] = [];
+    const regularCardList : reflectionGridCardProps[][] = [[],[],[]];
     const integrationCardList : reflectionGridCardProps[] = [];
 
     props.props.map((prop) => 
     {
         if (prop.reflectionType == ReflectionTypes.Regular) {
-            regularCardList.push({header: prop.cards.Doing.header, textLabel: prop.cards.Doing.textLabelPairsArray, className: prop.cards.Doing.reflectionCN + prop.number.toString()});
-            regularCardList.push({header: prop.cards.State.header, textLabel: prop.cards.State.textLabelPairsArray, className: prop.cards.State.reflectionCN + prop.number.toString()});
-            regularCardList.push({header: prop.cards.Orbits.header, textLabel: prop.cards.Orbits.textLabelPairsArray, className: prop.cards.Orbits.reflectionCN + prop.number.toString()});
-            regularCardList.push({header: prop.cards.Correction.header, textLabel: prop.cards.Correction.textLabelPairsArray, className: prop.cards.Correction.reflectionCN + prop.number.toString()});
+            regularCardList[prop.number-1].push({header: prop.cards.Doing.header, textLabel: prop.cards.Doing.textLabelPairsArray, className: prop.cards.Doing.reflectionCN + prop.number.toString()});
+            regularCardList[prop.number-1].push({header: prop.cards.State.header, textLabel: prop.cards.State.textLabelPairsArray, className: prop.cards.State.reflectionCN + prop.number.toString()});
+            regularCardList[prop.number-1].push({header: prop.cards.Orbits.header, textLabel: prop.cards.Orbits.textLabelPairsArray, className: prop.cards.Orbits.reflectionCN + prop.number.toString()});
+            regularCardList[prop.number-1].push({header: prop.cards.Correction.header, textLabel: prop.cards.Correction.textLabelPairsArray, className: prop.cards.Correction.reflectionCN + prop.number.toString()});
         }
         else {
             integrationCardList.push({header: prop.cards.Changes.header, textLabel: prop.cards.Changes.textLabelPairsArray, className: prop.cards.Changes.reflectionCN + prop.number.toString()});
@@ -46,14 +46,24 @@ export function ReflectionGrid(props: ReflectionGridProps) {
 }
 
 
-function ReflectionRegularGridSection(cards: reflectionGridCardProps[]) {
+function ReflectionRegularGridSection(cards: reflectionGridCardProps[][]) {
     return (
         <div className='reflection-cards-grid-section section-type-regular'>
         <div className='reflection-cards-grid grid-type-regular'>
             <h3 className='reflection-week reflection-week-number1'>Неделя 1</h3>
+            {cards[0].map((card) => 
+            <div className={clsx('reflection-grid-card-' + card.className)}>
+                <ReflectionCard header={card.header} textLabelPairsArray={card.textLabel} reflectionCN={reflectionClassNames.Default}/>
+            </div>
+            )}
             <h3 className='reflection-week reflection-week-number2'>Неделя 2</h3>
+            {cards[1].map((card) => 
+            <div className={clsx('reflection-grid-card-' + card.className)}>
+                <ReflectionCard header={card.header} textLabelPairsArray={card.textLabel} reflectionCN={reflectionClassNames.Default}/>
+            </div>
+            )}
             <h3 className='reflection-week reflection-week-number3'>Неделя 3</h3>
-            {cards.map((card) => 
+            {cards[2].map((card) => 
             <div className={clsx('reflection-grid-card-' + card.className)}>
                 <ReflectionCard header={card.header} textLabelPairsArray={card.textLabel} reflectionCN={reflectionClassNames.Default}/>
             </div>

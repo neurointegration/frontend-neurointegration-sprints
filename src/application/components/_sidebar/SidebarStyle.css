@@ -11,6 +11,11 @@
     line-height: 24px;
 }
 
+.without-style {
+    width: 100%;
+    list-style: none;
+}
+
 .sidebar button {
     font-size: inherit;
     font-weight: inherit;
@@ -34,7 +39,7 @@
     width: 100vw;
     height: 100vh;
     background-color: black;
-    z-index: 100;
+    z-index: 99;
     opacity: .25;
 }
 

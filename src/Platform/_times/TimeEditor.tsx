@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import './TimeEditorStyle.css';
+import '../Styles/accessibility.css'
 import { SyntheticEvent } from 'react';
 import {
     PossibleTimeResponceKeysType,

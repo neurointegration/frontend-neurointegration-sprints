@@ -15,6 +15,9 @@ import { MePutRequestType, OnboardingTypes } from '../../../core/api/actions/me'
 import MeInformationAtom from '../../../core/atoms/me.atom';
 import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/newOnboarding';
 import OnboardingAtom from '../../../core/atoms/onboarding.atom';
+import '../../../Platform/Styles/accessibility.css'
+import Delayed from '../../../core/api/utils/renderingDelayer';
+
 
 type ClientCardProps = {
     comment: string;
@@ -53,11 +56,11 @@ const ClientCard: React.FC<ClientCardProps> = ({
 
     return (
         <div className='client-card'>
-            <button className='card-top' onClick={cardClickHandler}>
+            <button className='card-top' onClick={cardClickHandler} aria-label={username + ' ' + firstName}>
                 <div className='profile-pic'></div>
                 <div className='client-info'>
-                    <p className='username'>@{username}</p>
-                    <p className='name'>{firstName}</p>
+                    <p aria-hidden className='username'>@{username}</p>
+                    <p aria-hidden className='name'>{firstName}</p>
                 </div>
             </button>
             <div className='card-bottom'>
@@ -176,17 +179,19 @@ const ClientsScreen: React.FC = () => {
             {!onboardingState.clientsOnboarding ? 
             <div className='onboarding-dark-overlay'/> :
         <></>}
+            <h1 className='sr-only'>Список клиентов</h1>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',
                     'controls-margin_left-xl'
                 )}
             />
+            <Delayed>
             {!onboardingState.clientsOnboarding ?  
             <OnboardingCard form={OnboardingCardsForms.Simple} type={OnboardingTypes.ClientsOnboarding} onboardingCardClickHandler={onboardingCardClickHandler}/>
             :
             <></>}
-
+            </Delayed>
             {clients ? clients.length > 0 ? 
             <div className='clients-container'>
                 <div className='client-list'>

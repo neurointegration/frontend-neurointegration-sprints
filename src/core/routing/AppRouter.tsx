@@ -1,5 +1,4 @@
 import EventEditingScreen from '../../application/screens/editing/EventEditing';
-import OnboardingScreen from '../../application/screens/onboarding/Onboarding';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import SettingsScreen from '../../application/screens/settings/Settings';
 import HistoryScreen from '../../application/screens/history/History';
@@ -61,14 +60,6 @@ function AppRouter() {
                     element={
                             <ClientsScreen />
                     }
-                />
-                <Route
-                    path={RoutesEnum.Onboarding}
-                    element={<OnboardingScreen short={isOnboardingComplete} />}
-                />
-                <Route
-                    path={RoutesEnum.OnboardingShort}
-                    element={<OnboardingScreen short />}
                 />
                 <Route
                     path={RoutesEnum.ClientSprint}

@@ -25,6 +25,8 @@ import { useParams } from 'react-router-dom';
 import Spoiler from '../../../Platform/_buttons/Spoiler';
 import LoadingScreen from '../loading/Loading';
 import { ClientResponseType } from '../../../core/api/actions/trainer.clients';
+import '../../../Platform/Styles/accessibility.css'
+
 
 import './ClientSprintStyle.css';
 import ReflectionScreen from '../reflection/Reflection';
@@ -155,6 +157,7 @@ function ClientReflectionScreen() {
         <LoadingScreen />
     ) : (
         <div aria-live='polite'>
+        <h1 className='sr-only'>Рефлексия клиента</h1>
             <Sidebar
                 menuButtonClassName={clsx(
                     'controls-margin_top-s',

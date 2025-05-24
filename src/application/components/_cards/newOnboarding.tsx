@@ -66,7 +66,7 @@ function OnboardingDateCard({onboardingCardClickHandler, form} : OnboardingCardP
     <div>
     <p className='onboarding-text'>Можно выбрать период, за&nbsp;который отобразятся проекты&nbsp;—&nbsp;конкретную неделю или весь спринт</p>
     </div>
-    <button className='onboarging-complete-button' aria-label='Обучение пройдено, закрыть окно' autoFocus={true} ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
+    <button className='onboarging-complete-button' aria-label='Закрыть' autoFocus={true} ref={inputRef} onClick={onboardingCardClickHandler} tabIndex={3}>
         <img className='cross-icon' src={Icons.cross} />
     </button>
   </dialog>
@@ -88,7 +88,7 @@ function OnboardingClientsCard({onboardingCardClickHandler, form} : OnboardingCa
     <p className='onboarding-text'>Тренер может оставить заметки на&nbsp;карточке клиента&nbsp;—&nbsp;клиент их не&nbsp;увидит.</p>
     <p className='onboarding-text'>А если нажать на&nbsp;карточку, то&nbsp;можно будет работать со&nbsp;спринтом, стендапом и рефлексией клиента.</p>
     </div>
-    <button className='onboarging-complete-button' aria-label='Обучение пройдено, закрыть окно' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
+    <button className='onboarging-complete-button' aria-label='Закрыть' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
         <img className='cross-icon' src={Icons.cross} />
     </button>
   </dialog>
@@ -112,7 +112,7 @@ function OnboardingEditingCard({onboardingCardClickHandler, form} : OnboardingCa
     <p className='onboarding-text'>На&nbsp;странице редактирования можно изменить количество времени для&nbsp;проекта или задачи.</p>
     <p className='onboarding-text'>А ещё обозначить цветом результаты.</p>
     </div>
-    <button className='onboarging-complete-button' aria-label='Обучение пройдено, закрыть окно' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
+    <button className='onboarging-complete-button' aria-label='Закрыть' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
         <img className='cross-icon' src={Icons.cross} />
     </button>
   </dialog>
@@ -156,7 +156,7 @@ function OnboardingProjectCard({form, onboardingCardClickHandler, additionalOnbo
             Назад 
         </button>
         </div>
-        <button className='onboarging-complete-button' aria-label='Обучение пройдено, закрыть окно' onClick={onboardingCardClickHandler} tabIndex={3}>
+        <button className='onboarging-complete-button' aria-label='Закрыть' onClick={onboardingCardClickHandler} tabIndex={3}>
             <img className='cross-icon' src={Icons.cross} />
         </button>
     </dialog>

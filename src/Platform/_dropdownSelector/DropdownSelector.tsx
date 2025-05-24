@@ -1,6 +1,6 @@
 import { Icons } from '../_types/Icons';
 import './DropdownSelectorStyle.css';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import { useRecoilState } from 'recoil';
 import { ReflectionDropdownSelectedAtom } from '../../core/atoms/screensDropdown.atom';
@@ -111,7 +111,7 @@ function DropdownSelector<T extends string | number>({
     );
 
     return (
-        <div className={selectorCN}>
+        <div className={selectorCN} aria-live='polite'>
             {isSelectorOpen && (
                 <div
                     className={selectorOverlayCN}
@@ -124,10 +124,11 @@ function DropdownSelector<T extends string | number>({
                 onClick={dropdownClickHandler}
                 value={selectedItem?.value}
                 aria-expanded={isSelectorOpen}
+                aria-label={selectedItem?.hint ? selectedItem?.caption + ': ' + selectedItem?.hint : selectedItem?.caption}
             >
                 <div>
                     <div className={selectorHeaderCN}>
-                        <span className={selectorHeaderCaptionCN}>
+                        <span aria-hidden className={selectorHeaderCaptionCN}>
                             {selectedItem?.caption}
                         </span>
                         <img
@@ -136,20 +137,20 @@ function DropdownSelector<T extends string | number>({
                             src={Icons.dropdownArrow}
                         />
                     </div>
-                    <span className={selectorHintCN}>{selectedItem?.hint}</span>
+                    <span aria-hidden className={selectorHintCN}>{selectedItem?.hint}</span>
                 </div>
             </button>
 
             {isSelectorOpen && (
-                <div className={selectorSelectCN} role='tablist'>
+                <section className={selectorSelectCN} role='listbox' aria-label='Список возможных периодов'>
                     {items.map((item, index) => (
                         <button
                             className={selectorOptionCN}
                             value={item.value}
                             key={`dropdownTab${index}`}
                             onClick={dropdownItemClickHandler}
-                            role='tab'
-                            aria-label={item.hint ? 'Период: ' + item.caption + ' ' + item.hint : 'Период: ' + item.caption}
+                            role='option'
+                            aria-label={item.hint ? item.caption + ' ' + item.hint : 'Спринт: ' + item.caption}
                         >
                             <span
                                 className={clsx(
@@ -165,7 +166,7 @@ function DropdownSelector<T extends string | number>({
                             )}
                         </button>
                     ))}
-                </div>
+                </section>
             )}
         </div>
     );
