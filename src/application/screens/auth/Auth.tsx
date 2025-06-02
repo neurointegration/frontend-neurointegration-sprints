@@ -75,10 +75,10 @@ const AuthScreen = () => {
 
     return (
         <div className='auth-container'>
-            {!onboardingShow ? 
+            {onboardingShow ? 
             <div className='onboarding-dark-overlay'/> :
             <></>}
-            {!onboardingShow ?
+            {onboardingShow ?
             <OnboardingCard form={OnboardingCardsForms.Simple} type={OnboardingTypes.AuthOnboarding} onboardingCardClickHandler={onboardingCardClickHandler}/>
             :
             <></>}    
