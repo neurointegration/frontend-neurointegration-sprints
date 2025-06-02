@@ -28,3 +28,10 @@
 .secondary-text {
     font-size: var(--fontsize-xl);
 }
+
+.onboarding-container {
+    display: flex;
+    text-align: left;
+    margin-left: 10%;
+    margin-right: 10%;
+}
