@@ -13,13 +13,13 @@
     text-align: center;
 }
 
-.primary-text {
+.primary-text-h1 {
     font-size: var(--fontsize-header-s);
     font-weight: var(--fontweight-semiBold);
     margin-bottom: 24px;
 }
 
-.primary-text {
+.primary-text-h2 {
     font-size: var(--fontsize-header-m);
     font-weight: var(--fontweight-semiBold);
     margin-bottom: 24px;
