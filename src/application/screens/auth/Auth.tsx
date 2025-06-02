@@ -106,17 +106,6 @@ const AuthScreen = () => {
                         </p> 
                     </li>
                 </ul>
-                <p className='secondary-text'>
-                    Важно! Приложение работает вместе с&nbsp;Телеграм-ботом «Баланси».
-                    <br />
-                    Пожалуйста, перед началом работы проверьте, что вы зарегистрированы в «Баланси».
-                    <br />
-                    <a href={TELEGRAM_BOT_URL} target="_blank"
-                        //style={{ color: 'blue', cursor: 'pointer' }}
-                        //onClick={handleLinkClick}
-                    >Телеграм-бот для прохождения спринтов нейроинтеграции
-                    </a>
-                </p>
                 <LoginButton
                     botUsername={BOT_USERNAME}
                     onAuthCallback={authCallback}
