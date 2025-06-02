@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './AuthStyle.css';
 import { LoginButton, TelegramAuthData } from '@telegram-auth/react';
 import { API } from '../../../core/api/handles';
@@ -7,6 +7,10 @@ import { HTTPErrorResponse } from '../../../core/api/utils/httpHandlers';
 import { useSetRecoilState } from 'recoil';
 import AuthAtom from '../../../core/atoms/auth.atom';
 import { BOT_USERNAME, TELEGRAM_BOT_URL  } from '../../../config';
+import clsx from 'clsx';
+import Button from '../../../Platform/_buttons/Button';
+import { OnboardingTypes } from '../../../core/api/actions/me';
+import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/newOnboarding';
 
 //const BOT_USERNAME = 'neurosprints_test_bot';
 //const TELEGRAM_BOT_URL = 'https://t.me/neurointegration_help_bot';
@@ -17,6 +21,10 @@ const AuthScreen = () => {
     useEffect(() => {
         document.body.className = 'body-color-white';
     }, []);
+
+    const [onboardingShow, setOnboardingShow] = useState(false);
+
+    const onboardingCardClickHandler = () => setOnboardingShow(false);
 
     const authCallback = (data: TelegramAuthData) => {
         const params: TelegramRequestDataType = {
@@ -67,13 +75,30 @@ const AuthScreen = () => {
 
     return (
         <div className='auth-container'>
+            {!onboardingShow ? 
+            <div className='onboarding-dark-overlay'/> :
+            <></>}
+            {!onboardingShow ?
+            <OnboardingCard form={OnboardingCardsForms.Simple} type={OnboardingTypes.AuthOnboarding} onboardingCardClickHandler={onboardingCardClickHandler}/>
+            :
+            <></>}    
             <div className='auth-wrapper'>
                 <h1 className='primary-text'>Вход в Нейроспринт</h1>
                 <p className='secondary-text'>
-                    Важно! Приложение работает вместе с&nbsp;Телеграм-ботом.
+                    Важно! Приложение работает вместе с&nbsp;Телеграм-ботом «Баланси».
                     <br />
-                    Пожалуйста, перед началом работы проверьте, что вы зарегистрированы.
+                    Пожалуйста, перед началом работы проверьте, что вы зарегистрированы в «Баланси».
                     <br />
+                    <Button
+                        caption='Показать инструкцию по авторизации'
+                        className={clsx(
+                            'controls-fontsize-m',
+                            'controls-fontweight-medium'
+                        )}
+                        showMode='filled'
+                        type='button'
+                        onClick={() => setOnboardingShow(true)}
+                    />
                     <a href={TELEGRAM_BOT_URL} target="_blank"
                         //style={{ color: 'blue', cursor: 'pointer' }}
                         //onClick={handleLinkClick}

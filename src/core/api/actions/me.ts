@@ -26,7 +26,8 @@ export enum OnboardingTypes {
     DateOnboarding='date',
     ProjectOnboarding='project',
     EditingOnboarding='editing',
-    ClientsOnboarding= 'clients', 
+    ClientsOnboarding= 'clients',
+    AuthOnboarding='auth',
 }
 
 export type MePutRequestType = {
