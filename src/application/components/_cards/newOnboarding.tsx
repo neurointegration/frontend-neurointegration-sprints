@@ -44,8 +44,6 @@ function OnboardingCard({
         return <OnboardingClientsCard form={form} onboardingCardClickHandler={onboardingCardClickHandler}/>
     } else if (type == OnboardingTypes.EditingOnboarding) {
         return <OnboardingEditingCard form={form} onboardingCardClickHandler={onboardingCardClickHandler}/>
-    } else if (type == OnboardingTypes.AuthOnboarding) {
-        return <OnboardingAuthCard form={form} onboardingCardClickHandler={onboardingCardClickHandler}/>
     } else {
         return <OnboardingProjectCard form={form} onboardingCardClickHandler={onboardingCardClickHandler} 
         additionalOnboardingCardClickHandler={onboardingProjectCardClickHandler}
@@ -164,30 +162,6 @@ function OnboardingProjectCard({form, onboardingCardClickHandler, additionalOnbo
     </dialog>
  )
  }
-}
-
-function OnboardingAuthCard({onboardingCardClickHandler, form} : OnboardingCardProps){
-
-    const inputRef = useRef<HTMLButtonElement | null>(null);
-
-    useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
- return(
-  <dialog className={clsx("dialog-card card-type-cross " + form)}
-    aria-modal="true"
-    open
-  >
-    <div>
-    <h2 className='onboarding-text'>Инструкция по авторизации</h2>
-    <p className='onboarding-text'>А ещё обозначить цветом результаты.</p>
-    </div>
-    <button className='onboarging-complete-button' aria-label='Закрыть' ref={inputRef} autoFocus={true} onClick={onboardingCardClickHandler} tabIndex={3}>
-        <img className='cross-icon' src={Icons.cross} />
-    </button>
-  </dialog>
- )
 }
 
 export default OnboardingCard;

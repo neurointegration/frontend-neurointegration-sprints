@@ -22,10 +22,6 @@ const AuthScreen = () => {
         document.body.className = 'body-color-white';
     }, []);
 
-    const [onboardingShow, setOnboardingShow] = useState(false);
-
-    const onboardingCardClickHandler = () => setOnboardingShow(false);
-
     const authCallback = (data: TelegramAuthData) => {
         const params: TelegramRequestDataType = {
             id: data.id.toString(),
@@ -74,31 +70,47 @@ const AuthScreen = () => {
 
 
     return (
-        <div className='auth-container'>
-            {onboardingShow ? 
-            <div className='onboarding-dark-overlay'/> :
-            <></>}
-            {onboardingShow ?
-            <OnboardingCard form={OnboardingCardsForms.Simple} type={OnboardingTypes.AuthOnboarding} onboardingCardClickHandler={onboardingCardClickHandler}/>
-            :
-            <></>}    
+        <div className='auth-container'> 
             <div className='auth-wrapper'>
                 <h1 className='primary-text'>Вход в Нейроспринт</h1>
+                <h2>Инструкция по авторизации</h2>
+                <ul>
+                    <li>
+                        <p className='secondary-text'>
+                            Приложение работает вместе с&nbsp;Телеграм-ботом «Баланси».
+                            <br />
+                            Пожалуйста, перед началом работы проверьте, что вы зарегистрированы в «Баланси».
+                            <br />
+                            <a href={TELEGRAM_BOT_URL} target="_blank"
+                            >Телеграм-бот для прохождения спринтов нейроинтеграции
+                            </a>
+                        </p>                    
+                    </li>
+                    <li>
+                        <p className='secondary-text'>
+                            К сожалению, на каждом новом устройстве авторизацию придётся проходить заново, таковы требования Телеграм.
+                        </p> 
+                    </li>
+                    <li>
+                        <p className='secondary-text'>
+                            При авторизации потребуется указать номер телефона.                            
+                            <br />
+                            Мы не собираем и не храним данные о номерах телефона пользователей, это нужно только для авторизации в Телеграм.                            
+                        </p> 
+                    </li>
+                    <li>
+                        <p className='secondary-text'>
+                            Дальше Телеграм пришлёт запрос на подтверждение авторизации. Его нужно принять.                           
+                            <br />
+                             Если приложение открыто во встроенном браузере Телеграм, то для корректной авторизации, пожалуйста, не закрывайте окно с приложением для принятия запроса, а просто сверните его.
+                        </p> 
+                    </li>
+                </ul>
                 <p className='secondary-text'>
                     Важно! Приложение работает вместе с&nbsp;Телеграм-ботом «Баланси».
                     <br />
                     Пожалуйста, перед началом работы проверьте, что вы зарегистрированы в «Баланси».
                     <br />
-                    <Button
-                        caption='Показать инструкцию по авторизации'
-                        className={clsx(
-                            'controls-fontsize-m',
-                            'controls-fontweight-medium'
-                        )}
-                        showMode='filled'
-                        type='button'
-                        onClick={() => setOnboardingShow(true)}
-                    />
                     <a href={TELEGRAM_BOT_URL} target="_blank"
                         //style={{ color: 'blue', cursor: 'pointer' }}
                         //onClick={handleLinkClick}
