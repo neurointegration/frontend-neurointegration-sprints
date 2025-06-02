@@ -55,7 +55,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
     };
 
     return (
-        <div className='client-card'>
+        <section className='client-card' aria-label='Карточка клиента'>
             <button className='card-top' onClick={cardClickHandler} aria-label={username + ' ' + firstName}>
                 <div className='profile-pic'></div>
                 <div className='client-info'>
@@ -82,7 +82,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
                     </button>
                 </>
             </div>
-        </div>
+        </section>
     );
 };
 
