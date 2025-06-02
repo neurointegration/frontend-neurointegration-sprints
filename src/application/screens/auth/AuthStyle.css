@@ -1,5 +1,4 @@
 .auth-container {
-    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,6 +6,7 @@
     width: 100%;
     top: 0;
     left: 0;
+    padding: 20px 0;
 }
 
 .auth-wrapper {
