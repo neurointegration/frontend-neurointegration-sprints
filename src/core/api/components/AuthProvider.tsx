@@ -14,6 +14,7 @@ import AuthScreen from '../../../application/screens/auth/Auth';
 import StandupSprintsAtom from '../../atoms/standup.atom';
 import ReflectionSprintsAtom from '../../atoms/reflection.atom';
 import OnboardingAtom from '../../atoms/onboarding.atom';
+import { SprintDropdownSelectedAtom } from '../../atoms/screensDropdown.atom';
 
 const AuthProvider = (props: PropsWithChildren) => {
     const { wait, loading } = useHttpLoader();
@@ -31,6 +32,8 @@ const AuthProvider = (props: PropsWithChildren) => {
     const setHistorySprintsState = useSetRecoilState(HistorySprintsAtom);
     const setStandupSprintsState = useSetRecoilState(StandupSprintsAtom);
     const setReflectionSprintsState = useSetRecoilState(ReflectionSprintsAtom);
+    const setSelectedWeekState = useSetRecoilState(SprintDropdownSelectedAtom);
+
 
     useEffect(() => {
         applyInterceptors(authState, setAuthState, resetAuthState);
@@ -79,6 +82,7 @@ const AuthProvider = (props: PropsWithChildren) => {
                             setHistorySprintsState(() => resp.body.slice(1));
                             setStandupSprintsState(() => resp.body.slice(0));
                             setReflectionSprintsState(() => resp.body.slice(0));
+                            setSelectedWeekState(() => {});
                         }
                     } else {
                         return;

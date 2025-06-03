@@ -3,10 +3,8 @@ import { SprintWeekDropdownValueType } from '../../application/screens/home/cons
 import { DropdownItem } from '../../Platform/_dropdownSelector/DropdownSelector';
 import { persistAtom } from '../api/utils/atomPersistenceMaker';
 
-export const SprintDropdownSelectedAtom = atom<DropdownItem<SprintWeekDropdownValueType>>({
-    key: 'sprintDropdownSelected',
-    default: null,
-});
+export const SprintDropdownSelectedAtom = persistAtom ('sprintDropdownSelected', null
+);
 
 export const HistoryDropdownSelectedAtom = persistAtom('historyDropdownSelected', null);
 
