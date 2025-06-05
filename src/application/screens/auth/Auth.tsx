@@ -24,11 +24,17 @@ import { Routes } from '../../../core/routing/routes';
 // photo_url=https%3A%2F%2Ft.me%2Fi%2Fuserpic%2F320%2FttTzsezh5fiQVqtSuquziteQY4u13Rnu9Z6HHZRXYBU.jpg
 // auth_date=1749140373&
 // hash=38a01c51ff5665822c60546094a9ff6012888c1a7913cecded7d4e3306116678
+const getUrlParameter = (name: string): string | null => {  
+    const urlSearchParams = new URLSearchParams(window.location.search);  
+    return urlSearchParams.get(name);  
+};   
+
 
 const AuthScreen = () => {
     // const { wait, loading } = useHttpLoader();
     const setAuthState = useSetRecoilState(AuthAtom);
     const locationParams = useParams();
+    console.log(locationParams);
     useEffect(() => {
         document.body.className = 'body-color-white';
     }, []);
@@ -36,12 +42,12 @@ const AuthScreen = () => {
     useEffect(() => {
         const params: TelegramRequestDataType = {
             id: locationParams.id,
-            firstName: locationParams.first_name,
-            lastName: locationParams.last_name,
-            userName: locationParams.username,
-            photoUrl: locationParams.photo_url,
-            authDate: locationParams.auth_date,
-            hash: locationParams.hash,
+            firstName: getUrlParameter('first_name'),
+            lastName: getUrlParameter('last_name'),
+            userName: getUrlParameter('username'),
+            photoUrl: getUrlParameter('photo_url'),
+            authDate: getUrlParameter('auth_date'),
+            hash: getUrlParameter('hash'),
         };
         API.AUTH.Login(params).then((response) => {
             if (response.isSuccess) {
