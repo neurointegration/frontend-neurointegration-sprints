@@ -1,5 +1,4 @@
 import { generatePath } from 'react-router-dom';
-import AuthCheckScreen from '../../application/screens/auth/AuthCheckPage';
 
 export enum Routes {
     Base = '/',
@@ -17,7 +16,6 @@ export enum Routes {
     ClientReflection = '/reflection/:clientId',
     Reflection = '/reflection',
     Standup = '/standup',
-    AuthCheck = '/loginCheck'
 }
 
 /**
