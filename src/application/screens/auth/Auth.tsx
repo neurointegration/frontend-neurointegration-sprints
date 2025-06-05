@@ -35,12 +35,12 @@ const AuthScreen = () => {
 
     useEffect(() => {
         const params: TelegramRequestDataType = {
-            id: locationParams.id.toString(),
+            id: locationParams.id,
             firstName: locationParams.first_name,
             lastName: locationParams.last_name,
             userName: locationParams.username,
             photoUrl: locationParams.photo_url,
-            authDate: locationParams.auth_date.toString(),
+            authDate: locationParams.auth_date,
             hash: locationParams.hash,
         };
         API.AUTH.Login(params).then((response) => {
