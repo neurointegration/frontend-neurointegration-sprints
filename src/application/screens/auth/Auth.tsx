@@ -65,7 +65,7 @@ const AuthScreen = () => {
                     'refreshToken',
                     response.body.data.refreshToken
                 );
-                location.reload();
+                window.location.href = 'https://d5dfebuflt1l46hd3d3d.l3hh3szr.apigw.yandexcloud.net/sprint'
             } else {
                 // TODO: неудачная авторизация через TG
                 console.log(
