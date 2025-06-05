@@ -11,6 +11,8 @@ import clsx from 'clsx';
 import Button from '../../../Platform/_buttons/Button';
 import { OnboardingTypes } from '../../../core/api/actions/me';
 import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/newOnboarding';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Routes } from '../../../core/routing/routes';
 
 //const BOT_USERNAME = 'neurosprints_test_bot';
 //const TELEGRAM_BOT_URL = 'https://t.me/neurointegration_help_bot';
@@ -26,19 +28,21 @@ import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/ne
 const AuthScreen = () => {
     // const { wait, loading } = useHttpLoader();
     const setAuthState = useSetRecoilState(AuthAtom);
+    const navigate = useNavigate();
+    const locationParams = useParams();
     useEffect(() => {
         document.body.className = 'body-color-white';
     }, []);
 
-    const authCallback = (data: TelegramAuthData) => {
+    useEffect(() => {
         const params: TelegramRequestDataType = {
-            id: data.id.toString(),
-            firstName: data.first_name,
-            lastName: data.last_name,
-            userName: data.username,
-            photoUrl: data.photo_url,
-            authDate: data.auth_date.toString(),
-            hash: data.hash,
+            id: locationParams.id.toString(),
+            firstName: locationParams.first_name,
+            lastName: locationParams.last_name,
+            userName: locationParams.username,
+            photoUrl: locationParams.photo_url,
+            authDate: locationParams.auth_date.toString(),
+            hash: locationParams.hash,
         };
         API.AUTH.Login(params).then((response) => {
             if (response.isSuccess) {
@@ -58,9 +62,7 @@ const AuthScreen = () => {
                     'refreshToken',
                     response.body.data.refreshToken
                 );
-
-                location.reload();
-                // navigate(Routes.Base);
+                navigate(Routes.Base);
             } else {
                 // TODO: неудачная авторизация через TG
                 console.log(
@@ -70,7 +72,8 @@ const AuthScreen = () => {
                 );
             }
         });
-    };
+    });
+
 
 
     return (
