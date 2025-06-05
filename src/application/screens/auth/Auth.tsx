@@ -41,7 +41,7 @@ const AuthScreen = () => {
 
     useEffect(() => {
         const params: TelegramRequestDataType = {
-            id: locationParams.id,
+            id: getUrlParameter('id'),
             firstName: getUrlParameter('first_name'),
             lastName: getUrlParameter('last_name'),
             userName: getUrlParameter('username'),
