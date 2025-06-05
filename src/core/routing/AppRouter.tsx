@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import { API } from '../api/handles';
 import ClientReflectionScreen from '../../application/screens/clients/ClientReflection';
 import ClientStandupScreen from '../../application/screens/clients/ClientStandup';
+import AuthCheckScreen from '../../application/screens/auth/AuthCheckPage';
 
 function AppRouter() {
     const isTrainer = useRecoilValue(RolesAtom);
@@ -33,6 +34,10 @@ function AppRouter() {
                 <Route
                     path={RoutesEnum.Editing}
                     element={<EventEditingScreen />}
+                />
+                <Route
+                    path={RoutesEnum.AuthCheck}
+                    element={<AuthCheckScreen />}
                 />
                 <Route
                     path={RoutesEnum.Creation}
