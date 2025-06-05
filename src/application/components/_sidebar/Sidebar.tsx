@@ -85,6 +85,17 @@ function Sidebar({ menuButtonClassName }: SidebarProps) {
             if (resp.isSuccess) {
                 resetAuthState();
                 localStorageClean();
+
+                const searchParams = new URLSearchParams(window.location.search);
+                
+                searchParams.delete('id');
+                searchParams.delete('first_name');
+                searchParams.delete('last_name');
+                searchParams.delete('username');
+                searchParams.delete('photo_url');
+                searchParams.delete('auth_date');
+                searchParams.delete('hash');
+
                 location.reload();
             }
         });

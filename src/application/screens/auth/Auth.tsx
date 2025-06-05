@@ -33,8 +33,6 @@ const getUrlParameter = (name: string): string | null => {
 const AuthScreen = () => {
     // const { wait, loading } = useHttpLoader();
     const setAuthState = useSetRecoilState(AuthAtom);
-    const locationParams = location.pathname;
-    console.log(locationParams);
     useEffect(() => {
         document.body.className = 'body-color-white';
     }, []);
