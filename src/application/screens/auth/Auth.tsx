@@ -62,7 +62,7 @@ const AuthScreen = () => {
                     'refreshToken',
                     response.body.data.refreshToken
                 );
-                navigate(Routes.Base);
+                location.reload();
             } else {
                 // TODO: неудачная авторизация через TG
                 console.log(
