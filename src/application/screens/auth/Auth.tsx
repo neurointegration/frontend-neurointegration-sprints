@@ -28,7 +28,6 @@ import { Routes } from '../../../core/routing/routes';
 const AuthScreen = () => {
     // const { wait, loading } = useHttpLoader();
     const setAuthState = useSetRecoilState(AuthAtom);
-    const navigate = useNavigate();
     const locationParams = useParams();
     useEffect(() => {
         document.body.className = 'body-color-white';
