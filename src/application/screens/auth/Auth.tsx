@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import Button from '../../../Platform/_buttons/Button';
 import { OnboardingTypes } from '../../../core/api/actions/me';
 import OnboardingCard, { OnboardingCardsForms } from '../../components/_cards/newOnboarding';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Routes } from '../../../core/routing/routes';
 
 //const BOT_USERNAME = 'neurosprints_test_bot';
@@ -33,7 +33,7 @@ const getUrlParameter = (name: string): string | null => {
 const AuthScreen = () => {
     // const { wait, loading } = useHttpLoader();
     const setAuthState = useSetRecoilState(AuthAtom);
-    const locationParams = useParams();
+    const locationParams = location.pathname;
     console.log(locationParams);
     useEffect(() => {
         document.body.className = 'body-color-white';
