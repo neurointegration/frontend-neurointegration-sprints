@@ -65,7 +65,7 @@ const AuthScreen = () => {
                     'refreshToken',
                     response.body.data.refreshToken
                 );
-                window.location.replace('https://d5dfebuflt1l46hd3d3d.l3hh3szr.apigw.yandexcloud.net/sprint');
+                window.location.reload();
             } else {
                 // TODO: неудачная авторизация через TG
                 console.log(
@@ -89,7 +89,7 @@ const AuthScreen = () => {
                         <br />
                         Пожалуйста, перед началом работы проверьте, что вы зарегистрированы в&nbsp;«Баланси». 
                         <br/>
-                        Для авторизации перейдите в&nbsp;«Баланси» по&nbsp;ссылке ниже и нажмите в&nbsp;меню кнопку /login.
+                        Для авторизации перейдите в&nbsp;«Баланси» по&nbsp;ссылке ниже и нажмите в&nbsp;меню кнопку «Войти в Нейроспринт».
                     </p>    
                     <a href={TELEGRAM_BOT_URL} target="_blank"
                         >Телеграм-бот для&nbsp;прохождения спринтов нейроинтеграции
