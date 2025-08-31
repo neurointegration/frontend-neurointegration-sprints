@@ -32,12 +32,12 @@ jobs:
             echo "VITE_API_URL=${{ secrets.VITE_API_URL_PROD }}" >> $GITHUB_ENV
             echo "VITE_BOT_USERNAME=${{ secrets.VITE_BOT_USERNAME_PROD }}" >> $GITHUB_ENV
             echo "VITE_TELEGRAM_BOT_URL=${{ secrets.VITE_TELEGRAM_BOT_URL_PROD }}" >> $GITHUB_ENV
-            echo "::set-output name=bucket::frontend-neurointegration-sprints"
+            echo "BUCKET_NAME=${{ secrets.BUCKET_PROD }}" >> $GITHUB_ENV
           else
             echo "VITE_API_URL=${{ secrets.VITE_API_URL_TEST }}" >> $GITHUB_ENV
             echo "VITE_BOT_USERNAME=${{ secrets.VITE_BOT_USERNAME_TEST }}" >> $GITHUB_ENV
             echo "VITE_TELEGRAM_BOT_URL=${{ secrets.VITE_TELEGRAM_BOT_URL_TEST }}" >> $GITHUB_ENV
-            echo "::set-output name=bucket::frontend-neurointegration-sprints-test"
+            echo "BUCKET_NAME=${{ secrets.BUCKET_TEST }}" >> $GITHUB_ENV
           fi
 
       - name: Install dependencies
@@ -68,7 +68,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
-          aws --endpoint-url=https://storage.yandexcloud.net s3 rm --recursive s3://${{ steps.set-vars.outputs.bucket }}
+          aws --endpoint-url=https://storage.yandexcloud.net s3 rm --recursive s3://${{ env.BUCKET_NAME }}
 
       - name: Upload to Object Storage
         env:
@@ -76,4 +76,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
-          aws --endpoint-url=https://storage.yandexcloud.net s3 cp --recursive dist/ s3://${{ steps.set-vars.outputs.bucket }}
+          aws --endpoint-url=https://storage.yandexcloud.net s3 cp --recursive dist/ s3://${{ env.BUCKET_NAME }}
