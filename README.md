@@ -16,7 +16,7 @@
 # Ссылки
 
 [https://d5do0kibuf11u2a6rbpt.kf69zffa.apigw.yandexcloud.net](https://d5do0kibuf11u2a6rbpt.kf69zffa.apigw.yandexcloud.net) \- прод  
-[https://d5dp5i0dp3aoisd6asdk.l3hh3szr.apigw.yandexcloud.net](https://d5dp5i0dp3aoisd6asdk.l3hh3szr.apigw.yandexcloud.net/sprint) \- тест, но там сейчас почему-то не работает авторизация через телеграм (надо разбираться). 
+[https://d5d6p5pj381j1lc3t4ai.yl4tuxdu.apigw.yandexcloud.net](https://d5d6p5pj381j1lc3t4ai.yl4tuxdu.apigw.yandexcloud.net) \- тест
 
 Деплоить в репозитории фронтенда можно через графический интерфейс гита раздельно в тест и в прод.  
 Actions \-\> Deploy React App to Object Storage \-\> Run workflow \-\> выбрать test или prod \-\> Run workflow
